@@ -1,1 +1,14 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/IYxRLrPq)
+# 3D Engine
+
+> Tugas Besar 2 IF3260 Grafika Komputer
+
+## Contributors
+
+**Kelompok 07 K-03 mariyati**
+
+| NIM      | Nama                        |
+| -------- | --------------------------- |
+| 13521006 | Azmi Hasna Zaharani         |
+| 13521009 | Christophorus Dharma Winata |
+| 13521018 | Syarifa Dwi Purnamasari     |
+| 13521024 | Ahmad Nadil                 |
