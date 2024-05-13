@@ -48,7 +48,6 @@ export class Object extends Listener {
     this.#localMatrix = M4.identity()
     this.#worldMatrix = M4.identity()
     this.#quaternion.onChange = () => {
-      // temporary so it won't trigger change event in rotation (infinite recursive)
       _v1.setVector(this.#rotation)
       this.#quaternion.toEuler(_v1)
       this.#rotation.setVector(_v1, false)
@@ -58,22 +57,10 @@ export class Object extends Listener {
     }
   }
 
-  /**
-   * The type of this object.
-   *
-   * @readonly
-   * @memberof Object
-   */
   get type() {
     return "Object"
   }
 
-  /**
-   * Is this object a Object?
-   *
-   * @readonly
-   * @memberof Object
-   */
   get isObject() {
     return true
   }
@@ -158,15 +145,6 @@ export class Object extends Listener {
     }
   }
 
-  /**
-   * Add object to this object.
-   *
-   * If object already has parent, it will detach with its parent first.
-   *
-   * @param {...Object} objects
-   * @return {Object} this object
-   * @memberof Object
-   */
   add(...objects) {
     if (objects.length > 1) {
       objects.forEach((obj) => this.add(obj))
@@ -177,7 +155,6 @@ export class Object extends Listener {
 
     const obj = objects[0]
     if (obj && obj.isObject) {
-      // change parent to this
       if (obj.parent !== this) {
         obj.removeFromParent()
         obj.parent = this
@@ -188,13 +165,6 @@ export class Object extends Listener {
     return this
   }
 
-  /**
-   * Remove object from this object.
-   *
-   * @param {...Object} objects
-   * @return {Object} this object
-   * @memberof Object
-   */
   remove(...objects) {
     if (objects.length > 1) {
       objects.forEach((obj) => this.remove(obj))
@@ -213,23 +183,11 @@ export class Object extends Listener {
     return this
   }
 
-  /**
-   * Remove this object from parent.
-   *
-   * @return {Object} this object.
-   * @memberof Object
-   */
   removeFromParent() {
     if (this.parent !== null) this.parent.remove(this)
     return this
   }
 
-  /**
-   * Remove all children from this object.
-   *
-   * @return {Object} this object.
-   * @memberof Object
-   */
   clear() {
     this.children.forEach((child) => {
       child.parent = null
@@ -248,7 +206,6 @@ export class Object extends Listener {
 
     _q1.setMatrix(m)
     if (this.parent) {
-      // move quaternion to local space
       const q = this.parent.worldQuaternion
       this.quaternion.copy(q.inv().mul(_q1))
     } else {
