@@ -17,14 +17,14 @@ export class OrthographicCamera extends Camera {
     this.right = right
     this.near = near
     this.far = far
-    this.updateProjectionMatrix()
+    this.computeProjectionMatrix()
   }
 
   get type() {
     return "OrthographicCamera"
   }
 
-  updateProjectionMatrix() {
+  computeProjectionMatrix() {
     const d = [
       (this.right - this.left) / (2 * this.zoom),
       (this.top - this.bottom) / (2 * this.zoom),

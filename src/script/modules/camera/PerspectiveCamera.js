@@ -13,14 +13,14 @@ export class PerspectiveCamera extends Camera {
     this.aspect = aspect
     this.near = near
     this.far = far
-    this.updateProjectionMatrix()
+    this.computeProjectionMatrix()
   }
 
   get type() {
     return "PerspectiveCamera"
   }
 
-  updateProjectionMatrix() {
+  computeProjectionMatrix() {
     this.projectionMatrix = M4.perspective(
       this.fov,
       this.aspect,
