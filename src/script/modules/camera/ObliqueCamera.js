@@ -1,5 +1,5 @@
-import { M4 } from "../math"
-import { Camera } from "./Camera"
+import { M4 } from "../math/Matrix4.js"
+import { Camera } from "./Camera.js"
 
 export class ObliqueCamera extends Camera {
   top

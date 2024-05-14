@@ -1,5 +1,5 @@
-import { Listener } from "../core"
-import { BufferAttribute } from "../geometry"
+import { Listener } from "../core/Listener.js"
+import { BufferAttribute } from "../geometry/BufferAttribute.js"
 
 export class Vector3 extends Listener {
   /** @type {number} */

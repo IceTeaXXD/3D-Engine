@@ -1,4 +1,4 @@
-import { WebGLTypes } from "../core"
+import { WebGLTypes } from "../core/GLTypes.js"
 
 export class BufferAttribute {
   /** @type {Float32Array} */

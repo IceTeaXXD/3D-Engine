@@ -1,4 +1,4 @@
-import { Listener } from "../core"
+import { Listener } from "../core/Listener.js"
 import { M4, Vector3 } from "./index.js"
 
 export class Quaternion extends Listener {

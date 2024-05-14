@@ -1,5 +1,5 @@
-import { Node } from "../core"
-import { M4 } from "../math"
+import { Node } from "../core/Node.js"
+import { M4 } from "../math/Matrix4.js"
 
 export class Camera extends Node {
   projectionMatrix = M4.identity()
