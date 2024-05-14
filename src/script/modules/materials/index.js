@@ -1,2 +1,5 @@
 export * from "./Texture.js"
 export * from "./ShaderMaterial.js"
+export * from "./PhongMaterial.js"
+export * from "./Color.js"
+export * from "./BasicMaterial.js"
