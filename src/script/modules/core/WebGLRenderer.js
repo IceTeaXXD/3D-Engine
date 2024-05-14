@@ -98,7 +98,8 @@ export class WebGLRenderer extends Listener {
                 worldMatrix: object.worldMatrix,
                 useVertexColor: object.geometry.useVertexColors,
             });
-            this.#gl.drawArrays(this.#gl.TRIANGLES, 0, object.geometry.attributes.position.count);
+            this.#gl.useProgram(this.#currentProgram);
+            this.#gl.drawArrays(this.#gl.TRIANGLES, 0, object.geometry.getAttribute('position').count);
         }
         for (let key in object.children) {
             this.renderObject(object.children[key], uniforms);
