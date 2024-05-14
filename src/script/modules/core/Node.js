@@ -30,6 +30,9 @@ export class Node extends Listener {
   #worldMatrix
   /** @type {Node} */
   #parent
+  /** @type {Array<Node>} */
+  children
+  /** @type 
   /** @type {Boolean} */
   visible = true
 

@@ -7,7 +7,7 @@ export class Camera extends Node {
   zoom = 1
 
   get projectionMatrix() {
-    this.updateLocalMatrix()
+    this.computeProjectionMatrix()
     return this.projectionMatrix.premul(this.#invWorldMatrix)
   }
 
@@ -21,8 +21,9 @@ export class Camera extends Node {
 
   computeWorldMatrix() {
     super.computeWorldMatrix()
-    this.#invWorldMatrix.invert(this.worldMatrix)
+    this.#invWorldMatrix = M4.inv(this.worldMatrix)
   }
+  
   computeProjectionMatrix() {
     throw new Error("Method not implemented.")
   }
