@@ -36,6 +36,7 @@ export class BufferGeometry {
 
   calculateNormals() {
     const position = this.#attributes.position
+    console.log(position)
     if (position === undefined) {
       console.error("BufferGeometry: No position attribute found.")
       return
@@ -49,17 +50,17 @@ export class BufferGeometry {
       ab = new Vector3()
 
     for (let i = 0; i < position.count; i += 3) {
-      pA.fromArray(position.array, i * 3)
-      pB.fromArray(position.array, (i + 1) * 3)
-      pC.fromArray(position.array, (i + 2) * 3)
+      pA.fromBufferAttribute(position, i * 3)
+      pB.fromBufferAttribute(position, (i + 1) * 3)
+      pC.fromBufferAttribute(position, (i + 2) * 3)
 
-      cb.subVectors(pC, pB)
-      ab.subVectors(pA, pB)
+      cb.sub(pC, pB)
+      ab.sub(pA, pB)
       cb.cross(ab).normalize()
 
-      normal.setXYZ(i, cb.x, cb.y, cb.z)
-      normal.setXYZ(i + 1, cb.x, cb.y, cb.z)
-      normal.setXYZ(i + 2, cb.x, cb.y, cb.z)
+      normal.set(i, cb.x, cb.y, cb.z)
+      normal.set(i + 1, cb.x, cb.y, cb.z)
+      normal.set(i + 2, cb.x, cb.y, cb.z)
     }
 
     this.setAttribute("normal", normal)

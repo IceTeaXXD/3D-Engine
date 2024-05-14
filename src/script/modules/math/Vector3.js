@@ -200,6 +200,7 @@ export class Vector3 extends Listener {
   }
 
   fromBufferAttribute(attribute, index) {
+    console.log(attribute)
     return this.set(
       ...attribute.get(index, attribute.size),
       ...[0, 0, 0].slice(attribute.size)
