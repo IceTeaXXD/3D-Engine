@@ -1,3 +1,5 @@
+import { WebGLTypeSetter } from "./GLTypes.js"
+
 export function createShader(gl, source, type) {
   const shader = gl.createShader(type)
   gl.shaderSource(shader, source)
@@ -9,6 +11,7 @@ export function createShader(gl, source, type) {
   }
   return shader
 }
+
 
 export function createProgram(gl, vertexShader, fragmentShader) {
   const program = gl.createProgram()
@@ -22,22 +25,20 @@ export function createProgram(gl, vertexShader, fragmentShader) {
   }
   return {
     program,
-    attribSetters: createAttributSetters(gl, program),
-    uniformSetters: createUniformSetters(gl, program)
+    uniformSetters: createUniformSetters(gl, program),
+    attribSetters: createAttributSetters(gl, program)
   }
 }
 
 export function createAttribSetter(gl, info, program) {
   const loc = gl.getAttribLocation(program, info.name)
-  return (v) =>
-    gl.vertexAttribPointer(
-      loc,
-      info.size,
-      info.type,
-      info.normalize,
-      info.stride,
-      info.offset
-    )
+  const buf = gl.createBuffer();
+    return (v) => {
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.enableVertexAttribArray(loc);
+        gl.bufferData(gl.ARRAY_BUFFER, v.data, gl.STATIC_DRAW);
+        gl.vertexAttribPointer(loc, v.size, v.dtype, v.normalize, v.stride, v.offset);
+    }
 }
 
 export function createAttributSetters(gl, program) {
@@ -48,15 +49,30 @@ export function createAttributSetters(gl, program) {
     if (!attribInfo) {
       break
     }
-    const index = gl.getAttribLocation(program, attribInfo.name)
     attribSetters[attribInfo.name] = createAttribSetter(gl, attribInfo, program)
   }
   return attribSetters
 }
 
 export function createUniformSetter(gl, info, program) {
-  const loc = gl.getUniformLocation(program, info.name)
-  return (v) => gl[`uniform${info.type}`](loc, v)
+    const loc = gl.getUniformLocation(program, info.name)
+    const isArray = (info.size > 1 && info.name.substr(-3) === '[0]');
+    const type = WebGLTypeSetter[info.type];
+    return (v) => {
+        if (typeof v === 'object' && 'toArray' in v) v = v.toArray();
+        if (isArray) {
+            gl[`uniform${type}v`](loc, v);
+        } else {
+            if (type.substr(0, 6) === 'Matrix')
+                gl[`uniform${type}`](loc, false, v);
+            else {
+                if (Array.isArray(v))
+                    gl[`uniform${type}`](loc, ...v);
+                else
+                    gl[`uniform${type}`](loc, v);
+            }
+        }
+    };
 }
 
 export function createUniformSetters(gl, program) {
@@ -67,40 +83,39 @@ export function createUniformSetters(gl, program) {
     if (!uniformInfo) {
       break
     }
-    const index = gl.getUniformLocation(program, uniformInfo.name)
-    uniformSetters[uniformInfo.name] = createUniformSetter(
-      gl,
-      uniformInfo,
-      program
-    )
+    let name = (uniformInfo.name.substr(-3) === '[0]') ? uniformInfo.name.substr(0, uniformInfo.name.length - 3) : uniformInfo.name;
+    uniformSetters[name] = createUniformSetter(gl, uniformInfo, program);
   }
   return uniformSetters
 }
 
 export function setAttribute(programInfo, attributeName, data) {
-  const { gl, program, attribSetters } = programInfo
-  const setter = attribSetters[attributeName]
-  if (setter) {
-    setter(data)
+  const setter = programInfo.attribSetters
+  console.log(setter);
+  if (attributeName in setter) {
+    setter[attributeName](data)
   }
 }
 
 export function setAttributes(programInfo, attributes) {
   for (const name in attributes) {
-    this.setAttribute(programInfo, name, attributes[name])
+    const shaderName = `a_${name}`;
+    setAttribute(programInfo, shaderName, attributes[name])
   }
 }
 
 export function setUniform(programInfo, uniformName, data) {
-  const { gl, program, uniformSetters } = programInfo
-  const setter = uniformSetters[uniformName]
-  if (setter) {
-    setter(data)
-  }
+    const setter = programInfo.uniformSetters
+    console.log(setter);
+    if (uniformName in setter) {
+      setter[uniformName](data)
+    }
 }
 
 export function setUniforms(programInfo, uniforms) {
-  for (const name in uniforms) {
-    this.setUniform(programInfo, name, uniforms[name])
-  }
+    console.log(uniforms);
+    for (const name in uniforms) {
+        const shaderName = `u_${name}`;
+        setUniform(programInfo, shaderName, uniforms[name])
+      }
 }

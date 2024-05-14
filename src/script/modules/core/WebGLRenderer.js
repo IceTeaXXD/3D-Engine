@@ -89,6 +89,12 @@ export class WebGLRenderer extends Listener {
     this.renderObject(Scene, defaultUniform)
   }
 
+  /**
+     * Render object recursively.
+     * 
+     * @param {Node} object Object to render.
+     * @param {{resolution: [number, number], time: number, viewMatrix: M4}} uniforms Default uniforms for every object to use.
+     */
   renderObject(object, uniforms) {
     if (!object.visible) return
     object.computeWorldMatrix(false, true)
@@ -98,8 +104,8 @@ export class WebGLRenderer extends Listener {
       /** @type {ProgramInfo} */
       const info = this.createOrGetMaterial(material)
       this.setProgramInfo(info)
-      setAttributes(object.geometry.getAttribute("position"))
-      setUniforms({
+      setAttributes(this.#currentProgram, object.geometry.attributes)
+      setUniforms(this.#currentProgram, {
         ...object.material.uniforms,
         ...uniforms,
         worldMatrix: object.worldMatrix,

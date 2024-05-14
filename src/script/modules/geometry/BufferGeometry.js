@@ -4,6 +4,7 @@ import { BufferAttribute } from "./BufferAttribute.js"
 export class BufferGeometry {
   #attributes
   #indices
+  useVertexColors = false;
 
   constructor() {
     this.#attributes = {}
@@ -23,6 +24,10 @@ export class BufferGeometry {
   setAttribute(name, attribute) {
     this.#attributes[name] = attribute
     return this
+  }
+
+  get attributes() {
+    return this.#attributes
   }
 
   getAttribute(name) {
