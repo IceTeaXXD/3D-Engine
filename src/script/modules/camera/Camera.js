@@ -11,6 +11,11 @@ export class Camera extends Node {
     return this.projectionMatrix.premul(this.#invWorldMatrix)
   }
 
+  getProjectionMatrix() {
+    this.computeProjectionMatrix()
+    return this.projectionMatrix.premul(this.#invWorldMatrix)
+  }
+
   get type() {
     return "Camera"
   }

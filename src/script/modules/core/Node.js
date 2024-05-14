@@ -153,7 +153,7 @@ export class Node extends Listener {
       Nodes.forEach((obj) => this.add(obj))
       return this
     }
-
+    
     if (Nodes.length === 0) return this
 
     const obj = Nodes[0]

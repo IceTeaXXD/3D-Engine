@@ -36,7 +36,6 @@ export class BufferGeometry {
 
   calculateNormals() {
     const position = this.#attributes.position
-    console.log(position)
     if (position === undefined) {
       console.error("BufferGeometry: No position attribute found.")
       return
