@@ -1,7 +1,7 @@
-import { Object } from "../core"
+import { Node } from "../core"
 import { M4 } from "../math"
 
-export class Camera extends Object {
+export class Camera extends Node {
   projectionMatrix = M4.identity()
   #invWorldMatrix = M4.identity()
   zoom = 1
@@ -19,11 +19,11 @@ export class Camera extends Object {
     return true
   }
 
-  updateWorldMatrix() {
-    super.updateWorldMatrix()
+  computeWorldMatrix() {
+    super.computeWorldMatrix()
     this.#invWorldMatrix.invert(this.worldMatrix)
   }
-  updateProjectionMatrix() {
+  computeProjectionMatrix() {
     throw new Error("Method not implemented.")
   }
 }

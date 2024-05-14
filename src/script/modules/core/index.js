@@ -1,3 +1,3 @@
-export * from "./Types.js"
+export * from "./GLTypes.js"
 export * from "./Listener.js"
-export * from "./Object.js"
+export * from "./Node.js"

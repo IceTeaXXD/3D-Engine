@@ -19,14 +19,14 @@ export class ObliqueCamera extends Camera {
     this.near = near
     this.far = far
     this.angle = angle
-    this.updateProjectionMatrix()
+    this.computeProjectionMatrix()
   }
 
   get type() {
     return "ObliqueCamera"
   }
 
-  updateProjectionMatrix() {
+  computeProjectionMatrix() {
     const d = [
       (this.right - this.left) / (2 * this.zoom),
       (this.top - this.bottom) / (2 * this.zoom),

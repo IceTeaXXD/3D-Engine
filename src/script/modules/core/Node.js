@@ -15,7 +15,7 @@ const _v1 = new Vector3(),
   _zAxis = new Vector3(0, 0, 1)
 const _q1 = new Quaternion()
 
-export class Object extends Listener {
+export class Node extends Listener {
   /** @type {Vector3} */
   #position
   /** @type {Vector3} */
@@ -28,7 +28,7 @@ export class Object extends Listener {
   #localMatrix
   /** @type {M4} */
   #worldMatrix
-  /** @type {Object} */
+  /** @type {Node} */
   #parent
   /** @type {Boolean} */
   visible = true
@@ -37,9 +37,9 @@ export class Object extends Listener {
     super()
     /** @type {string} */
     this.name = ""
-    /** @type {Object} */
+    /** @type {Node} */
     this.#parent = null
-    /** @type {Array<Object>} */
+    /** @type {Array<Node>} */
     this.children = []
     this.#position = new Vector3()
     this.#rotation = new Vector3()
@@ -58,10 +58,10 @@ export class Object extends Listener {
   }
 
   get type() {
-    return "Object"
+    return "Node"
   }
 
-  get isObject() {
+  get isNode() {
     return true
   }
 
@@ -70,7 +70,7 @@ export class Object extends Listener {
   }
 
   get worldPosition() {
-    this.updateWorldMatrix(true, false)
+    this.computeWorldMatrix(true, false)
     return M4.getTranslation(this.#worldMatrix)
   }
 
@@ -79,7 +79,7 @@ export class Object extends Listener {
   }
 
   get worldQuaternion() {
-    this.updateWorldMatrix(true, false)
+    this.computeWorldMatrix(true, false)
     return M4.decompose(this.#worldMatrix).quaternion
   }
 
@@ -88,7 +88,7 @@ export class Object extends Listener {
   }
 
   get worldRotation() {
-    this.updateWorldMatrix(true, false)
+    this.computeWorldMatrix(true, false)
     return M4.getRotation(this.#worldMatrix)
   }
 
@@ -97,7 +97,7 @@ export class Object extends Listener {
   }
 
   get worldScale() {
-    this.updateWorldMatrix(true, false)
+    this.computeWorldMatrix(true, false)
     return M4.decompose(this.#worldMatrix).scale
   }
 
@@ -108,7 +108,7 @@ export class Object extends Listener {
   set parent(parent) {
     if (this.#parent !== parent) {
       this.#parent = parent
-      this.updateWorldMatrix()
+      this.computeWorldMatrix()
     }
   }
 
@@ -120,7 +120,7 @@ export class Object extends Listener {
     return this.#worldMatrix
   }
 
-  updateLocalMatrix() {
+  computeLocalMatrix() {
     this.#localMatrix = M4.compose(
       this.#position,
       this.#quaternion,
@@ -128,11 +128,11 @@ export class Object extends Listener {
     )
   }
 
-  updateWorldMatrix(updateParent = true, updateChildren = true) {
+  computeWorldMatrix(updateParent = true, updateChildren = true) {
     if (updateParent && this.parent) {
-      this.parent.updateWorldMatrix(true, false)
+      this.parent.computeWorldMatrix(true, false)
     }
-    this.updateLocalMatrix()
+    this.computeLocalMatrix()
     if (this.parent) {
       this.#worldMatrix = this.parent.#worldMatrix.premul(this.#localMatrix)
     } else {
@@ -140,21 +140,21 @@ export class Object extends Listener {
     }
     if (updateChildren) {
       for (let i = 0; i < this.children.length; i++) {
-        this.children[i].updateWorldMatrix(false, true)
+        this.children[i].computeWorldMatrix(false, true)
       }
     }
   }
 
-  add(...objects) {
-    if (objects.length > 1) {
-      objects.forEach((obj) => this.add(obj))
+  add(...Nodes) {
+    if (Nodes.length > 1) {
+      Nodes.forEach((obj) => this.add(obj))
       return this
     }
 
-    if (objects.length === 0) return this
+    if (Nodes.length === 0) return this
 
-    const obj = objects[0]
-    if (obj && obj.isObject) {
+    const obj = Nodes[0]
+    if (obj && obj.isNode) {
       if (obj.parent !== this) {
         obj.removeFromParent()
         obj.parent = this
@@ -165,19 +165,19 @@ export class Object extends Listener {
     return this
   }
 
-  remove(...objects) {
-    if (objects.length > 1) {
-      objects.forEach((obj) => this.remove(obj))
+  remove(...Nodes) {
+    if (Nodes.length > 1) {
+      Nodes.forEach((obj) => this.remove(obj))
       return this
     }
-    if (objects.length === 0) return this
-    const object = objects[0]
-    if (object && object.isObject) {
-      const index = this.children.indexOf(object)
+    if (Nodes.length === 0) return this
+    const Node = Nodes[0]
+    if (Node && Node.isNode) {
+      const index = this.children.indexOf(Node)
       if (index !== -1) {
-        object.parent = null
+        Node.parent = null
         this.children.splice(index, 1)
-        object.dispatchEvent(_events.removed)
+        Node.dispatchEvent(_events.removed)
       }
     }
     return this
@@ -198,7 +198,7 @@ export class Object extends Listener {
   }
 
   lookAt(target, up = Vector3.up) {
-    if (target.isObject) target = target.worldPosition
+    if (target.isNode) target = target.worldPosition
 
     let m
     if (this.isCamera) m = M4.lookAt(this.worldPosition, target, up)
@@ -214,17 +214,17 @@ export class Object extends Listener {
   }
 
   localToWorld(vector) {
-    this.updateWorldMatrix(true, false)
+    this.computeWorldMatrix(true, false)
     return Vector3.mulMat(vector, this.#worldMatrix)
   }
 
   worldToLocal(vector) {
-    this.updateWorldMatrix(true, false)
+    this.computeWorldMatrix(true, false)
     return Vector3.mulMat(vector, M4.inv(this.#worldMatrix))
   }
 
   applyMatrix(matrix) {
-    this.updateLocalMatrix()
+    this.computeLocalMatrix()
     this.#localMatrix = matrix.premul(this.#localMatrix)
     M4.decompose(
       this.#localMatrix,
@@ -274,14 +274,14 @@ export class Object extends Listener {
   }
 
   static fromJSON(json, obj = null) {
-    if (!obj) obj = new Object()
+    if (!obj) obj = new Node()
     obj.name = json.name
     obj.position.set(...json.position)
     obj.quaternion.set(...json.quaternion)
     obj.scale.set(...json.scale)
 
     json.children.forEach((child) => {
-      obj.add(TRI.DeserializeObject(child))
+      obj.add(TRI.DeserializeNode(child))
     })
     return obj
   }
