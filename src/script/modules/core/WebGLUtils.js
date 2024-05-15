@@ -91,7 +91,6 @@ export function createUniformSetters(gl, program) {
 
 export function setAttribute(programInfo, attributeName, data) {
   const setter = programInfo.attribSetters
-  console.log(setter);
   if (attributeName in setter) {
     setter[attributeName](data)
   }
@@ -106,14 +105,12 @@ export function setAttributes(programInfo, attributes) {
 
 export function setUniform(programInfo, uniformName, data) {
     const setter = programInfo.uniformSetters
-    console.log(setter);
     if (uniformName in setter) {
       setter[uniformName](data)
     }
 }
 
 export function setUniforms(programInfo, uniforms) {
-    console.log(uniforms);
     for (const name in uniforms) {
         const shaderName = `u_${name}`;
         setUniform(programInfo, shaderName, uniforms[name])
