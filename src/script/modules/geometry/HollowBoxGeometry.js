@@ -12,7 +12,7 @@ export class HollowBoxGeometry extends BufferGeometry {
         this.width = width;
         this.height = height;
         this.depth = depth;
-        thickness < 0 ? -1 * thickness : thickness;
+        thickness < 0 ? 0 : thickness;
         const hw = width/2, hh = height/2, hd = depth/2;
         const vertices = new Float32Array([
             // Front face
@@ -102,7 +102,7 @@ export class HollowBoxGeometry extends BufferGeometry {
             -hw+thickness, hh-thickness,  hd-thickness,
         ]);
         this.setAttribute('position', new BufferAttribute(vertices, 3));
-        // this.calculateNormals();
+        // this.calculateNormals(); //TODO: hollow normals
     }
 
     get type() {
