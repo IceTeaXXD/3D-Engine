@@ -55,8 +55,8 @@ const obliqueCamera = new ObliqueCamera(
 // objectUtils(box)
 
 const tube = new Mesh(
-  new TubeGeometry(1, 1.2, 3, 10000, 1),
-  new BasicMaterial({ color: Color.blue() })
+  new TubeGeometry(1, 1.2, 3),
+  new BasicMaterial({ color: Color.black() })
 );
 scene.add(tube);
 cameraUtils(perspectiveCamera)
