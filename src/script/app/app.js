@@ -5,6 +5,7 @@ import { Mesh } from "../modules/core/Mesh.js"
 import { PlaneGeometry } from "../modules/geometry/PlaneGeometry.js"
 import { BoxGeometry } from "../modules/geometry/BoxGeometry.js"
 import { BasicMaterial } from "../modules/materials/BasicMaterial.js"
+import { ShaderMaterial } from "../modules/materials/ShaderMaterial.js"
 import { Color } from "../modules/materials/Color.js"
 import { ObliqueCamera } from "../modules/camera/ObliqueCamera.js"
 import { PerspectiveCamera } from "../modules/camera/PerspectiveCamera.js"
@@ -14,6 +15,7 @@ import { OrbitControl } from "../modules/camera/OrbitControl.js"
 import { HollowBoxGeometry } from "../modules/geometry/HollowBoxGeometry.js"
 import { PhongMaterial } from "../modules/materials/PhongMaterial.js"
 import { OrtographicCamera } from "../modules/camera/OrtographicCamera.js"
+import { TubeGeometry } from "../modules/geometry/TubeGeometry.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
@@ -30,17 +32,25 @@ plane.position.y = -300
 plane.scale.z = -2
 scene.add(plane)
 
-// const box = new Mesh(
-//   new BoxGeometry(1, 1, 1),
-//   new BasicMaterial({ color: Color.red() })
-// )
-// scene.add(box)
-const hollow_box = new Mesh(
-  new HollowBoxGeometry(2, 2, 2, 0.1),
-  new PhongMaterial({ color: Color.blue() })
+const box = new Mesh(
+  new BoxGeometry(10, 10, 10),
+  new PhongMaterial({})
 )
-scene.add(hollow_box)
-objectTransformations(hollow_box)
+scene.add(box)
+
+// const hollow_box = new Mesh(
+//   new HollowBoxGeometry(2, 2, 2, 0.1),
+//   new PhongMaterial({ color: Color.blue() })
+// )
+// scene.add(hollow_box)
+// objectTransformations(hollow_box)
+
+// const tube = new Mesh(
+//   new TubeGeometry(1, 1.1, 2),
+//   new PhongMaterial({ color: Color.black() })
+// )
+// scene.add(tube)
+// objectTransformations(tube)
 
 const cameras = {
   perspective: new PerspectiveCamera(

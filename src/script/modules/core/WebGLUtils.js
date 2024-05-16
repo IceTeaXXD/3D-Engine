@@ -30,18 +30,24 @@ export function createProgram(gl, vertexShader, fragmentShader) {
   }
 }
 
-export function createAttribSetter(gl, info, program) {
-  const loc = gl.getAttribLocation(program, info.name)
-  const buf = gl.createBuffer();
-    return (v) => {
-        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-        gl.enableVertexAttribArray(loc);
-        gl.bufferData(gl.ARRAY_BUFFER, v.data, gl.STATIC_DRAW);
-        gl.vertexAttribPointer(loc, v.size, v.dtype, v.normalize, v.stride, v.offset);
-    }
-}
-
+/**
+ * Create attribute setters for the program.
+ * @param {WebGLRenderingContext?} gl
+ * @param {WebGLProgram} program
+ * @returns {AttribSetters}
+ */
 export function createAttributSetters(gl, program) {
+  function createAttribSetter(info) {
+    const loc = gl.getAttribLocation(program, info.name)
+    const buf = gl.createBuffer();
+      return (v) => {
+          gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+          gl.enableVertexAttribArray(loc);
+          gl.bufferData(gl.ARRAY_BUFFER, v.data, gl.STATIC_DRAW);
+          gl.vertexAttribPointer(loc, v.size, v.dtype, v.normalize, v.stride, v.offset);
+      }
+  }
+
   const attribSetters = {}
   const numAttribs = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES)
   for (let i = 0; i < numAttribs; i++) {
@@ -49,12 +55,19 @@ export function createAttributSetters(gl, program) {
     if (!attribInfo) {
       break
     }
-    attribSetters[attribInfo.name] = createAttribSetter(gl, attribInfo, program)
+    attribSetters[attribInfo.name] = createAttribSetter(attribInfo)
   }
   return attribSetters
 }
 
-export function createUniformSetter(gl, info, program) {
+/**
+ * Create uniform setters from the program. 
+ * @param {WebGLRenderingContext?} gl
+ * @param {WebGLProgram} program
+ * @returns {UniformSetters} Uniform setter.
+ */
+export function createUniformSetters(gl, program) {
+  function createUniformSetter(info) {
     const loc = gl.getUniformLocation(program, info.name)
     const isArray = (info.size > 1 && info.name.substr(-3) === '[0]');
     const type = WebGLTypeSetter[info.type];
@@ -70,12 +83,10 @@ export function createUniformSetter(gl, info, program) {
                     gl[`uniform${type}`](loc, ...v);
                 else
                     gl[`uniform${type}`](loc, v);
-            }
-        }
-    };
-}
-
-export function createUniformSetters(gl, program) {
+              }
+          }
+      };
+  }
   const uniformSetters = {}
   const numUniforms = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS)
   for (let i = 0; i < numUniforms; i++) {
@@ -84,8 +95,9 @@ export function createUniformSetters(gl, program) {
       break
     }
     let name = (uniformInfo.name.substr(-3) === '[0]') ? uniformInfo.name.substr(0, uniformInfo.name.length - 3) : uniformInfo.name;
-    uniformSetters[name] = createUniformSetter(gl, uniformInfo, program);
+    uniformSetters[name] = createUniformSetter(uniformInfo);
   }
+  console.log(uniformSetters)
   return uniformSetters
 }
 
