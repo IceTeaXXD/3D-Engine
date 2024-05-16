@@ -8,10 +8,10 @@ import { BasicMaterial } from "../modules/materials/BasicMaterial.js"
 import { Color } from "../modules/materials/Color.js"
 import { ObliqueCamera } from "../modules/camera/ObliqueCamera.js"
 import { PerspectiveCamera } from "../modules/camera/PerspectiveCamera.js"
-import { BoxGeometry } from "../modules/geometry/BoxGeometry.js"
 import { cameraUtils } from "./utils/cameraUtils.js"
 import { objectUtils } from "./utils/objectUtils.js"
 import { OrbitControl } from "../modules/camera/OrbitControl.js"
+import { HollowBoxGeometry } from "../modules/geometry/HollowBoxGeometry.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
@@ -23,18 +23,11 @@ const plane = new Mesh(
   new BasicMaterial({ color: Color.green() })
 )
 
-const box = new Mesh(
-  new BoxGeometry(500, 500),
-  new BasicMaterial( {color: Color.black()})
-)
 
 const scene = new Scene()
 plane.position.y = -300
 plane.scale.z = -2
-box.position.y = -150
-box.scale.z = -1
 scene.add(plane)
-scene.add(box)
 
 const perspectiveCamera = new PerspectiveCamera(
   60,
@@ -53,14 +46,20 @@ const obliqueCamera = new ObliqueCamera(
   45
 )
 
-const box = new Mesh(
-  new BoxGeometry(1, 1, 1),
-  new BasicMaterial({ color: Color.red() })
+// const box = new Mesh(
+//   new BoxGeometry(1, 1, 1),
+//   new BasicMaterial({ color: Color.red() })
+// )
+// scene.add(box)
+const hollow_box = new Mesh(
+  new HollowBoxGeometry(2, 2, 2, 0.1),
+  new BasicMaterial( {color: Color.blue()})
 )
-scene.add(box)
+scene.add(hollow_box)
+objectUtils(hollow_box)
 
 cameraUtils(perspectiveCamera)
-objectUtils(box)
+// objectUtils(box)
 const cameraControl = new OrbitControl(perspectiveCamera, canvas)
 
 function render() {
