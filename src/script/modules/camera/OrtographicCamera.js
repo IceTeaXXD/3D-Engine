@@ -1,7 +1,7 @@
 import { M4 } from "../math/Matrix4.js"
 import { Camera } from "./Camera.js"
 
-export class OrthographicCamera extends Camera {
+export class OrtographicCamera extends Camera {
   top
   bottom
   left
@@ -38,6 +38,6 @@ export class OrthographicCamera extends Camera {
       (d[3] + d[1]) / 2
     ]
 
-    this.projectionMatrix = M4.orthographic(...edge, this.near, this.far)
+    this.projectionMatrix = M4.ortographic(...edge, this.near, this.far)
   }
 }

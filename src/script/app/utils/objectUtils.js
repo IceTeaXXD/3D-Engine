@@ -1,4 +1,4 @@
-export function objectUtils(object) {
+export function objectTransformations(object) {
   var rotateX = document.getElementById("rotateX")
   var rotateY = document.getElementById("rotateY")
   var rotateZ = document.getElementById("rotateZ")

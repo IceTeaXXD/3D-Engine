@@ -10,7 +10,7 @@ export class ObliqueCamera extends Camera {
   far
   angle
 
-  constructor(top, bottom, left, right, near, far, angle) {
+  constructor(top, bottom, left, right, near, far, theta, phi) {
     super()
     this.top = top
     this.bottom = bottom
@@ -18,7 +18,8 @@ export class ObliqueCamera extends Camera {
     this.right = right
     this.near = near
     this.far = far
-    this.angle = angle
+    this.theta = theta
+    this.phi = phi
     this.computeProjectionMatrix()
   }
 
@@ -43,7 +44,8 @@ export class ObliqueCamera extends Camera {
       ...edge,
       this.near,
       this.far,
-      this.angle,
+      this.theta,
+      this.phi,
       0.5
     )
   }
