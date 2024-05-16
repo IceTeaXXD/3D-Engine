@@ -19,7 +19,7 @@ import { TubeGeometry } from "../modules/geometry/TubeGeometry.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
-canvas.style.backgroundColor = "white"
+canvas.style.backgroundColor = "black"
 const gl = new WebGLRenderer(canvas)
 
 const plane = new Mesh(
@@ -33,10 +33,11 @@ plane.scale.z = -2
 scene.add(plane)
 
 const box = new Mesh(
-  new BoxGeometry(10, 10, 10),
+  new BoxGeometry(2, 2, 2),
   new PhongMaterial({})
 )
 scene.add(box)
+objectTransformations(box)
 
 // const hollow_box = new Mesh(
 //   new HollowBoxGeometry(2, 2, 2, 0.1),
