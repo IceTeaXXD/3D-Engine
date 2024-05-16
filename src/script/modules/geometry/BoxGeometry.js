@@ -1,3 +1,4 @@
+
 import { BufferAttribute, BufferGeometry } from "./index.js";
 
 export class BoxGeometry extends BufferGeometry {

@@ -1,3 +1,5 @@
 export * from "./BufferAttribute.js"
 export * from "./BufferGeometry.js"
 export * from "./PlaneGeometry.js"
+export * from "./BoxGeometry.js"
+export * from "./HollowBoxGeometry.js"
