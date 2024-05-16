@@ -67,49 +67,6 @@ export class HollowBoxGeometry extends BufferGeometry {
             inhw, -inhh, hd,
             0, -hh, hd,
             hw, -hh, hd,
-
-            // // Inner part
-            // //// Right
-            // hw, hh,  inhd,
-            // hw, 0, inhd,
-            // inhw, inhh, inhd,
-            // inhw, inhh, inhd,
-            // hw, 0, inhd,
-            // inhw, -inhh, inhd,
-            // inhw, -inhh, inhd,
-            // hw, 0, inhd,
-            // hw, -hh,  inhd,
-            // //// Left
-            // -inhw, inhh, inhd,
-            // -hw, 0, inhd,
-            // -hw, hh,  inhd,
-            // -inhw, -inhh, inhd,
-            // -hw, 0, inhd,
-            // -inhw, inhh, inhd,
-            // -hw, -hh,  inhd,
-            // -hw, 0, inhd,
-            // -inhw, -inhh, inhd,
-            // //// Top
-            // -hw, hh, inhd,
-            // 0, hh, inhd,
-            // -inhw, inhh, inhd,
-            // -inhw, inhh, inhd,
-            // 0, hh, inhd,
-            // inhw, inhh, inhd,
-            // inhw, inhh, inhd,
-            // 0, hh, inhd,
-            // hw, hh, inhd,
-            // //// Bottom
-            // -inhw, -inhh, inhd,
-            // 0, -hh, inhd,
-            // -hw, -hh, inhd,
-            // inhw, -inhh, inhd,
-            // 0, -hh, inhd,
-            // -inhw, -inhh, inhd,
-            // hw, -hh, inhd,
-            // 0, -hh, inhd,
-            // inhw, -inhh, inhd,
-
             // Hole part
             //// Top
             -inhw, inhh, inhd,
@@ -181,48 +138,6 @@ export class HollowBoxGeometry extends BufferGeometry {
             inhw, inhh, -hd,
             0, hh, -hd,
             hw, hh, -hd,
-            // Inner part
-            // //// Left
-            // -hw, hh,  -inhd,
-            // -hw, 0, -inhd,
-            // -inhw, inhh, -inhd,
-            // -inhw, inhh, -inhd,
-            // -hw, 0, -inhd,
-            // -inhw, -inhh, -inhd,
-            // -inhw, -inhh, -inhd,
-            // -hw, 0, -inhd,
-            // -hw, -hh,  -inhd,
-            // //// Bottom
-            // -hw, -hh, -inhd,
-            // 0, -hh, -inhd,
-            // -inhw, -inhh, -inhd,
-            // -inhw, -inhh, -inhd,
-            // 0, -hh, -inhd,
-            // inhw, -inhh, -inhd,
-            // inhw, -inhh, -inhd,
-            // 0, -hh, -inhd,
-            // hw, -hh, -inhd,
-            // //// Right
-            // inhw, inhh, -inhd,
-            // hw, 0, -inhd,
-            // hw, hh,  -inhd,
-            // inhw, -inhh, -inhd,
-            // hw, 0, -inhd,
-            // inhw, inhh, -inhd,
-            // hw, -hh,  -inhd,
-            // hw, 0, -inhd,
-            // inhw, -inhh, -inhd,
-            // //// Top
-            // -inhw, inhh, -inhd,
-            // 0, hh, -inhd,
-            // -hw, hh, -inhd,
-            // inhw, inhh, -inhd,
-            // 0, hh, -inhd,
-            // -inhw, inhh, -inhd,
-            // hw, hh, -inhd,
-            // 0, hh, -inhd,
-            // inhw, inhh, -inhd,
-            // Hole part
             //// Top
             inhw, inhh, -hd,    
             inhw, inhh, -inhd,
@@ -293,8 +208,6 @@ export class HollowBoxGeometry extends BufferGeometry {
             hw, -hh, hd,
             hw, -hh, 0,
             hw, -inhh, inhd,
-            // Inner part
-            //// TODO?
             // Hole part
             //// Top
             inhw, inhh, inhd,
@@ -366,8 +279,6 @@ export class HollowBoxGeometry extends BufferGeometry {
             -hw, -inhh, inhd,
             -hw, -hh, 0,
             -hw, -hh, hd,
-            // Inner part
-            //// TODO?
             // Hole part
             //// Top
             -hw, inhh, inhd,    
@@ -439,8 +350,6 @@ export class HollowBoxGeometry extends BufferGeometry {
             -inhw, hh, inhd,
             -hw, hh, 0,
             -hw, hh, hd,
-            // Inner
-            //// TODO ?
             // Hole part
             //// Top
             -inhw, inhh, -inhd,
@@ -512,8 +421,6 @@ export class HollowBoxGeometry extends BufferGeometry {
             -hw, -hh, hd,
             -hw, -hh, 0,
             -inhw, -hh, inhd,
-            // Inner
-            //// TODO ?
             // Hole part
             //// Top
             inhw, -hh, -inhd,
