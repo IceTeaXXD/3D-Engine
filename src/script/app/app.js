@@ -6,8 +6,12 @@ import { PlaneGeometry } from "../modules/geometry/PlaneGeometry.js"
 import { BoxGeometry } from "../modules/geometry/BoxGeometry.js"
 import { BasicMaterial } from "../modules/materials/BasicMaterial.js"
 import { Color } from "../modules/materials/Color.js"
+import { ObliqueCamera } from "../modules/camera/ObliqueCamera.js"
 import { PerspectiveCamera } from "../modules/camera/PerspectiveCamera.js"
 import { BoxGeometry } from "../modules/geometry/BoxGeometry.js"
+import { cameraUtils } from "./utils/cameraUtils.js"
+import { objectUtils } from "./utils/objectUtils.js"
+import { OrbitControl } from "../modules/camera/OrbitControl.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
@@ -32,40 +36,36 @@ box.scale.z = -1
 scene.add(plane)
 scene.add(box)
 
-const camera = new PerspectiveCamera(
+const perspectiveCamera = new PerspectiveCamera(
   60,
   canvas.clientWidth / canvas.clientHeight,
   0.01,
   9999
 )
-camera.position.z = 700
+
+const obliqueCamera = new ObliqueCamera(
+  -canvas.clientWidth / 2,
+  canvas.clientWidth / 2,
+  canvas.clientHeight / 2,
+  -canvas.clientHeight / 2,
+  -1000,
+  1000,
+  45
+)
 
 const box = new Mesh(
-  new BoxGeometry(100, 100, 100),
+  new BoxGeometry(1, 1, 1),
   new BasicMaterial({ color: Color.red() })
 )
-box.position.set(0, 150, 100)
 scene.add(box)
 
-let direction = 1;
+cameraUtils(perspectiveCamera)
+objectUtils(box)
+const cameraControl = new OrbitControl(perspectiveCamera, canvas)
+
 function render() {
   requestAnimationFrame(render)
-
-  // Update box position
-  box.position.x += direction;
-  box.position.y += direction;
-  box.position.z += direction;
-
-  // Check if box position hits 100, 150, 100
-  if (box.position.x >= 50 && box.position.y >= 50 && box.position.z >= 50) {
-    direction = -1;
-  }
-
-  // Check if box position hits 0, 0, 0
-  if (box.position.x <= 0 && box.position.y <= 0 && box.position.z <= 0) {
-    direction = 1;
-  }
-
-  gl.render(scene, camera)
+  cameraControl.update()
+  gl.render(scene, perspectiveCamera)
 }
-// render()
+render()

@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <h6>Radius</h6>
-                <input type="range" min="0" max="100" step="1" value="10" id="radiusCamera" />
+                <input type="range" min="1" max="50" step="1" value="25" id="radiusCamera" />
             </div>
             <h5>Mapping</h5>
             <div class="dropdown">
@@ -47,32 +47,32 @@
         <canvas id="canvas"></canvas>
         <div class="toolbar-2">
             <h4>Transformation</h4>
-            <h5>Angle</h5>
+            <h5>Rotation</h5>
             <div class="grid">
                 <h6>X</h6>
-                <input type="range" min="0" max="360" step="5" value="0" id="rotateX" />
+                <input type="range" min="0" max="90" step="1" value="0" id="rotateX" />
                 <h6>Y</h6>
-                <input type="range" min="0" max="360" step="5" value="0" id="rotateY" />
+                <input type="range" min="0" max="90" step="1" value="0" id="rotateY" />
                 <h6>Z</h6>
-                <input type="range" min="0" max="360" step="5" value="0" id="rotateZ" />
+                <input type="range" min="0" max="90" step="1" value="0" id="rotateZ" />
             </div>
             <h5>Scale</h5>
             <div class="grid">
                 <h6>X</h6>
-                <input type="range" min="0" max="100" step="1" value="10" id="scaleX" />
+                <input type="range" min="1" max="10" step="1" value="5" id="scaleX" />
                 <h6>Y</h6>
-                <input type="range" min="0" max="100" step="1" value="10" id="scaleY" />
+                <input type="range" min="1" max="10" step="1" value="5" id="scaleY" />
                 <h6>Z</h6>
-                <input type="range" min="0" max="100" step="1" value="10" id="scaleZ" />
+                <input type="range" min="1" max="10" step="1" value="5" id="scaleZ" />
             </div>
             <h5>Translate</h5>
             <div class="grid">
                 <h6>X</h6>
-                <input type="range" min="-100" max="100" step="1" value="0" id="rotateX" />
+                <input type="range" min="-10" max="10" step="1" value="0" id="translateX" />
                 <h6>Y</h6>
-                <input type="range" min="-100" max="100" step="1" value="0" id="rotateY" />
+                <input type="range" min="-10" max="10" step="1" value="0" id="translateY" />
                 <h6>Z</h6>
-                <input type="range" min="-100" max="100" step="1" value="0" id="rotateZ" />
+                <input type="range" min="-10" max="10" step="1" value="0" id="translateZ" />
             </div>
         </div>
     </div>
