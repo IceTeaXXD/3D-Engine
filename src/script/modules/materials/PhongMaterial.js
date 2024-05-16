@@ -2,15 +2,16 @@ import { Color } from "./Color.js"
 import { ShaderMaterial } from "./ShaderMaterial.js"
 import phongFrag from "./shaders/phong.frag.js"
 import phongVert from "./shaders/phong.vert.js"
+import { Vector3 } from "../math/Vector3.js"
 
 export class PhongMaterial extends ShaderMaterial {
   /**
    * Creates an instance of PhongMaterial.
-   * @param {{name: string, ambient: Color, diffuse: Color, specular: Color, shininess: number}} options
+   * @param {{name: string, ambient: Color, diffuse: Color, specular: Color, shininess: number, lightPosition: Vector3}} options
    * @memberof PhongMaterial
    */
   constructor(options = {}) {
-    const { name, ambient, diffuse, specular, shininess } = options
+    const { name, ambient, diffuse, specular, shininess, lightPosition } = options
     super({
       name,
       vertexShader: phongVert,
@@ -19,7 +20,8 @@ export class PhongMaterial extends ShaderMaterial {
         ambient: ambient || Color.white(),
         diffuse: diffuse || Color.white(),
         specular: specular || Color.white(),
-        shininess: shininess || 30
+        shininess: shininess || 30,
+        lightPosition: lightPosition || new Vector3(20,100, 300)
       }
     })
   }
@@ -50,6 +52,15 @@ export class PhongMaterial extends ShaderMaterial {
 
   set shininess(val) {
     this.uniforms["shininess"] = val
+  }
+
+  /** @type {Vector3} */
+  get lightPosition() {
+    return this.uniforms["lightPosition"]
+  }
+
+  set lightPosition(val) {
+    this.uniforms["lightPosition"] = val
   }
 
   get type() {
