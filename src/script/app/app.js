@@ -8,6 +8,7 @@ import { Color } from "../modules/materials/Color.js"
 import { ObliqueCamera } from "../modules/camera/ObliqueCamera.js"
 import { PerspectiveCamera } from "../modules/camera/PerspectiveCamera.js"
 import { BoxGeometry } from "../modules/geometry/BoxGeometry.js"
+import { TubeGeometry } from "../modules/geometry/TubeGeometry.js"
 import { cameraUtils } from "./utils/cameraUtils.js"
 import { objectUtils } from "./utils/objectUtils.js"
 import { OrbitControl } from "../modules/camera/OrbitControl.js"
@@ -44,14 +45,23 @@ const obliqueCamera = new ObliqueCamera(
   45
 )
 
-const box = new Mesh(
-  new BoxGeometry(1, 1, 1),
-  new BasicMaterial({ color: Color.red() })
-)
-scene.add(box)
+// const box = new Mesh(
+//   new BoxGeometry(1, 1, 1),
+//   new BasicMaterial({ color: Color.red() })
+// )
+// scene.add(box)
 
+// cameraUtils(perspectiveCamera)
+// objectUtils(box)
+
+const tube = new Mesh(
+  new TubeGeometry(1, 1.2, 3, 10000, 1),
+  new BasicMaterial({ color: Color.blue() })
+);
+scene.add(tube);
 cameraUtils(perspectiveCamera)
-objectUtils(box)
+objectUtils(tube)
+
 const cameraControl = new OrbitControl(perspectiveCamera, canvas)
 
 function render() {
