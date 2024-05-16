@@ -309,8 +309,9 @@ export class M4 extends Matrix {
     ])
   }
 
-  static oblique(left, right, bottom, top, near, far, angle, scale = 0.5) {
-    angle *= DEGTORAD
+  static oblique(left, right, bottom, top, near, far, theta, phi, scale = 0.5) {
+    const radTheta = theta * DEGTORAD
+    const radPhi = phi * DEGTORAD
     return M4.premul(
       M4.ortographic(left, right, bottom, top, near, far),
       new M4([
@@ -322,8 +323,8 @@ export class M4 extends Matrix {
         1,
         0,
         0,
-        -scale * Math.cos(angle),
-        scale * Math.sin(angle),
+        -scale * Math.cos(radTheta),
+        scale * Math.sin(radPhi),
         1,
         0,
         0,

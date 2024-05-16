@@ -14,6 +14,7 @@ export class PerspectiveCamera extends Camera {
     this.near = near
     this.far = far
     this.computeProjectionMatrix()
+    this.position.z = 25
   }
 
   get type() {

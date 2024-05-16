@@ -23,13 +23,13 @@
             <h5>Camera Controls</h5>
             <div class="grid">
                 <h6>Projection</h6>
-                <div class="dropdown">
-                    <button class="dropbtn" id="projectionButton">Perspective</button>
-                    <div class="dropdown-content">
-                        <a onclick="setProjection('Perspective')">Perspective</a>
-                        <a onclick="setProjection('Orthographic')">Orthographic</a>
-                        <a onclick="setProjection('Oblique')">Oblique</a>
-                    </div>
+                <!-- dropdown -->
+                <div class="input">
+                    <select id="projection-type">
+                        <option value="perspective">Perspective</option>
+                        <option value="ortographic">Ortographic</option>
+                        <option value="oblique">Oblique</option>
+                    </select>
                 </div>
                 <h6>Radius</h6>
                 <input type="range" min="1" max="50" step="1" value="25" id="radiusCamera" />
