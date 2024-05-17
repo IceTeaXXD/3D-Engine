@@ -18,6 +18,7 @@ import { OrtographicCamera } from "../modules/camera/OrtographicCamera.js"
 import { TubeGeometry } from "../modules/geometry/TubeGeometry.js"
 import { DEGTORAD } from "../modules/math/index.js"
 import { saveUtil } from "./utils/saveUtils.js"
+import { HollowPrismGeometry } from "../modules/geometry/HollowPrismGeometry.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
@@ -36,19 +37,17 @@ plane.position.y = -300
 plane.scale.z = -2
 scene.add(plane)
 
+// const box = new Mesh(
+//   new BoxGeometry(1, 1, 1),
+//   new BasicMaterial({ color: Color.red() })
+// )
+// scene.add(box)
 const hollow_box = new Mesh(
-  new HollowBoxGeometry(2, 2, 2, 0.2),
-  new PhongMaterial({})
+  new HollowBoxGeometry(2, 2, 2, 0.1),
+  new PhongMaterial({ color: Color.blue() })
 )
 scene.add(hollow_box)
 objectTransformations(hollow_box)
-console.log(hollow_box.scale)
-
-const box = new Mesh(
-  new BoxGeometry(2, 2, 2),
-  new BasicMaterial({ color: Color.red() })
-)
-scene.add(box)
 
 const cameras = {
   perspective: new PerspectiveCamera(
