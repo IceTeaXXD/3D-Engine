@@ -14,6 +14,7 @@ import { OrbitControl } from "../modules/camera/OrbitControl.js"
 import { HollowBoxGeometry } from "../modules/geometry/HollowBoxGeometry.js"
 import { PhongMaterial } from "../modules/materials/PhongMaterial.js"
 import { OrtographicCamera } from "../modules/camera/OrtographicCamera.js"
+import { HollowPrismGeometry } from "../modules/geometry/HollowPrismGeometry.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
@@ -35,12 +36,18 @@ scene.add(plane)
 //   new BasicMaterial({ color: Color.red() })
 // )
 // scene.add(box)
-const hollow_box = new Mesh(
-  new HollowBoxGeometry(2, 2, 2, 0.1),
+const hollow_prism = new Mesh(
+  new HollowPrismGeometry(2,2,2,0.3,50),
   new PhongMaterial({ color: Color.blue() })
 )
-scene.add(hollow_box)
-objectTransformations(hollow_box)
+scene.add(hollow_prism)
+objectTransformations(hollow_prism)
+// const hollow_box = new Mesh(
+//   new HollowBoxGeometry(2,2,2,0.1),
+//   new PhongMaterial({ color: Color.blue() })
+// )
+// scene.add(hollow_box)
+// objectTransformations(hollow_box)
 
 const cameras = {
   perspective: new PerspectiveCamera(
