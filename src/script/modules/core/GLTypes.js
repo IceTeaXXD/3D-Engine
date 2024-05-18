@@ -43,5 +43,6 @@ export const WebGLTypeSetter = {
   [WebGLRenderingContext.BOOL_VEC4]: "4i",
   [WebGLRenderingContext.FLOAT_MAT2]: "Matrix2fv",
   [WebGLRenderingContext.FLOAT_MAT3]: "Matrix3fv",
-  [WebGLRenderingContext.FLOAT_MAT4]: "Matrix4fv"
+  [WebGLRenderingContext.FLOAT_MAT4]: "Matrix4fv",
+  [WebGLRenderingContext.SAMPLER_2D]: "1i"
 }

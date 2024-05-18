@@ -53,6 +53,51 @@ export class BoxGeometry extends BufferGeometry {
             -hw, hh,  hd
         ]);
         this.setAttribute('position', new BufferAttribute(vertices, 3));
+        const textureCoordinates = new Float32Array([
+            // Front face
+            0.0, 1.0,
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 1.0,
+            1.0, 0.0,
+            // Back face
+            0.0, 1.0,
+            1.0, 0.0,
+            0.0, 0.0,
+            1.0, 1.0,
+            1.0, 0.0,
+            0.0, 1.0,
+            // Top face
+            0.0, 1.0,
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 1.0,
+            1.0, 0.0,
+            // Bottom face
+            0.0, 1.0,
+            1.0, 1.0,
+            1.0, 0.0,
+            0.0, 0.0,
+            0.0, 1.0,
+            1.0, 0.0,
+            // Right face
+            0.0, 0.0,
+            1.0, 1.0,
+            1.0, 0.0,
+            0.0, 0.0,
+            0.0, 1.0,
+            1.0, 1.0,
+            // Left face
+            0.0, 0.0,
+            1.0, 1.0,
+            0.0, 1.0,
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0
+        ]);
+        this.setAttribute('textureCoord', new BufferAttribute(textureCoordinates, 2));
         this.calculateNormals();
     }
 
