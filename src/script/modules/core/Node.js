@@ -1,4 +1,3 @@
-import { Listener } from "./Listener.js"
 import { Vector3, Quaternion, M4 } from "../math/index.js"
 
 const _events = {
@@ -15,7 +14,7 @@ const _v1 = new Vector3(),
   _zAxis = new Vector3(0, 0, 1)
 const _q1 = new Quaternion()
 
-export class Node extends Listener {
+export class Node {
   /** @type {Vector3} */
   #position
   /** @type {Vector3} */
@@ -37,7 +36,6 @@ export class Node extends Listener {
   visible = true
 
   constructor() {
-    super()
     /** @type {string} */
     this.name = ""
     /** @type {Node} */
@@ -163,7 +161,6 @@ export class Node extends Listener {
         obj.parent = this
       }
       this.children.push(obj)
-      obj.dispatchEvent(_events.added)
     }
     return this
   }
@@ -267,25 +264,19 @@ export class Node extends Listener {
 
   toJSON() {
     return {
-      name: this.name,
+      type: this.type,
       position: this.position.toJSON(),
       quaternion: this.quaternion.toJSON(),
       scale: this.scale.toJSON(),
-      type: this.type,
       children: this.children.map((child) => child.toJSON())
     }
   }
 
   static fromJSON(json, obj = null) {
     if (!obj) obj = new Node()
-    obj.name = json.name
     obj.position.set(...json.position)
     obj.quaternion.set(...json.quaternion)
     obj.scale.set(...json.scale)
-
-    json.children.forEach((child) => {
-      obj.add(TRI.DeserializeNode(child))
-    })
     return obj
   }
 }

@@ -60,8 +60,8 @@ export class BoxGeometry extends BufferGeometry {
         return "BoxGeometry";
     }
 
-    toJson() {
-        const data = super.toJson();
+    toJSON() {
+        const data = super.toJSON();
         delete data.attributes.position;
         return {
             ...data,

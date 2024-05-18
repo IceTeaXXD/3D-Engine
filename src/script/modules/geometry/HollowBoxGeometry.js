@@ -460,7 +460,7 @@ export class HollowBoxGeometry extends BufferGeometry {
     }
 
     toJSON() {
-        const data = super.toJson();
+        const data = super.toJSON();
         delete data.attributes.position;
         return {
             ...data,

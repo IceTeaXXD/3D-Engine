@@ -15,12 +15,13 @@ export class BufferAttribute {
   offset = 0
 
   constructor(data, size, options = {}) {
+    const { dtype, normalize, stride, offset } = options
     this.#data = new Float32Array(data)
     this.#size = size
-    this.#dtype = options.dtype || this.#dtype
-    this.normalize = options.normalize || this.normalize
-    this.stride = options.stride || this.stride
-    this.offset = options.offset || this.offset
+    this.#dtype = dtype || this.#dtype
+    this.normalize = normalize || this.normalize
+    this.stride = stride || this.stride
+    this.offset = offset || this.offset
   }
 
   get data() {
@@ -64,21 +65,19 @@ export class BufferAttribute {
     }
   }
 
-  convertToJson() {
+  toJSON() {
     return {
       data: Array.from(this.#data),
       type: this.type,
       size: this.#size,
-      options: {
-        ...(this.dtype !== WebGLTypes.FLOAT ? { dtype: this.dtype } : {}),
-        ...(this.normalize ? { normalize: this.normalize } : {}),
-        ...(this.stride ? { stride: this.stride } : {}),
-        ...(this.offset ? { offset: this.offset } : {})
-      }
+      dtype: this.#dtype !== WebGLTypes.FLOAT ? this.#dtype : {},
+      normalize: this.normalize ? this.normalize : {},
+      stride: this.stride ? this.stride : {},
+      offset: this.offset ? this.offset : {}
     }
   }
 
-  static convertFromJson(json, obj = null) {
+  static fromJSON(json, obj = null) {
     if (!obj) {
       obj = new BufferAttribute(
         new Float32Array(json.data),

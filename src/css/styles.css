@@ -119,6 +119,20 @@ canvas {
     background: #DFFC8A;
 }
 
+.component {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.component.active {
+    background-color: #ddd;
+}
+
+.component-tree {
+    max-height: 200px; /* Adjust as needed */
+    overflow-y: auto;
+}
+
 @media screen and (min-width:800px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);

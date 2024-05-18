@@ -68,7 +68,7 @@ export class PhongMaterial extends ShaderMaterial {
   }
 
   toJSON() {
-    const { vertexShader, fragmentShader, ...other } = super.toJson()
+    const { vertexShader, fragmentShader, ...other } = super.toJSON()
     return {
       ...other,
       type: this.type

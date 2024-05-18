@@ -1,5 +1,4 @@
 export * from "./GLTypes.js"
-export * from "./Listener.js"
 export * from "./Node.js"
 export * from "./Scene.js"
 export * from "./WebGLRenderer.js"

@@ -1,7 +1,4 @@
-import { Listener } from "../core/Listener.js"
-import { BufferAttribute } from "../geometry/BufferAttribute.js"
-
-export class Vector3 extends Listener {
+export class Vector3 {
   /** @type {number} */
   #x
   /** @type {number} */
@@ -10,7 +7,6 @@ export class Vector3 extends Listener {
   #z
 
   constructor(x = 0, y = 0, z = 0) {
-    super()
     this.set(x, y, z)
   }
 
@@ -20,7 +16,6 @@ export class Vector3 extends Listener {
 
   set x(value) {
     this.#x = value
-    this.dispatchEvent({ type: "change", target: this })
   }
 
   get y() {
@@ -29,7 +24,6 @@ export class Vector3 extends Listener {
 
   set y(value) {
     this.#y = value
-    this.dispatchEvent({ type: "change", target: this })
   }
 
   get z() {
@@ -38,18 +32,12 @@ export class Vector3 extends Listener {
 
   set z(value) {
     this.#z = value
-    this.dispatchEvent({ type: "change", target: this })
-  }
-
-  set onChange(callback) {
-    this.addEventListener("change", callback)
   }
 
   set(x = 0, y = 0, z = 0) {
     this.#x = x
     this.#y = y
     this.#z = z
-    this.dispatchEvent({ type: "change", target: this })
     return this
   }
 

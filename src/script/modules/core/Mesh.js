@@ -28,8 +28,8 @@ export class Mesh extends Node {
   toJSON() {
     return {
       ...super.toJSON(),
-      geometry: this.geometry.toJson(),
-      material: this.material.toJson(),
+      geometry: this.geometry.toJSON(),
+      material: this.material.toJSON(),
       type: this.type
     }
   }

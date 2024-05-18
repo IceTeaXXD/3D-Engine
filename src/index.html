@@ -1,97 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3D WebGL</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter"
+      rel="stylesheet"
+    />
     <script type="module" src="script/app/app.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <h1>3D WebGL</h1>
     <div class="row">
-        <div class="toolbar-1">
-            <h4>Component Tree</h4>
-            <div class="component-tree"></div>
-            <div class="grid">
-                <h6>Animation</h6>
-                <button class="onoffButton" id="animation">ON</button>
-                <h6>Shading</h6>
-                <button class="onoffButton" id="shading">ON</button>
-            </div>
-            <h5>Camera Controls</h5>
-            <div class="grid">
-                <h6>Projection</h6>
-                <!-- dropdown -->
-                <div class="input">
-                    <select id="projection-type">
-                        <option value="perspective">Perspective</option>
-                        <option value="ortographic">Ortographic</option>
-                        <option value="oblique">Oblique</option>
-                    </select>
-                </div>
-                <h6>Radius</h6>
-                <input type="range" min="1" max="50" step="1" value="25" id="radiusCamera" />
-            </div>
-            <h5>Mapping</h5>
-            <div class="dropdown">
-                <button class="dropbtn" id="mappingButton">Texture</button>
-                <div class="dropdown-content">
-                    <a onclick="setMapping('Texture')">Texture</a>
-                    <a onclick="setMapping('Environment')">Environment</a>
-                    <a onclick="setMapping('Bump')">Bump</a>
-                </div>
-            </div>
+      <div class="toolbar-1">
+        <h4>Component Tree</h4>
+        <div class="component-tree">
+          <!-- <div class="component" id="component1">Component 1</div> -->
         </div>
-        <canvas id="canvas"></canvas>
-        <div class="toolbar-2">
-            <h4>Transformation</h4>
-            <h5>Rotation</h5>
-            <div class="grid">
-                <h6>X</h6>
-                <input type="range" min="0" max="90" step="1" value="0" id="rotateX" />
-                <h6>Y</h6>
-                <input type="range" min="0" max="90" step="1" value="0" id="rotateY" />
-                <h6>Z</h6>
-                <input type="range" min="0" max="90" step="1" value="0" id="rotateZ" />
-            </div>
-            <h5>Scale</h5>
-            <div class="grid">
-                <h6>X</h6>
-                <input type="range" min="1" max="10" step="1" value="5" id="scaleX" />
-                <h6>Y</h6>
-                <input type="range" min="1" max="10" step="1" value="5" id="scaleY" />
-                <h6>Z</h6>
-                <input type="range" min="1" max="10" step="1" value="5" id="scaleZ" />
-            </div>
-            <h5>Translate</h5>
-            <div class="grid">
-                <h6>X</h6>
-                <input type="range" min="-10" max="10" step="1" value="0" id="translateX" />
-                <h6>Y</h6>
-                <input type="range" min="-10" max="10" step="1" value="0" id="translateY" />
-                <h6>Z</h6>
-                <input type="range" min="-10" max="10" step="1" value="0" id="translateZ" />
-            </div>
+        <div class="grid">
+          <h6>Animation</h6>
+          <button class="onoffButton" id="animation">ON</button>
+          <h6>Shading</h6>
+          <button class="onoffButton" id="shading">ON</button>
         </div>
+        <h5>Camera Controls</h5>
+        <div class="grid">
+          <h6>Projection</h6>
+          <!-- dropdown -->
+          <div class="input">
+            <select id="projection-type">
+              <option value="perspective">Perspective</option>
+              <option value="ortographic">Ortographic</option>
+              <option value="oblique">Oblique</option>
+            </select>
+          </div>
+          <h6>Radius</h6>
+          <input
+            type="range"
+            min="1"
+            max="50"
+            step="1"
+            value="25"
+            id="radiusCamera"
+          />
+        </div>
+        <h5>Mapping</h5>
+        <div class="dropdown">
+          <button class="dropbtn" id="mappingButton">Texture</button>
+          <div class="dropdown-content">
+            <a onclick="setMapping('Texture')">Texture</a>
+            <a onclick="setMapping('Environment')">Environment</a>
+            <a onclick="setMapping('Bump')">Bump</a>
+          </div>
+        </div>
+      </div>
+      <canvas id="canvas"></canvas>
+      <div class="toolbar-2">
+        <h4>Transformation</h4>
+        <h5>Rotation</h5>
+        <div class="grid">
+          <h6>X</h6>
+          <input
+            type="range"
+            min="0"
+            max="90"
+            step="1"
+            value="0"
+            id="rotateX"
+          />
+          <h6>Y</h6>
+          <input
+            type="range"
+            min="0"
+            max="90"
+            step="1"
+            value="0"
+            id="rotateY"
+          />
+          <h6>Z</h6>
+          <input
+            type="range"
+            min="0"
+            max="90"
+            step="1"
+            value="0"
+            id="rotateZ"
+          />
+        </div>
+        <h5>Scale</h5>
+        <div class="grid">
+          <h6>X</h6>
+          <input type="range" min="1" max="10" step="1" value="5" id="scaleX" />
+          <h6>Y</h6>
+          <input type="range" min="1" max="10" step="1" value="5" id="scaleY" />
+          <h6>Z</h6>
+          <input type="range" min="1" max="10" step="1" value="5" id="scaleZ" />
+        </div>
+        <h5>Translate</h5>
+        <div class="grid">
+          <h6>X</h6>
+          <input
+            type="range"
+            min="-10"
+            max="10"
+            step="1"
+            value="0"
+            id="translateX"
+          />
+          <h6>Y</h6>
+          <input
+            type="range"
+            min="-10"
+            max="10"
+            step="1"
+            value="0"
+            id="translateY"
+          />
+          <h6>Z</h6>
+          <input
+            type="range"
+            min="-10"
+            max="10"
+            step="1"
+            value="0"
+            id="translateZ"
+          />
+        </div>
+      </div>
     </div>
     <div class="toolbar-3">
-        <div class="column file-column">
-            <h4>File</h4>
-                <button class="button">Save</button>
-                <button class="button">Load</button>
-        </div>
+      <div class="column file-column">
+        <h4>File</h4>
+        <button class="button">Save</button>
+        <button class="button">Load</button>
+      </div>
     </div>
-    
+
     <script type="module" src="./script/app/app.js"></script>
     <script>
-        function setProjection(projection) {
-            document.getElementById('projectionButton').textContent = projection;
-        }
-        function setMapping(mapping) {
-            document.getElementById('mappingButton').textContent = mapping;
-        }
+      function setProjection(projection) {
+        document.getElementById("projectionButton").textContent = projection
+      }
+      function setMapping(mapping) {
+        document.getElementById("mappingButton").textContent = mapping
+      }
+      let components = document.querySelectorAll(".component")
+
+      components.forEach((component) => {
+        component.addEventListener("click", function () {
+          // Remove active class from all components
+          components.forEach((c) => c.classList.remove("active"))
+
+          // Add active class to clicked component
+          this.classList.add("active")
+        })
+      })
     </script>
-</body>
+  </body>
 </html>

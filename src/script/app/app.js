@@ -16,10 +16,14 @@ import { HollowBoxGeometry } from "../modules/geometry/HollowBoxGeometry.js"
 import { PhongMaterial } from "../modules/materials/PhongMaterial.js"
 import { OrtographicCamera } from "../modules/camera/OrtographicCamera.js"
 import { TubeGeometry } from "../modules/geometry/TubeGeometry.js"
+import { DEGTORAD } from "../modules/math/index.js"
+import { saveUtil } from "./utils/saveUtils.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
-canvas.style.backgroundColor = "black"
+canvas.width = 800
+canvas.height = 600
+canvas.style.backgroundColor = "white"
 const gl = new WebGLRenderer(canvas)
 
 const plane = new Mesh(
@@ -32,26 +36,19 @@ plane.position.y = -300
 plane.scale.z = -2
 scene.add(plane)
 
-const box = new Mesh(
-  new BoxGeometry(2, 2, 2),
+const hollow_box = new Mesh(
+  new HollowBoxGeometry(2, 2, 2, 0.2),
   new PhongMaterial({})
 )
+scene.add(hollow_box)
+objectTransformations(hollow_box)
+console.log(hollow_box.scale)
+
+const box = new Mesh(
+  new BoxGeometry(2, 2, 2),
+  new BasicMaterial({ color: Color.red() })
+)
 scene.add(box)
-objectTransformations(box)
-
-// const hollow_box = new Mesh(
-//   new HollowBoxGeometry(2, 2, 2, 0.1),
-//   new PhongMaterial({ color: Color.blue() })
-// )
-// scene.add(hollow_box)
-// objectTransformations(hollow_box)
-
-// const tube = new Mesh(
-//   new TubeGeometry(1, 1.1, 2),
-//   new PhongMaterial({ color: Color.black() })
-// )
-// scene.add(tube)
-// objectTransformations(tube)
 
 const cameras = {
   perspective: new PerspectiveCamera(
@@ -88,6 +85,10 @@ const orbitControl = {
 }
 
 cameraController(cameras)
+// scene array
+let sceneArr = []
+sceneArr.push(scene)
+saveUtil(sceneArr)
 
 function render() {
   requestAnimationFrame(render)

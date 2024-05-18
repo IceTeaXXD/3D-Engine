@@ -65,7 +65,7 @@ export class TubeGeometry extends BufferGeometry {
     }
 
     toJson() {
-        const data = super.toJson();
+        const data = super.toJSON();
         delete data.attributes.position;
         return {
             ...data,

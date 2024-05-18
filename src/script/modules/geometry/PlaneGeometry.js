@@ -22,7 +22,7 @@ export class PlaneGeometry extends BufferGeometry {
         return "PlaneGeometry";
     }
 
-    toJSON() {
+    toJson() {
         const data = super.toJSON();
         delete data.attributes.position;
         return {

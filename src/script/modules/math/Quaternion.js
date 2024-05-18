@@ -1,7 +1,6 @@
-import { Listener } from "../core/Listener.js"
 import { M4, Vector3 } from "./index.js"
 
-export class Quaternion extends Listener {
+export class Quaternion {
   /** @type {number} */
   #x
   /** @type {number} */
@@ -12,7 +11,6 @@ export class Quaternion extends Listener {
   #w
 
   constructor(x = 0, y = 0, z = 0, w = 1) {
-    super()
     this.set(x, y, z, w)
   }
 
@@ -22,7 +20,6 @@ export class Quaternion extends Listener {
 
   set x(value) {
     this.#x = value
-    this.dispatchEvent({ type: "change", target: this })
   }
 
   get y() {
@@ -31,7 +28,6 @@ export class Quaternion extends Listener {
 
   set y(value) {
     this.#y = value
-    this.dispatchEvent({ type: "change", target: this })
   }
 
   get z() {
@@ -40,7 +36,6 @@ export class Quaternion extends Listener {
 
   set z(value) {
     this.#z = value
-    this.dispatchEvent({ type: "change", target: this })
   }
 
   get w() {
@@ -49,19 +44,13 @@ export class Quaternion extends Listener {
 
   set w(value) {
     this.#w = value
-    this.dispatchEvent({ type: "change", target: this })
   }
-
-  set onChange(callback) {
-    this.addEventListener("change", callback)
-  }
-
+  
   set(x = 0, y = 0, z = 0, w = 1) {
     this.#x = x
     this.#y = y
     this.#z = z
     this.#w = w
-    this.dispatchEvent({ type: "change", target: this })
     return this
   }
 
@@ -95,7 +84,6 @@ export class Quaternion extends Listener {
     this.#z = c1 * c2 * s3 + s1 * s2 * c3
     this.#w = c1 * c2 * c3 - s1 * s2 * s3
 
-    if (update) this.dispatchEvent({ type: "change", target: this })
     return this
   }
 

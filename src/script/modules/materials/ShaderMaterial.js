@@ -1,3 +1,5 @@
+import { Color } from "./Color.js"
+import { Vector3 } from "../math/Vector3.js"
 export class ShaderMaterial {
   static #idCtr = 0
 
@@ -18,8 +20,7 @@ export class ShaderMaterial {
    * @param {{name: string, vertexShader: string, fragmentShader: string, uniforms: object}} options
    */
   constructor(options = {}) {
-    const { name, vertexShader, fragmentShader, uniforms } = options
-    this.name = name || this.type
+    const { vertexShader, fragmentShader, uniforms } = options
     this.#vertexShader = vertexShader
     this.#fragmentShader = fragmentShader
     this.#uniforms = uniforms
@@ -49,7 +50,7 @@ export class ShaderMaterial {
     return "ShaderMaterial"
   }
 
-  toJson() {
+  toJSON() {
     const uniformsData = {}
     for (const key in this.uniforms) {
       const uniform = this.uniforms[key]
@@ -63,7 +64,6 @@ export class ShaderMaterial {
     }
     return {
       type: this.type,
-      name: this.name,
       vertexShader: this.#vertexShader,
       fragmentShader: this.#fragmentShader,
       uniforms: uniformsData

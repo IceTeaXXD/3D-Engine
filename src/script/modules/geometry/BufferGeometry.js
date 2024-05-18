@@ -3,22 +3,10 @@ import { BufferAttribute } from "./BufferAttribute.js"
 
 export class BufferGeometry {
   #attributes
-  #indices
   useVertexColors = false;
 
   constructor() {
     this.#attributes = {}
-    this.#indices = null
-  }
-
-  setIndices(indices) {
-    this.#indices = indices
-    return this
-  }
-
-  removeIndices() {
-    this.#indices = null
-    return this
   }
 
   setAttribute(name, attribute) {
@@ -64,15 +52,14 @@ export class BufferGeometry {
     this.setAttribute('normal', normal);
   }
 
-  toJson() {
+  toJSON() {
     const attributes = {}
     for (const key in this.#attributes) {
-      attributes[key] = this.#attributes[key].toJson()
+      attributes[key] = this.#attributes[key].toJSON()
     }
 
     return {
       attributes,
-      indices: this.#indices ? this.#indices.array : null
     }
   }
 
@@ -80,10 +67,6 @@ export class BufferGeometry {
     const geometry = new BufferGeometry()
     for (const key in data.attributes) {
       geometry.setAttribute(key, BufferAttribute.fromJson(data.attributes[key]))
-    }
-
-    if (data.indices) {
-      geometry.setIndices(BufferAttribute.fromJson(data.indices))
     }
 
     return geometry

@@ -8,9 +8,8 @@ export class BasicMaterial extends ShaderMaterial {
   #color
 
   constructor(options) {
-    const { name, color } = options || {}
+    const { color } = options || {}
     super({
-      name: name,
       vertexShader: basicVert,
       fragmentShader: basicFrag,
       uniforms: {

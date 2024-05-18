@@ -1,4 +1,3 @@
-import { Listener } from "./Listener.js"
 import {
   createProgram,
   createShader,
@@ -9,7 +8,7 @@ import { Mesh } from "./Mesh.js"
 import { ShaderMaterial } from "../materials/ShaderMaterial.js"
 import { ShaderTypes } from "./GLTypes.js"
 
-export class WebGLRenderer extends Listener {
+export class WebGLRenderer {
   /** @type {WebGLRenderingContext?} */
   #gl
   /** @type {HTMLCanvasElement} */
@@ -20,7 +19,6 @@ export class WebGLRenderer extends Listener {
   #currentProgram = null
 
   constructor(canvas = null) {
-    super()
     this.#canvas = canvas
     if (typeof canvas === "string" || canvas instanceof String)
       this.#canvas = document.querySelector(canvas)
@@ -43,7 +41,6 @@ export class WebGLRenderer extends Listener {
     const dw = canvas.clientWidth
     const dh = canvas.clientHeight
     if (canvas.width !== dw || canvas.height !== dh) {
-      this.dispatchEvent({ type: "resize", width: dw, height: dh })
       canvas.width = dw
       canvas.height = dh
       this.setViewport(0, 0, dw, dh)
