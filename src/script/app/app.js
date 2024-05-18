@@ -41,6 +41,7 @@ objectTransformations(box)
 
 // const hollow_box = new Mesh(
 //   new HollowBoxGeometry(2, 2, 2, 0.1),
+
 //   new PhongMaterial({ color: Color.blue() })
 // )
 // scene.add(hollow_box)
@@ -52,6 +53,7 @@ objectTransformations(box)
 // )
 // scene.add(tube)
 // objectTransformations(tube)
+
 
 const cameras = {
   perspective: new PerspectiveCamera(
