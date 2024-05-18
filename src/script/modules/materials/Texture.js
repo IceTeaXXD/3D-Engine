@@ -1,40 +1,53 @@
-export class Texture {
-    /**@type {HTMLImageElement} */
-    image
-    
-    /**@type {number} */
-    wrapS
+import { ShaderMaterial } from "./ShaderMaterial.js";
+import textureFrag from "./shaders/texture.frag.js";
+import textureVert from "./shaders/texture.vert.js";
 
-    /**@type {number} */
-    wrapT
-
-    /**@type {number} */
-    magFilter
-
-    /**@type {number} */
-    minFilter
-
-    /**@type {WebGLTextureType} */
-    format
-
-    /** @type {WebGLType} */
-    dtype
-
-    /**@type {boolean} */
-    generateMipmaps
-
-
-    constructor() {
-        this.wrapS = 33071
-        this.wrapT = 33071
-        this.magFilter = 9729
-        this.minFilter = 9729
-        this.format = 6408
-        this.dtype = 5121
-        this.generateMipmaps = true
+export class Texture extends ShaderMaterial {
+    /**
+     * Creates an instance of Texture.
+     * @param {{name: string, sampler: WebGLTexture}} options
+     * @memberof Texture
+     */
+    constructor(options = {}) {
+        const { name, sampler } = options;
+        super({
+            name,
+            vertexShader: textureVert,
+            fragmentShader: textureFrag,
+            uniforms: {
+                sampler: sampler || null,
+            }
+        });
     }
 
-    // set(index, data)
+    get id() {
+        return "Texture";
+    }
 
-    // get(index, size): number[]
+    /** @type {WebGLTexture} */
+    get sampler() {
+        return this.uniforms['sampler'];
+    }
+
+    set sampler(val) {
+        this.uniforms['sampler'] = val;
+    }
+
+    get type() {
+        return 'Texture';
+    }
+
+    toJSON() {
+        const { vertexShader, fragmentShader, ...other } = super.toJSON();
+        return {
+            ...other,
+            type: this.type,
+        };
+    }
+
+    static fromJSON(json) {
+        const obj = new Texture(json);
+        ShaderMaterial.fromJSON(json, obj);
+        return obj;
+    }
 }
