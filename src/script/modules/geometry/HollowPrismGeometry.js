@@ -69,16 +69,11 @@ export class HollowPrismGeometry extends BufferGeometry {
         let innerSideVertices = [];
       
         // Calculate base side based on number of sides (assuming regular polygon)
-        const angleStep = (2 * Math.PI) / this.side; // Angle between consecutive side vertices
-        const baseSide = this.width / angleStep;
+        let angleStep = (2 * Math.PI) / this.side; // Angle between consecutive side vertices
+        let baseSide = this.width / angleStep;
       
         // Calculate half height and half thickness
-        const halfHeight = this.height / 2;
-        const halfThickness = this.thickness / 2;
-      
-        // Define center coordinates (adjust as needed)
-        const centerX = 0.0;
-        const centerY = 0.0;
+        let halfHeight = this.height / 2;
 
         // Top
         let _outerTopVertices = [];
@@ -87,22 +82,22 @@ export class HollowPrismGeometry extends BufferGeometry {
         let TopVertices = []; // For later in the method, when _outerTopVertices, _innerTopVertices, _innerHoleTopVertices is indexed to be faces
         //  Calculate outer, inner, and in-hole vertices
         for (let i = 0; i < this.side; i++) {
-            const outerX = this.width * Math.cos(angleStep * i);
-            const outerY = this.width * Math.sin(angleStep * i);
+            let outerX = this.width * Math.cos(angleStep * i);
+            let outerY = this.width * Math.sin(angleStep * i);
             _outerTopVertices.push(outerX, outerY, halfHeight);
 
-            const innerX = (this.width - this.thickness) * Math.cos(angleStep * i);
-            const innerY = (this.width - this.thickness) * Math.sin(angleStep * i);
+            let innerX = (this.width - this.thickness) * Math.cos(angleStep * i);
+            let innerY = (this.width - this.thickness) * Math.sin(angleStep * i);
             _innerTopVertices.push(innerX, innerY, halfHeight);
 
-            const holeX = (this.width-this.thickness) * Math.cos(angleStep * i);
-            const holeY = (this.width-this.thickness) * Math.sin(angleStep * i);
+            let holeX = (this.width-this.thickness) * Math.cos(angleStep * i);
+            let holeY = (this.width-this.thickness) * Math.sin(angleStep * i);
             _innerHoleTopVertices.push(holeX, holeY, halfHeight-this.thickness);
         }
 
         //  Pushing procedurally to geometry vertices
         for (let i = 0; i < _outerTopVertices.length; i+=3) {
-            const out1 = _outerTopVertices.slice(i, i+3)
+            let out1 = _outerTopVertices.slice(i, i+3)
             let _out2 = _outerTopVertices.slice(i+3, i+3+3)
 
             if (i+3 >= _outerTopVertices.length){
@@ -111,9 +106,9 @@ export class HollowPrismGeometry extends BufferGeometry {
                     i+3+3-_outerTopVertices.length
                 )
             } 
-            const out2 = _out2
+            let out2 = _out2
             
-            const in1 = _innerTopVertices.slice(i, i+3)
+            let in1 = _innerTopVertices.slice(i, i+3)
             let _in2 = _innerTopVertices.slice(i+3, i+3+3)
             if (i+3 >= _innerTopVertices.length){
                 _in2 = _innerTopVertices.slice(
@@ -121,9 +116,9 @@ export class HollowPrismGeometry extends BufferGeometry {
                     i+3+3-_innerTopVertices.length
                 )
             }
-            const in2 = _in2
+            let in2 = _in2
 
-            const hole1 = _innerHoleTopVertices.slice(i, i+3)
+            let hole1 = _innerHoleTopVertices.slice(i, i+3)
             let _hole2 = _innerHoleTopVertices.slice(i+3, i+3+3)
 
             if (i+3 >= _innerHoleTopVertices.length){
@@ -132,20 +127,20 @@ export class HollowPrismGeometry extends BufferGeometry {
                     i+3+3-_innerHoleTopVertices.length
                 )
             } 
-            const hole2 = _hole2
+            let hole2 = _hole2
 
-            // TopVertices.push(...out1)
-            // TopVertices.push(...in2)
-            // TopVertices.push(...in1)
-            // TopVertices.push(...out1)
-            // TopVertices.push(...out2)
-            // TopVertices.push(...in2)
-            // TopVertices.push(...in1)
-            // TopVertices.push(...in2)
-            // TopVertices.push(...hole1)
-            // TopVertices.push(...in2)
-            // TopVertices.push(...hole2)
-            // TopVertices.push(...hole1)
+            TopVertices.push(...out1)
+            TopVertices.push(...in2)
+            TopVertices.push(...in1)
+            TopVertices.push(...out1)
+            TopVertices.push(...out2)
+            TopVertices.push(...in2)
+            TopVertices.push(...in1)
+            TopVertices.push(...in2)
+            TopVertices.push(...hole1)
+            TopVertices.push(...in2)
+            TopVertices.push(...hole2)
+            TopVertices.push(...hole1)
         }
         // Bottom
         let _outerBottomVertices = [];
@@ -154,22 +149,22 @@ export class HollowPrismGeometry extends BufferGeometry {
         let BottomVertices = []; // For later in the method, when _outerBottomVertices, _innerBottomVertices, _innerHoleBottomVertices is indexed to be faces
         //  Calculate outer, inner, and in-hole vertices
         for (let i = 0; i < this.side; i++) {
-            const outerX = this.width * Math.cos(angleStep * i);
-            const outerY = this.width * Math.sin(angleStep * i);
+            let outerX = this.width * Math.cos(angleStep * i);
+            let outerY = this.width * Math.sin(angleStep * i);
             _outerBottomVertices.push(outerX, outerY, -halfHeight);
 
-            const innerX = (this.width - this.thickness) * Math.cos(angleStep * i);
-            const innerY = (this.width - this.thickness) * Math.sin(angleStep * i);
+            let innerX = (this.width - this.thickness) * Math.cos(angleStep * i);
+            let innerY = (this.width - this.thickness) * Math.sin(angleStep * i);
             _innerBottomVertices.push(innerX, innerY, -halfHeight);
 
-            const holeX = (this.width-this.thickness) * Math.cos(angleStep * i);
-            const holeY = (this.width-this.thickness) * Math.sin(angleStep * i);
+            let holeX = (this.width-this.thickness) * Math.cos(angleStep * i);
+            let holeY = (this.width-this.thickness) * Math.sin(angleStep * i);
             _innerHoleBottomVertices.push(holeX, holeY, -halfHeight+this.thickness);
         }
 
         //  Pushing procedurally to geometry vertices
         for (let i = 0; i < _outerBottomVertices.length; i+=3) {
-            const out1 = _outerBottomVertices.slice(i, i+3)
+            let out1 = _outerBottomVertices.slice(i, i+3)
             let _out2 = _outerBottomVertices.slice(i+3, i+3+3)
 
             if (i+3 >= _outerBottomVertices.length){
@@ -178,9 +173,9 @@ export class HollowPrismGeometry extends BufferGeometry {
                     i+3+3-_outerBottomVertices.length
                 )
             } 
-            const out2 = _out2
+            let out2 = _out2
             
-            const in1 = _innerBottomVertices.slice(i, i+3)
+            let in1 = _innerBottomVertices.slice(i, i+3)
             let _in2 = _innerBottomVertices.slice(i+3, i+3+3)
             if (i+3 >= _innerBottomVertices.length){
                 _in2 = _innerBottomVertices.slice(
@@ -188,9 +183,9 @@ export class HollowPrismGeometry extends BufferGeometry {
                     i+3+3-_innerBottomVertices.length
                 )
             }
-            const in2 = _in2
+            let in2 = _in2
 
-            const hole1 = _innerHoleBottomVertices.slice(i, i+3)
+            let hole1 = _innerHoleBottomVertices.slice(i, i+3)
             let _hole2 = _innerHoleBottomVertices.slice(i+3, i+3+3)
 
             if (i+3 >= _innerHoleBottomVertices.length){
@@ -199,71 +194,95 @@ export class HollowPrismGeometry extends BufferGeometry {
                     i+3+3-_innerHoleBottomVertices.length
                 )
             } 
-            const hole2 = _hole2
+            let hole2 = _hole2
 
-            // BottomVertices.push(...in1)
-            // BottomVertices.push(...in2)
-            // BottomVertices.push(...out1)
-            // BottomVertices.push(...in2)
-            // BottomVertices.push(...out2)
-            // BottomVertices.push(...out1)
-            // BottomVertices.push(...hole1)
-            // BottomVertices.push(...in2)
-            // BottomVertices.push(...in1)
-            // BottomVertices.push(...hole1)
-            // BottomVertices.push(...hole2)
-            // BottomVertices.push(...in2)
+            BottomVertices.push(...in1)
+            BottomVertices.push(...in2)
+            BottomVertices.push(...out1)
+            BottomVertices.push(...in2)
+            BottomVertices.push(...out2)
+            BottomVertices.push(...out1)
+            BottomVertices.push(...hole1)
+            BottomVertices.push(...in2)
+            BottomVertices.push(...in1)
+            BottomVertices.push(...hole1)
+            BottomVertices.push(...hole2)
+            BottomVertices.push(...in2)
         }
-
         // Side parts
-        // for (let i = 0; i < this.side; i++) {
-            //     // Vertices used are outer and inner hole vertices from top and bottom faces
-            //     // and new set of inner vertices to each side faces
-            //     // TODO
-            //     // Getting the x,y,z value of inner side faces should be sin/cos of something and related to thickness
-            // }
-        let SideVertices = [];
-        for (let i = 0; i < _outerBottomVertices.length; i+=3){
-            const top1 = _outerTopVertices.slice(i, i+3)
-            let _top2 = _outerTopVertices.slice(i+3, i+3+3)
-            if (i+3 >= _outerTopVertices.length){
-                _top2 = _outerTopVertices.slice(
-                    i+3-_outerTopVertices.length, 
-                    i+3+3-_outerTopVertices.length
-                )
-            } 
-            const top2 = _top2
-
-            const bot1 = _outerBottomVertices.slice(i, i+3)
-            let _bot2 = _outerBottomVertices.slice(i+3, i+3+3)
-            if (i+3 >= _outerBottomVertices.length){
-                _bot2 = _outerBottomVertices.slice(
-                    i+3-_outerBottomVertices.length,
-                    i+3+3-_outerBottomVertices.length
-                )
+        // Used to find the X and Y of the prism side faces
+        function findPointInBetween(xA, yA, xB, yB, lengthFromPoint, isFromA=true) {
+            // Calculate the distance AB
+            let AB = Math.sqrt(Math.pow(xB - xA, 2) + Math.pow(yB - yA, 2));
+            
+            // Calculate the ratio t
+            let t = lengthFromPoint / AB;
+            if (!isFromA) {
+                t = (AB - lengthFromPoint)/AB
             }
-            const bot2 = _bot2
-            SideVertices.push(...bot1)
-            SideVertices.push(...top2)
-            SideVertices.push(...top1)
-            SideVertices.push(...bot1)
-            SideVertices.push(...bot2)
-            SideVertices.push(...top2)
-            SideVertices.push(...top1)
-            SideVertices.push(...top2)
-            SideVertices.push(...bot1)
-            SideVertices.push(...top2)
-            SideVertices.push(...bot2)
-            SideVertices.push(...bot1)
+            
+            // Calculate the coordinates of C
+            let xC = xA + t * (xB - xA);
+            let yC = yA + t * (yB - yA);
+            
+            // Return the coordinates of C as an array
+            return [xC, yC];
         }
+
+        let SideVertices = []
+        for (let i = 0; i < this.side; i++) {
+                // Vertices used are outer vertices and inner hole vertices from top and bottom faces
+                // and new set of inner vertices to each side faces
+
+                let _top = _outerTopVertices.slice(3*i, 3*i+3)
+                let _topHole = _innerHoleTopVertices.slice(3*i, 3*i+3)
+                let _bot = _outerBottomVertices.slice(3*i, 3*i+3)
+                let _botHole = _innerHoleBottomVertices.slice(3*i, 3*i+3)
+                
+                let nextAng = i + 1 >= this.side? 0 : i + 1
+                let _topNext = _outerTopVertices.slice (3*nextAng, 3*nextAng+3)
+                let _topHoleNext = _innerHoleTopVertices.slice(3*nextAng, 3*nextAng+3)
+                let _botNext = _outerBottomVertices.slice (3*nextAng, 3*nextAng+3)
+                let _botHoleNext = _innerHoleBottomVertices.slice(3*nextAng, 3*nextAng+3)
+                // naming system below assumes X and Y respectively as prism depth and lengths along prism blanket
+                // (X and Y is relative to 1 prism side only)
+                let [_X, _Y] = [_top[0], _top[1]]
+                let [_XnextAng, _YnextAng] = [_topNext[0], _topNext[1]]
+
+                // innerBottom and innerTop also relative to 1 prism side
+                let _innerBottom = findPointInBetween(_X, _Y, _XnextAng, _YnextAng, this.thickness)
+                let _innerTop = findPointInBetween(_X, _Y, _XnextAng, _YnextAng, this.thickness, false)
+                
+                //_innerBottom forth aliased as _iB, _innerTop forth aliased as _iT
+                /// Top or Bottom refers back to Top/Bottom side of prism
+                let _iBTop = [..._innerBottom, halfHeight-this.thickness]
+                let _iBBot = [..._innerBottom, -halfHeight+this.thickness]
+                let _iTTop = [..._innerTop, halfHeight-this.thickness]
+                let _iTBot = [..._innerTop, -halfHeight+this.thickness]
+
+                SideVertices.push(..._bot,..._iBTop,..._top)
+                SideVertices.push(..._bot,..._iBBot,..._iBTop)
+                SideVertices.push(..._top,..._iBTop,..._topNext)
+                SideVertices.push(..._iBTop,..._iTTop,..._topNext)
+                SideVertices.push(..._bot,..._iTBot,..._iBBot)
+                SideVertices.push(..._botNext,..._iTBot,..._bot)
+                SideVertices.push(..._botNext,..._topNext,..._iTBot)
+                SideVertices.push(..._iTBot,..._topNext,..._iTTop)
+                SideVertices.push(..._iBBot,..._botHole,..._topHole)
+                SideVertices.push(..._topHole,..._iBTop,..._iBBot)
+                SideVertices.push(..._iBBot,..._iTBot,..._botHoleNext)
+                SideVertices.push(..._iBBot, ..._botHoleNext, ..._botHole)
+                SideVertices.push(..._iTTop, ..._topHoleNext, ..._botHoleNext)
+                SideVertices.push(..._iTBot, ..._iTTop, ..._botHoleNext)
+                SideVertices.push(..._iBTop, ..._topHoleNext, ..._iTTop)
+                SideVertices.push(..._topHole, ..._topHoleNext, ..._iBTop)
+            }
       
         // Combine all vertices into a single array
         const allVertices = [
           ...TopVertices,
           ...BottomVertices,
           ...SideVertices,
-        //   ...outerSideVertices,
-        //   ...innerSideVertices,
         ];
       
         return new Float32Array(allVertices);
