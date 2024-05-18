@@ -37,7 +37,7 @@ scene.add(plane)
 // )
 // scene.add(box)
 const hollow_prism = new Mesh(
-  new HollowPrismGeometry(2,2,2,0.3,50),
+  new HollowPrismGeometry(2,0.5,2,0.1,7),
   new PhongMaterial({ color: Color.blue() })
 )
 scene.add(hollow_prism)
