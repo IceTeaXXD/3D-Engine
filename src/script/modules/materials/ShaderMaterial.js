@@ -1,5 +1,5 @@
-import { Color } from "./Color.js"
-import { Vector3 } from "../math/Vector3.js"
+import { Color } from "./index.js"
+import { Vector3 } from "../math/index.js"
 export class ShaderMaterial {
   static #idCtr = 0
 
@@ -70,7 +70,7 @@ export class ShaderMaterial {
     }
   }
 
-  static fromJson(json, obj = null) {
+  static fromJSON(json, obj = null) {
     const uniforms = {}
     for (const key in json.uniforms) {
       const uniform = json.uniforms[key]

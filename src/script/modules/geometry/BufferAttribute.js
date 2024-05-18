@@ -1,4 +1,4 @@
-import { WebGLTypes } from "../core/GLTypes.js"
+import { WebGLTypes } from "../core/index.js"
 
 export class BufferAttribute {
   /** @type {Float32Array} */
@@ -66,14 +66,24 @@ export class BufferAttribute {
   }
 
   toJSON() {
+    const options = {}
+    if (this.#dtype !== WebGLTypes.FLOAT) {
+      options.dtype = this.#dtype
+    }
+    if (this.normalize) {
+      options.normalize = this.normalize
+    }
+    if (this.stride) {
+      options.stride = this.stride
+    }
+    if (this.offset) {
+      options.offset = this.offset
+    }
     return {
       data: Array.from(this.#data),
       type: this.type,
       size: this.#size,
-      dtype: this.#dtype !== WebGLTypes.FLOAT ? this.#dtype : {},
-      normalize: this.normalize ? this.normalize : {},
-      stride: this.stride ? this.stride : {},
-      offset: this.offset ? this.offset : {}
+      options: options
     }
   }
 

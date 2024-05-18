@@ -1,7 +1,6 @@
-import { Color } from "./Color.js"
-import { ShaderMaterial } from "./ShaderMaterial.js"
-import basicFrag from "./shaders/basic.frag.js"
+import { Color, ShaderMaterial } from "./index.js"
 import basicVert from "./shaders/basic.vert.js"
+import basicFrag from "./shaders/basic.frag.js"
 
 export class BasicMaterial extends ShaderMaterial {
   /** @type {Color} */
@@ -41,7 +40,7 @@ export class BasicMaterial extends ShaderMaterial {
 
   static fromJSON(json) {
     const obj = new BasicMaterial(json)
-    ShaderMaterial.fromJson(json, obj)
+    ShaderMaterial.fromJSON(json, obj)
     return obj
   }
 }

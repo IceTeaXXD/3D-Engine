@@ -1,8 +1,7 @@
-import { Color } from "./Color.js"
-import { ShaderMaterial } from "./ShaderMaterial.js"
+import { Color, ShaderMaterial } from "./index.js"
+import { Vector3 } from "../math/index.js"
 import phongFrag from "./shaders/phong.frag.js"
 import phongVert from "./shaders/phong.vert.js"
-import { Vector3 } from "../math/Vector3.js"
 
 export class PhongMaterial extends ShaderMaterial {
   /**

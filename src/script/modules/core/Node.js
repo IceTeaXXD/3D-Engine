@@ -1,4 +1,5 @@
 import { Vector3, Quaternion, M4 } from "../math/index.js"
+import { JSONDeserializer } from "./index.js"
 
 const _events = {
   added: {
@@ -151,7 +152,7 @@ export class Node {
       Nodes.forEach((obj) => this.add(obj))
       return this
     }
-    
+
     if (Nodes.length === 0) return this
 
     const obj = Nodes[0]
@@ -277,6 +278,9 @@ export class Node {
     obj.position.set(...json.position)
     obj.quaternion.set(...json.quaternion)
     obj.scale.set(...json.scale)
+    json.children.forEach((child) => {
+      obj.add(JSONDeserializer.fromJSON(child))
+    })
     return obj
   }
 }
