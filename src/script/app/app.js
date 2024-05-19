@@ -16,6 +16,7 @@ import {
 } from "../modules/geometry/index.js"
 import {
   saveUtil,
+  loadUtil,
   objectTransformations,
   cameraController
 } from "./utils/index.js"
@@ -33,15 +34,6 @@ canvas.height = 600
 canvas.style.backgroundColor = "white"
 const gl = new WebGLRenderer(canvas)
 
-const scene = new Scene()
-
-const box = new Mesh(
-  new BoxGeometry(2, 2, 2),
-  new BasicMaterial({ color: Color.red() })
-)
-scene.add(box)
-objectTransformations(box)
-
 const cameras = {
   perspective: new PerspectiveCamera(
     60,
@@ -50,18 +42,18 @@ const cameras = {
     9999
   ),
   ortographic: new OrtographicCamera(
-    -canvas.clientWidth / 100,
     canvas.clientWidth / 100,
-    canvas.clientHeight / 100,
+    -canvas.clientWidth / 100,
     -canvas.clientHeight / 100,
+    canvas.clientHeight / 100,
     -1000,
     1000
   ),
   oblique: new ObliqueCamera(
-    -canvas.clientWidth / 100,
     canvas.clientWidth / 100,
-    canvas.clientHeight / 100,
+    -canvas.clientWidth / 100,
     -canvas.clientHeight / 100,
+    canvas.clientHeight / 100,
     -1000,
     1000,
     30,
@@ -76,9 +68,36 @@ const orbitControl = {
   oblique: new OrbitControl(cameras.oblique, canvas)
 }
 
+let scene = new Scene()
+// const box = new Mesh(
+//   new BoxGeometry(2, 2, 2),
+//   new BasicMaterial({ color: Color.red() })
+// )
+// scene.add(box)
+// objectTransformations(box)
+
+// const hollow_box = new Mesh(
+//   new HollowBoxGeometry(2, 2, 2, 0.2),
+//   new PhongMaterial()
+// )
+// scene.add(hollow_box)
+// objectTransformations(hollow_box)
+
+// const hollow_prism = new Mesh(
+//   new HollowPrismGeometry(2, 2, 2, 0.2, 100),
+//   new PhongMaterial()
+// )
+// scene.add(hollow_prism)
+// objectTransformations(hollow_prism)
+
+let sceneArr = [scene]
+
+loadUtil((loadedScene) => {
+  scene = loadedScene
+  sceneArr = [scene]
+})
+
 cameraController(cameras)
-let sceneArr = []
-sceneArr.push(scene)
 saveUtil(sceneArr)
 
 function render() {

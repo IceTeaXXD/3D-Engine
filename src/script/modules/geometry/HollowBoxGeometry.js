@@ -474,7 +474,7 @@ export class HollowBoxGeometry extends BufferGeometry {
 
     static fromJSON(json, geom) {
         if(!geom) geom = new HollowBoxGeometry(json.width, json.height, json.depth, json.thickness);
-        BufferGeometry.fromJson(json, geom);
+        BufferGeometry.fromJSON(json, geom);
         return geom;
     }
 }

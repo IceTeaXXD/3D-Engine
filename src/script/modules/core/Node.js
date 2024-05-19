@@ -279,7 +279,7 @@ export class Node {
     obj.quaternion.set(...json.quaternion)
     obj.scale.set(...json.scale)
     json.children.forEach((child) => {
-      obj.add(JSONDeserializer.fromJSON(child))
+      obj.add(JSONDeserializer(child))
     })
     return obj
   }

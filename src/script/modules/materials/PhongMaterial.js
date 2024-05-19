@@ -76,7 +76,7 @@ export class PhongMaterial extends ShaderMaterial {
 
   static fromJSON(json) {
     const obj = new PhongMaterial(json)
-    ShaderMaterial.fromJson(json, obj)
+    ShaderMaterial.fromJSON(json, obj)
     return obj
   }
 }

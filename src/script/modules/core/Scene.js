@@ -5,6 +5,10 @@ export class Scene extends Node {
         return "Scene";
     }
 
+    setScene(scene) {
+        this.scene = scene;
+    }
+
     toJSON() {
         return { 
             ...super.toJSON(),

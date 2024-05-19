@@ -118,7 +118,7 @@ export class BoxGeometry extends BufferGeometry {
 
     static fromJson(json, geom) {
         if(!geom) geom = new BoxGeometry(json.width, json.height, json.depth);
-        BufferGeometry.fromJson(json, geom);
+        BufferGeometry.fromJSON(json, geom);
         return geom;
     }
 }

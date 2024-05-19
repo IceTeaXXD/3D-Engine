@@ -42,6 +42,10 @@ export class ShaderMaterial {
     return this.#uniforms
   }
 
+  set uniforms(value) {
+    this.#uniforms = value
+  }
+
   equals(material) {
     return this.#id === material.#id
   }
@@ -84,7 +88,9 @@ export class ShaderMaterial {
     }
     json.uniforms = uniforms
     if (!obj) obj = new ShaderMaterial(json)
-    else obj.get.uniforms = json.uniforms
+    else {
+      obj.uniforms = json.uniforms
+    }
     return obj
   }
 }

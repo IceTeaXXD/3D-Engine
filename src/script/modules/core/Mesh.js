@@ -1,9 +1,10 @@
 import { Node } from "./Node.js"
-import { BufferGeometry, HollowBoxGeometry } from "../geometry/index.js"
+import { BufferGeometry, GeometryDeserializer } from "../geometry/index.js"
 import {
   BasicMaterial,
   PhongMaterial,
-  ShaderMaterial
+  ShaderMaterial,
+  MaterialDeserializer
 } from "../materials/index.js"
 export class Mesh extends Node {
   /** @type {BufferGeometry} */
@@ -39,11 +40,11 @@ export class Mesh extends Node {
     if (!obj) obj = new Mesh()
     super.fromJSON(json, obj)
 
-    // Geometry
-    if (json.type == "HollowBoxGeometry") {
-      obj.geometry = HollowBoxGeometry.fromJSON(json.geometry)
-    }
+    // Geometry Deserialization
+    obj.geometry = GeometryDeserializer(json.geometry)
+    obj.material = MaterialDeserializer(json.material)
 
+    console.log(obj.geometry)
     return obj
   }
 }

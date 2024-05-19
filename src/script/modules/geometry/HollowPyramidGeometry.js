@@ -325,7 +325,7 @@ export class HollowPyramidGeometry extends BufferGeometry {
 
     static fromJSON(json, geom) {
         if (!geom) geom = new HollowPyramidGeometry(json.width, json.height, json.depth, json.thickness);
-        BufferGeometry.fromJson(json, geom);
+        BufferGeometry.fromJSON(json, geom);
         return geom;
     }
 }

@@ -130,8 +130,6 @@ export class WebGLRenderer {
       viewMatrix: Camera.getProjectionMatrix()
     }
 
-    // console.log(defaultUniform);
-
     this.renderObject(Scene, defaultUniform)
   }
 

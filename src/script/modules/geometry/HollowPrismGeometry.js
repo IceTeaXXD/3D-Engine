@@ -35,7 +35,7 @@ export class HollowPrismGeometry extends BufferGeometry {
   }
 
   get type() {
-    return "PrismGeometry"
+    return "HollowPrismGeometry"
   }
   
   createPrismVertices() {
@@ -308,7 +308,7 @@ export class HollowPrismGeometry extends BufferGeometry {
         json.thickness,
         json.side
       )
-    BufferGeometry.fromJson(json, geom)
+    BufferGeometry.fromJSON(json, geom)
     return geom
   }
 
