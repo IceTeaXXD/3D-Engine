@@ -1,8 +1,7 @@
-import { Color } from "./Color.js"
-import { ShaderMaterial } from "./ShaderMaterial.js"
+import { Color, ShaderMaterial } from "./index.js"
+import { Vector3 } from "../math/index.js"
 import phongFrag from "./shaders/phong.frag.js"
 import phongVert from "./shaders/phong.vert.js"
-import { Vector3 } from "../math/Vector3.js"
 
 export class PhongMaterial extends ShaderMaterial {
   /**
@@ -68,7 +67,7 @@ export class PhongMaterial extends ShaderMaterial {
   }
 
   toJSON() {
-    const { vertexShader, fragmentShader, ...other } = super.toJson()
+    const { vertexShader, fragmentShader, ...other } = super.toJSON()
     return {
       ...other,
       type: this.type
@@ -77,7 +76,7 @@ export class PhongMaterial extends ShaderMaterial {
 
   static fromJSON(json) {
     const obj = new PhongMaterial(json)
-    ShaderMaterial.fromJson(json, obj)
+    ShaderMaterial.fromJSON(json, obj)
     return obj
   }
 }

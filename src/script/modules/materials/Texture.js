@@ -1,4 +1,4 @@
-import { ShaderMaterial } from "./ShaderMaterial.js";
+import { ShaderMaterial } from "./index.js";
 import textureFrag from "./shaders/texture.frag.js";
 import textureVert from "./shaders/texture.vert.js";
 

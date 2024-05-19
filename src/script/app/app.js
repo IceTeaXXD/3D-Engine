@@ -1,59 +1,38 @@
-import { Vector3 } from "../modules/math/Vector3.js"
-import { WebGLRenderer } from "../modules/core/WebGLRenderer.js"
-import { Scene } from "../modules/core/Scene.js"
-import { Mesh } from "../modules/core/Mesh.js"
-import { PlaneGeometry } from "../modules/geometry/PlaneGeometry.js"
-import { BoxGeometry } from "../modules/geometry/BoxGeometry.js"
-import { BasicMaterial } from "../modules/materials/BasicMaterial.js"
-import { ShaderMaterial } from "../modules/materials/ShaderMaterial.js"
-import { Color } from "../modules/materials/Color.js"
-import { ObliqueCamera } from "../modules/camera/ObliqueCamera.js"
-import { PerspectiveCamera } from "../modules/camera/PerspectiveCamera.js"
-import { cameraController } from "./utils/cameraUtils.js"
-import { objectTransformations } from "./utils/objectUtils.js"
-import { OrbitControl } from "../modules/camera/OrbitControl.js"
-import { HollowBoxGeometry } from "../modules/geometry/HollowBoxGeometry.js"
-import { PhongMaterial } from "../modules/materials/PhongMaterial.js"
-import { OrtographicCamera } from "../modules/camera/OrtographicCamera.js"
-import { TubeGeometry } from "../modules/geometry/TubeGeometry.js"
+import { Mesh, WebGLRenderer, Scene } from "../modules/core/index.js"
+import {
+  Color,
+  BasicMaterial,
+  ShaderMaterial,
+  PhongMaterial,
+  Texture
+} from "../modules/materials/index.js"
+import { Vector3, DEGTORAD } from "../modules/math/index.js"
+import {
+  BoxGeometry,
+  HollowPrismGeometry,
+  HollowBoxGeometry,
+  TubeGeometry,
+  PlaneGeometry
+} from "../modules/geometry/index.js"
+import {
+  saveUtil,
+  loadUtil,
+  objectTransformations,
+  cameraController
+} from "./utils/index.js"
+import {
+  OrtographicCamera,
+  PerspectiveCamera,
+  ObliqueCamera,
+  OrbitControl
+} from "../modules/camera/index.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
-canvas.style.backgroundColor = "black"
+canvas.width = 800
+canvas.height = 600
+canvas.style.backgroundColor = "white"
 const gl = new WebGLRenderer(canvas)
-
-const plane = new Mesh(
-  new PlaneGeometry(1000, 1000),
-  new BasicMaterial({ color: Color.green() })
-)
-
-const scene = new Scene()
-plane.position.y = -300
-plane.scale.z = -2
-scene.add(plane)
-
-const box = new Mesh(
-  new BoxGeometry(2, 2, 2),
-  new PhongMaterial({})
-)
-scene.add(box)
-objectTransformations(box)
-
-// const hollow_box = new Mesh(
-//   new HollowBoxGeometry(2, 2, 2, 0.1),
-
-//   new PhongMaterial({ color: Color.blue() })
-// )
-// scene.add(hollow_box)
-// objectTransformations(hollow_box)
-
-// const tube = new Mesh(
-//   new TubeGeometry(1, 1.1, 2),
-//   new PhongMaterial({ color: Color.black() })
-// )
-// scene.add(tube)
-// objectTransformations(tube)
-
 
 const cameras = {
   perspective: new PerspectiveCamera(
@@ -63,18 +42,18 @@ const cameras = {
     9999
   ),
   ortographic: new OrtographicCamera(
-    -canvas.clientWidth / 100,
     canvas.clientWidth / 100,
-    canvas.clientHeight / 100,
+    -canvas.clientWidth / 100,
     -canvas.clientHeight / 100,
+    canvas.clientHeight / 100,
     -1000,
     1000
   ),
   oblique: new ObliqueCamera(
-    -canvas.clientWidth / 100,
     canvas.clientWidth / 100,
-    canvas.clientHeight / 100,
+    -canvas.clientWidth / 100,
     -canvas.clientHeight / 100,
+    canvas.clientHeight / 100,
     -1000,
     1000,
     30,
@@ -89,7 +68,37 @@ const orbitControl = {
   oblique: new OrbitControl(cameras.oblique, canvas)
 }
 
+let scene = new Scene()
+// const box = new Mesh(
+//   new BoxGeometry(2, 2, 2),
+//   new BasicMaterial({ color: Color.red() })
+// )
+// scene.add(box)
+// objectTransformations(box)
+
+// const hollow_box = new Mesh(
+//   new HollowBoxGeometry(2, 2, 2, 0.2),
+//   new PhongMaterial()
+// )
+// scene.add(hollow_box)
+// objectTransformations(hollow_box)
+
+// const hollow_prism = new Mesh(
+//   new HollowPrismGeometry(2, 2, 2, 0.2, 100),
+//   new PhongMaterial()
+// )
+// scene.add(hollow_prism)
+// objectTransformations(hollow_prism)
+
+let sceneArr = [scene]
+
+loadUtil((loadedScene) => {
+  scene = loadedScene
+  sceneArr = [scene]
+})
+
 cameraController(cameras)
+saveUtil(sceneArr)
 
 function render() {
   requestAnimationFrame(render)

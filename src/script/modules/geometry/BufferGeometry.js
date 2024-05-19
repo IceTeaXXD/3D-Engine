@@ -1,24 +1,12 @@
-import { Vector3 } from "../math/Vector3.js"
-import { BufferAttribute } from "./BufferAttribute.js"
+import { Vector3 } from "../math/index.js"
+import { BufferAttribute } from "./index.js"
 
 export class BufferGeometry {
   #attributes
-  #indices
-  useVertexColors = false;
+  useVertexColors = false
 
   constructor() {
     this.#attributes = {}
-    this.#indices = null
-  }
-
-  setIndices(indices) {
-    this.#indices = indices
-    return this
-  }
-
-  removeIndices() {
-    this.#indices = null
-    return this
   }
 
   setAttribute(name, attribute) {
@@ -39,51 +27,51 @@ export class BufferGeometry {
     return this
   }
 
-  calculateNormals(newAttribute=false) {
-    const position = this.getAttribute('position');
-    if (!position) return;
-    let normal = this.getAttribute('normal');
+  calculateNormals(newAttribute = false) {
+    const position = this.getAttribute("position")
+    if (!position) return
+    let normal = this.getAttribute("normal")
     if (newAttribute || !normal)
-        normal = new BufferAttribute(new Float32Array(position.length), position.size);
+      normal = new BufferAttribute(
+        new Float32Array(position.length),
+        position.size
+      )
 
-    const pA = new Vector3(), pB = new Vector3(), pC = new Vector3();
+    const pA = new Vector3(),
+      pB = new Vector3(),
+      pC = new Vector3()
     for (let i = 0; i < position.length; i += 3) {
-        pA.fromBufferAttribute(position, i);
-        pB.fromBufferAttribute(position, i+1);
-        pC.fromBufferAttribute(position, i+2);
+      pA.fromBufferAttribute(position, i)
+      pB.fromBufferAttribute(position, i + 1)
+      pC.fromBufferAttribute(position, i + 2)
 
-        pC.sub(pB);
-        pB.sub(pA);
-        pB.cross(pC);
+      pC.sub(pB)
+      pB.sub(pA)
+      pB.cross(pC)
 
-        const d = pB.normalize().toArray();
-        normal.set(i, d);
-        normal.set(i+1, d);
-        normal.set(i+2, d);
+      const d = pB.normalize().toArray()
+      normal.set(i, d)
+      normal.set(i + 1, d)
+      normal.set(i + 2, d)
     }
-    this.setAttribute('normal', normal);
+    this.setAttribute("normal", normal)
   }
 
-  toJson() {
+  toJSON() {
     const attributes = {}
     for (const key in this.#attributes) {
-      attributes[key] = this.#attributes[key].toJson()
+      attributes[key] = this.#attributes[key].toJSON()
     }
 
     return {
-      attributes,
-      indices: this.#indices ? this.#indices.array : null
+      attributes
     }
   }
 
-  static fromJson(data) {
+  static fromJSON(data) {
     const geometry = new BufferGeometry()
     for (const key in data.attributes) {
-      geometry.setAttribute(key, BufferAttribute.fromJson(data.attributes[key]))
-    }
-
-    if (data.indices) {
-      geometry.setIndices(BufferAttribute.fromJson(data.indices))
+      geometry.setAttribute(key, BufferAttribute.fromJSON(data.attributes[key]))
     }
 
     return geometry

@@ -1,9 +1,11 @@
 import { Node } from "./Node.js"
-import { BufferGeometry } from "../geometry/BufferGeometry.js"
-import { BasicMaterial } from "../materials/BasicMaterial.js"
-import { PhongMaterial } from "../materials/PhongMaterial.js"
-import { ShaderMaterial } from "../materials/ShaderMaterial.js"
-
+import { BufferGeometry, GeometryDeserializer } from "../geometry/index.js"
+import {
+  BasicMaterial,
+  PhongMaterial,
+  ShaderMaterial,
+  MaterialDeserializer
+} from "../materials/index.js"
 export class Mesh extends Node {
   /** @type {BufferGeometry} */
   geometry
@@ -28,15 +30,21 @@ export class Mesh extends Node {
   toJSON() {
     return {
       ...super.toJSON(),
-      geometry: this.geometry.toJson(),
-      material: this.material.toJson(),
+      geometry: this.geometry.toJSON(),
+      material: this.material.toJSON(),
       type: this.type
     }
   }
 
-  static fromJson(json, obj = null) {
+  static fromJSON(json, obj = null) {
     if (!obj) obj = new Mesh()
-    super.fromJson(json, obj)
+    super.fromJSON(json, obj)
+
+    // Geometry Deserialization
+    obj.geometry = GeometryDeserializer(json.geometry)
+    obj.material = MaterialDeserializer(json.material)
+
+    console.log(obj.geometry)
     return obj
   }
 }

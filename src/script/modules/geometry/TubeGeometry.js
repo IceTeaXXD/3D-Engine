@@ -65,7 +65,7 @@ export class TubeGeometry extends BufferGeometry {
     }
 
     toJson() {
-        const data = super.toJson();
+        const data = super.toJSON();
         delete data.attributes.position;
         return {
             ...data,
@@ -80,7 +80,7 @@ export class TubeGeometry extends BufferGeometry {
 
     static fromJson(json, geom) {
         if (!geom) geom = new TubeGeometry(json.innerRadius, json.outerRadius, json.height, json.radialSegments, json.heightSegments);
-        BufferGeometry.fromJson(json, geom);
+        BufferGeometry.fromJSON(json, geom);
         return geom;
     }
 }

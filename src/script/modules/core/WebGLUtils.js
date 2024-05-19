@@ -97,7 +97,6 @@ export function createUniformSetters(gl, program) {
     let name = (uniformInfo.name.substr(-3) === '[0]') ? uniformInfo.name.substr(0, uniformInfo.name.length - 3) : uniformInfo.name;
     uniformSetters[name] = createUniformSetter(uniformInfo);
   }
-  console.log(uniformSetters)
   return uniformSetters
 }
 

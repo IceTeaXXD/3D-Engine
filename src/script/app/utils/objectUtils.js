@@ -1,3 +1,5 @@
+import { DEGTORAD } from "../../modules/math/index.js"
+
 export function objectTransformations(object) {
   var rotateX = document.getElementById("rotateX")
   var rotateY = document.getElementById("rotateY")
@@ -11,52 +13,51 @@ export function objectTransformations(object) {
   var translateY = document.getElementById("translateY")
   var translateZ = document.getElementById("translateZ")
 
-  object.rotateX(rotateX.value)
-  object.rotateY(rotateY.value)
-  object.rotateZ(rotateZ.value)
+  object.rotateX(parseInt(rotateX.value, 10))
+  object.rotateY(parseInt(rotateY.value, 10))
+  object.rotateZ(parseInt(rotateZ.value, 10))
 
-  object.scale.x = scaleX.value
-  object.scale.y = scaleY.value
-  object.scale.z = scaleZ.value
+  object.scale.x = parseInt(scaleX.value, 10)
+  object.scale.y = parseInt(scaleY.value, 10)
+  object.scale.z = parseInt(scaleZ.value, 10)
 
-  object.position.x = translateX.value
-  object.position.y = translateY.value
-  object.position.z = translateZ.value
+  object.position.x = parseInt(translateX.value, 10)
+  object.position.y = parseInt(translateY.value, 10)
+  object.position.z = parseInt(translateZ.value, 10)
 
   rotateX.oninput = function () {
-    console.log(this.value)
-    object.rotateX(this.value)
+    object.rotateX(DEGTORAD * parseInt(this.value, 10))
   }
 
   rotateY.oninput = function () {
-    object.rotateY(this.value)
+    object.rotateY(DEGTORAD * parseInt(this.value, 10))
   }
 
   rotateZ.oninput = function () {
-    object.rotateZ(this.value)
+    object.rotateZ(DEGTORAD * parseInt(this.value, 10))
   }
 
   scaleX.oninput = function () {
-    object.scale.x = this.value
+    object.scale.x = parseInt(this.value, 10)
   }
 
   scaleY.oninput = function () {
-    object.scale.y = this.value
+    object.scale.y = parseInt(this.value, 10)
   }
 
   scaleZ.oninput = function () {
-    object.scale.z = this.value
+    object.scale.z = parseInt(this.value, 10)
   }
 
   translateX.oninput = function () {
-    object.position.x = this.value
+    object.position.x = parseInt(this.value, 10)
   }
 
   translateY.oninput = function () {
-    object.position.y = this.value
+    object.position.y = parseInt(this.value, 10)
   }
 
   translateZ.oninput = function () {
-    object.position.z = this.value
+    object.position.z = parseInt(this.value, 10)
   }
 }

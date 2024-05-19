@@ -1,4 +1,4 @@
-import { WebGLTypes } from "../core/GLTypes.js"
+import { WebGLTypes } from "../core/index.js"
 
 export class BufferAttribute {
   /** @type {Float32Array} */
@@ -15,12 +15,13 @@ export class BufferAttribute {
   offset = 0
 
   constructor(data, size, options = {}) {
+    const { dtype, normalize, stride, offset } = options
     this.#data = new Float32Array(data)
     this.#size = size
-    this.#dtype = options.dtype || this.#dtype
-    this.normalize = options.normalize || this.normalize
-    this.stride = options.stride || this.stride
-    this.offset = options.offset || this.offset
+    this.#dtype = dtype || this.#dtype
+    this.normalize = normalize || this.normalize
+    this.stride = stride || this.stride
+    this.offset = offset || this.offset
   }
 
   get data() {
@@ -64,21 +65,29 @@ export class BufferAttribute {
     }
   }
 
-  convertToJson() {
+  toJSON() {
+    const options = {}
+    if (this.#dtype !== WebGLTypes.FLOAT) {
+      options.dtype = this.#dtype
+    }
+    if (this.normalize) {
+      options.normalize = this.normalize
+    }
+    if (this.stride) {
+      options.stride = this.stride
+    }
+    if (this.offset) {
+      options.offset = this.offset
+    }
     return {
       data: Array.from(this.#data),
       type: this.type,
       size: this.#size,
-      options: {
-        ...(this.dtype !== WebGLTypes.FLOAT ? { dtype: this.dtype } : {}),
-        ...(this.normalize ? { normalize: this.normalize } : {}),
-        ...(this.stride ? { stride: this.stride } : {}),
-        ...(this.offset ? { offset: this.offset } : {})
-      }
+      options: options
     }
   }
 
-  static convertFromJson(json, obj = null) {
+  static fromJSON(json, obj = null) {
     if (!obj) {
       obj = new BufferAttribute(
         new Float32Array(json.data),

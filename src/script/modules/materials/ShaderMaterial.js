@@ -1,3 +1,5 @@
+import { Color } from "./index.js"
+import { Vector3 } from "../math/index.js"
 export class ShaderMaterial {
   static #idCtr = 0
 
@@ -18,8 +20,7 @@ export class ShaderMaterial {
    * @param {{name: string, vertexShader: string, fragmentShader: string, uniforms: object}} options
    */
   constructor(options = {}) {
-    const { name, vertexShader, fragmentShader, uniforms } = options
-    this.name = name || this.type
+    const { vertexShader, fragmentShader, uniforms } = options
     this.#vertexShader = vertexShader
     this.#fragmentShader = fragmentShader
     this.#uniforms = uniforms
@@ -41,6 +42,10 @@ export class ShaderMaterial {
     return this.#uniforms
   }
 
+  set uniforms(value) {
+    this.#uniforms = value
+  }
+
   equals(material) {
     return this.#id === material.#id
   }
@@ -49,7 +54,7 @@ export class ShaderMaterial {
     return "ShaderMaterial"
   }
 
-  toJson() {
+  toJSON() {
     const uniformsData = {}
     for (const key in this.uniforms) {
       const uniform = this.uniforms[key]
@@ -63,14 +68,13 @@ export class ShaderMaterial {
     }
     return {
       type: this.type,
-      name: this.name,
       vertexShader: this.#vertexShader,
       fragmentShader: this.#fragmentShader,
       uniforms: uniformsData
     }
   }
 
-  static fromJson(json, obj = null) {
+  static fromJSON(json, obj = null) {
     const uniforms = {}
     for (const key in json.uniforms) {
       const uniform = json.uniforms[key]
@@ -84,7 +88,9 @@ export class ShaderMaterial {
     }
     json.uniforms = uniforms
     if (!obj) obj = new ShaderMaterial(json)
-    else obj.get.uniforms = json.uniforms
+    else {
+      obj.uniforms = json.uniforms
+    }
     return obj
   }
 }
