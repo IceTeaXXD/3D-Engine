@@ -44,7 +44,6 @@ export class Mesh extends Node {
     obj.geometry = GeometryDeserializer(json.geometry)
     obj.material = MaterialDeserializer(json.material)
 
-    console.log(obj.geometry)
     return obj
   }
 }

@@ -8,7 +8,6 @@ import { PlaneGeometry } from "./PlaneGeometry.js"
 import { TubeGeometry } from "./TubeGeometry.js"
 
 const GeometryDeserializer = (json) => {
-  console.log(json.type)
   switch (json.type) {
     case "BufferAttribute":
       return BufferAttribute.fromJSON(json)
