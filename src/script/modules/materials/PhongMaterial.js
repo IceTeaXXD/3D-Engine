@@ -1,4 +1,4 @@
-import { Color, ShaderMaterial } from "./index.js"
+import { Texture, Color, ShaderMaterial } from "./index.js"
 import { Vector3 } from "../math/index.js"
 import phongFrag from "./shaders/phong.frag.js"
 import phongVert from "./shaders/phong.vert.js"
@@ -6,11 +6,11 @@ import phongVert from "./shaders/phong.vert.js"
 export class PhongMaterial extends ShaderMaterial {
   /**
    * Creates an instance of PhongMaterial.
-   * @param {{name: string, ambient: Color, diffuse: Color, specular: Color, shininess: number, lightPosition: Vector3}} options
+   * @param {{name: string, ambient: Color, diffuse: Color, specular: Color, shininess: number, lightPosition: Vector3, useDiffuseTexture, diffuseTexture, useSpecularTexture, specularTexture }} options
    * @memberof PhongMaterial
    */
   constructor(options = {}) {
-    const { name, ambient, diffuse, specular, shininess, lightPosition } = options
+    const { name, ambient, diffuse, specular, shininess, lightPosition, useDiffuseTexture, diffuseTexture, useSpecularTexture, specularTexture } = options
     super({
       name,
       vertexShader: phongVert,
@@ -20,7 +20,11 @@ export class PhongMaterial extends ShaderMaterial {
         diffuse: diffuse || Color.white(),
         specular: specular || Color.white(),
         shininess: shininess || 30,
-        lightPosition: lightPosition || new Vector3(20,100, 300)
+        lightPosition: lightPosition || new Vector3(20,100, 300),
+        useDiffuseTexture: useDiffuseTexture || false,
+        diffuseTexture: diffuseTexture || {},
+        useSpecularTexture: useSpecularTexture || false,
+        specularTexture: specularTexture || {},
       }
     })
   }

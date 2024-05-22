@@ -111,8 +111,6 @@ export class WebGLRenderer {
       }
     };
     image.src = url;
-
-    return texture;
   }
 
   isPowerOf2(value) {

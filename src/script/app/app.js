@@ -83,6 +83,20 @@ let scene = new Scene()
 // scene.add(hollow_box)
 // objectTransformations(hollow_box)
 
+// Load texture and create a Mesh with it
+var image = "../../../public/img/bg.jpg"
+gl.configureTexture(image);
+const texturedBox = new Mesh(
+    new BoxGeometry(2, 2, 2),
+    new PhongMaterial({ useDiffuseTexture:true, useSpecularTexture:true })
+    // new PhongMaterial({ useSpecularTexture:true })
+    // new PhongMaterial({ useDiffuseTexture:true })
+    // new PhongMaterial({ specular: Color.red() })
+
+);
+scene.add(texturedBox);
+objectTransformations(texturedBox);
+
 // const hollow_prism = new Mesh(
 //   new HollowPrismGeometry(2, 2, 2, 0.2, 100),
 //   new PhongMaterial()
