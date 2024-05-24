@@ -70,53 +70,31 @@ export class WebGLRenderer {
     }
   }
 
-  configureTexture(url) {
-    const gl = this.#gl;
-    const texture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, texture);    
-    gl.texImage2D(
-      gl.TEXTURE_2D,
-      0,
-      gl.RGBA,
-      1,
-      1,
-      0,
-      gl.RGBA,
-      gl.UNSIGNED_BYTE,
-      new Uint8Array([0, 0, 0, 0])
-    );
-    const image = new Image();
-    image.onload = () => {
-      gl.bindTexture(gl.TEXTURE_2D, texture);
-      gl.texImage2D(
-        gl.TEXTURE_2D,
-        0,
-        gl.RGBA,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        image
-      );
-      // WebGL1 has different requirements for power of 2 images
-      // vs non power of 2 images so check if the image is a
-      // power of 2 in both dimensions.
-      if (this.isPowerOf2(image.width) && this.isPowerOf2(image.height)) {
-        // Yes, it's a power of 2. Generate mips.
-        gl.generateMipmap(gl.TEXTURE_2D);
-      } else {
-        // No, it's not a power of 2. Turn off mips and set
-        // wrapping to clamp to edge
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  loadImage(url, callback) {
+    var image = new Image();
+    image.src = url;
+    image.onload = callback;
+    return image;
+  }
+  
+  loadImages(urls, callback) {
+    var images = [];
+    var imagesToLoad = urls.length;
+  
+    // Called each time an image finished
+    // loading.
+    var onImageLoad = function() {
+      --imagesToLoad;
+      // If all the images are loaded call the callback.
+      if (imagesToLoad === 0) {
+        callback(images);
       }
     };
-    image.src = url;
-
-    return texture;
-  }
-
-  isPowerOf2(value) {
-    return (value & (value - 1)) === 0;
+  
+    for (var ii = 0; ii < imagesToLoad; ++ii) {
+      var image = this.loadImage(urls[ii], onImageLoad);
+      images.push(image);
+    }
   }
 
   render(Scene, Camera) {
@@ -148,6 +126,54 @@ export class WebGLRenderer {
       /** @type {ProgramInfo} */
       const info = this.createOrGetMaterial(material)
       this.setProgramInfo(info)
+
+      const urls = [
+        "../../src/public/img/glass/albedo.jpg",
+        "../../src/public/img/glass/roughness.jpg",
+        "../../src/public/img/glass/normal.jpg",
+        "../../src/public/img/glass/height.png"
+      ];
+  
+      this.loadImages(urls, (images) => {
+        var textures = [];
+        const gl = this.#gl;
+        for (var ii = 0; ii < 2; ++ii) {
+          var texture = gl.createTexture();
+          gl.bindTexture(gl.TEXTURE_2D, texture);
+  
+          // Set the parameters so we can render any size image.
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  
+          // Upload the image into the texture.
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[ii]);
+  
+          // add the texture to the array of textures.
+          textures.push(texture);
+        }
+  
+        const u_diffuseTextureLocation = gl.getUniformLocation(info.program, "u_diffuseTexture");
+        const u_specularTextureLocation = gl.getUniformLocation(info.program, "u_specularTexture");
+        const u_normalTextureLocation = gl.getUniformLocation(info.program, "u_normalTexture");
+        const u_displacementTextureLocation = gl.getUniformLocation(info.program, "u_displacementTexture");
+  
+        gl.uniform1i(u_diffuseTextureLocation, 0);
+        gl.uniform1i(u_specularTextureLocation, 1);
+        gl.uniform1i(u_normalTextureLocation, 2); 
+        gl.uniform1i(u_displacementTextureLocation, 3);
+  
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, textures[0]);
+        gl.activeTexture(gl.TEXTURE1);
+        gl.bindTexture(gl.TEXTURE_2D, textures[1]);
+        gl.activeTexture(gl.TEXTURE2);
+        gl.bindTexture(gl.TEXTURE_2D, textures[2]);
+        gl.activeTexture(gl.TEXTURE3);
+        gl.bindTexture(gl.TEXTURE_2D, textures[3]);
+      });
+
       setAttributes(this.#currentProgram, object.geometry.attributes)
       setUniforms(this.#currentProgram, {
         ...object.material.uniforms,
