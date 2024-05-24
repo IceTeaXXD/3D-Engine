@@ -67,7 +67,6 @@ export class OrbitControl {
       this.#camera.position.z += delta * 0.05
       return
     }
-    console.log(delta)
     if (this.#camera.zoom <= 0.05 && delta > 0) return
     this.#camera.zoom =
       delta > 0 ? this.#camera.zoom - 0.05 : this.#camera.zoom + 0.05

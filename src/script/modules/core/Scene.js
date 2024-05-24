@@ -1,24 +1,35 @@
-import { Node } from "./Node.js";
+import { Node } from "./Node.js"
 
 export class Scene extends Node {
-    get type() {
-        return "Scene";
-    }
+  isUpdated = false
 
-    setScene(scene) {
-        this.scene = scene;
-    }
+  constructor() {
+    super()
+  }
 
-    toJSON() {
-        return { 
-            ...super.toJSON(),
-            type: this.type,
-        };
-    }
+  add(object) {
+    super.add(object)
+    this.isUpdated = true
+  }
 
-    static fromJSON(json, obj=null) {
-        if (!obj) obj = new Scene();
-        super.fromJSON(json, obj);
-        return obj;
+  get type() {
+    return "Scene"
+  }
+
+  setScene(scene) {
+    this.scene = scene
+  }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      type: this.type
     }
+  }
+
+  static fromJSON(json, obj = null) {
+    if (!obj) obj = new Scene()
+    super.fromJSON(json, obj)
+    return obj
+  }
 }

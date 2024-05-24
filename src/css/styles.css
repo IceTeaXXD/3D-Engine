@@ -105,6 +105,17 @@ body {
   margin: 0 10px;
 }
 
+.component-select {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.component-tree {
+  height: 100%;
+  padding-bottom: 10px;
+}
+
 /* RIGHT SIDE BAR */
 .sidebar-right {
   position: fixed;
