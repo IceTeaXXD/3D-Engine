@@ -6,11 +6,11 @@ import phongVert from "./shaders/phong.vert.js"
 export class PhongMaterial extends ShaderMaterial {
   /**
    * Creates an instance of PhongMaterial.
-   * @param {{name: string, ambient: Color, diffuse: Color, specular: Color, shininess: number, lightPosition: Vector3, useTexture, diffuseTexture, specularTexture, normalTexture }} options
+   * @param {{name: string, ambient: Color, diffuse: Color, specular: Color, shininess: number, lightPosition: Vector3, useTexture: Boolean, texture: String }} options
    * @memberof PhongMaterial
    */
   constructor(options = {}) {
-    const { name, ambient, diffuse, specular, shininess, lightPosition, useTexture, diffuseTexture, specularTexture, normalTexture } = options
+    const { name, ambient, diffuse, specular, shininess, lightPosition, useTexture, texture } = options
     super({
       name,
       vertexShader: phongVert,
@@ -21,7 +21,8 @@ export class PhongMaterial extends ShaderMaterial {
         specular: specular || Color.white(),
         shininess: shininess || 30,
         lightPosition: lightPosition || new Vector3(20,100, 300),
-        useTexture: useTexture || false
+        useTexture: useTexture || false,
+        texture: texture || "brick"
       }
     })
   }

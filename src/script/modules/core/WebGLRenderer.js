@@ -127,12 +127,16 @@ export class WebGLRenderer {
       const info = this.createOrGetMaterial(material)
       this.setProgramInfo(info)
 
+      const tex = material.uniforms.texture;
+
       const urls = [
-        "../../src/public/img/glass/albedo.jpg",
-        "../../src/public/img/glass/roughness.jpg",
-        "../../src/public/img/glass/normal.jpg",
-        "../../src/public/img/glass/height.png"
+        `../../src/public/img/${tex}/albedo.jpg`,
+        `../../src/public/img/${tex}/roughness.jpg`,
+        `../../src/public/img/${tex}/normal.jpg`,
+        `../../src/public/img/${tex}/height.png`
       ];
+
+      // console.log(urls);
   
       this.loadImages(urls, (images) => {
         var textures = [];
