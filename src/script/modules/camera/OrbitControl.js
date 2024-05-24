@@ -64,11 +64,13 @@ export class OrbitControl {
     event.preventDefault()
     const delta = event.deltaY
     if (this.#camera.type == "PerspectiveCamera") {
-      this.#camera.position.z += delta * 0.1
+      this.#camera.position.z += delta * 0.05
       return
     }
-    if (this.#camera.zoom <= 0.02 && delta < 0) return
-    this.#camera.zoom = delta > 0 ? this.#camera.zoom + 0.02 : this.#camera.zoom - 0.02
+    console.log(delta)
+    if (this.#camera.zoom <= 0.05 && delta > 0) return
+    this.#camera.zoom =
+      delta > 0 ? this.#camera.zoom - 0.05 : this.#camera.zoom + 0.05
   }
 
   update() {

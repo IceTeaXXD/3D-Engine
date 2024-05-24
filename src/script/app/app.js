@@ -30,9 +30,15 @@ import model from "./models/index.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
-canvas.width = 800
-canvas.height = 600
-canvas.style.backgroundColor = "white"
+canvas.width = window.innerWidth - 610
+canvas.height = window.innerHeight - 70
+
+canvas.style.backgroundColor = "black"
+
+var sceneColorPicker = document.getElementById("scenecolor")
+sceneColorPicker.oninput = function () {
+  canvas.style.backgroundColor = this.value
+}
 const gl = new WebGLRenderer(canvas)
 
 const cameras = {
@@ -88,12 +94,11 @@ const hollow_prism = new Mesh(
   new HollowBoxGeometry(2, 2, 2, 0.2, 10),
   new PhongMaterial()
 )
-// scene.add(hollow_prism)
-// objectTransformations(hollow_prism)
+scene.add(hollow_prism)
+objectTransformations(hollow_prism)
 
-scene.add(model)
-console.log(model.children[0].children)
-objectTransformations(model.children[0].children[2].children[0])
+// scene.add(model)
+// objectTransformations(model)
 
 // const body = new Mesh(
 //   new HollowPrismGeometry(2, 2, 2, 0.2, 100),
