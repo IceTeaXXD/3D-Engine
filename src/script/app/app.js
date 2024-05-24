@@ -84,11 +84,17 @@ let scene = new Scene()
 // objectTransformations(hollow_box)
 
 // Load texture and create a Mesh with it
-var image = "../../../public/img/bg.jpg"
-gl.configureTexture(image);
+// var image = "../../../public/img/noodles.jpg"
+// gl.configureTexture(image);
+// gl.loadAndConfigureTexture("../../../public/img/wood/albedo.jpg", 'u_diffuseTexture', 0);
+// gl.loadAndConfigureTexture("../../../public/img/wood/height.png", 'u_specularTexture', 1);
+// gl.loadAndConfigureTexture("../../../public/img/wood/normal.jpg", 'normalTexture', 2);
+
 const texturedBox = new Mesh(
     new BoxGeometry(2, 2, 2),
-    new PhongMaterial({ useDiffuseTexture:true, useSpecularTexture:true })
+    new PhongMaterial({ 
+      useTexture: true
+   })
     // new PhongMaterial({ useSpecularTexture:true })
     // new PhongMaterial({ useDiffuseTexture:true })
     // new PhongMaterial({ specular: Color.red() })
@@ -118,5 +124,6 @@ function render() {
   requestAnimationFrame(render)
   orbitControl[cameras.current].update()
   gl.render(scene, cameras[cameras.current])
+  
 }
 render()

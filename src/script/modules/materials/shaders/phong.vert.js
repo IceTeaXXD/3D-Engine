@@ -17,7 +17,7 @@ varying highp vec2 v_textureCoord;
 void main() {
     gl_Position = u_viewMatrix * u_worldMatrix * a_position;
 
-    v_pos = gl_Position.xyz / gl_Position.w;
+    v_pos = vec3(normalize(u_worldMatrix * a_position));
     v_normal = mat3(u_worldMatrix) * a_normal;
     v_color = mix(vec4(1,1,1,1), a_color, float(u_useVertexColor));
     v_textureCoord = a_textureCoord;
