@@ -28,7 +28,7 @@ void main() {
     float kSpec = pow(max(dot(N, H), 0.0), u_shininess);
     vec3 specularColor;
 
-    vec3 displacement;
+    vec3 displacementColor;
 
     vec3 normalColor;
 

@@ -69,46 +69,14 @@ const orbitControl = {
 }
 
 let scene = new Scene()
-// const box = new Mesh(
-//   new BoxGeometry(2, 2, 2),
-//   new BasicMaterial({ color: Color.red() })
-// )
-// scene.add(box)
-// objectTransformations(box)
-
-// const hollow_box = new Mesh(
-//   new HollowBoxGeometry(2, 2, 2, 0.2),
-//   new PhongMaterial()
-// )
-// scene.add(hollow_box)
-// objectTransformations(hollow_box)
-
-// Load texture and create a Mesh with it
-// var image = "../../../public/img/noodles.jpg"
-// gl.configureTexture(image);
-// gl.loadAndConfigureTexture("../../../public/img/wood/albedo.jpg", 'u_diffuseTexture', 0);
-// gl.loadAndConfigureTexture("../../../public/img/wood/height.png", 'u_specularTexture', 1);
-// gl.loadAndConfigureTexture("../../../public/img/wood/normal.jpg", 'normalTexture', 2);
-
 const texturedBox = new Mesh(
     new BoxGeometry(2, 2, 2),
     new PhongMaterial({ 
       useTexture: true
    })
-    // new PhongMaterial({ useSpecularTexture:true })
-    // new PhongMaterial({ useDiffuseTexture:true })
-    // new PhongMaterial({ specular: Color.red() })
-
 );
 scene.add(texturedBox);
 objectTransformations(texturedBox);
-
-// const hollow_prism = new Mesh(
-//   new HollowPrismGeometry(2, 2, 2, 0.2, 100),
-//   new PhongMaterial()
-// )
-// scene.add(hollow_prism)
-// objectTransformations(hollow_prism)
 
 let sceneArr = [scene]
 

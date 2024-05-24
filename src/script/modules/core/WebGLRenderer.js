@@ -128,9 +128,10 @@ export class WebGLRenderer {
       this.setProgramInfo(info)
 
       const urls = [
-        "../../../../public/img/wood/albedo.jpg",
-        "../../../../public/img/wood/height.png",
-        "../../../../public/img/wood/normal.jpg"
+        "../../src/public/img/glass/albedo.jpg",
+        "../../src/public/img/glass/roughness.jpg",
+        "../../src/public/img/glass/normal.jpg",
+        "../../src/public/img/glass/height.png"
       ];
   
       this.loadImages(urls, (images) => {
@@ -156,10 +157,12 @@ export class WebGLRenderer {
         const u_diffuseTextureLocation = gl.getUniformLocation(info.program, "u_diffuseTexture");
         const u_specularTextureLocation = gl.getUniformLocation(info.program, "u_specularTexture");
         const u_normalTextureLocation = gl.getUniformLocation(info.program, "u_normalTexture");
+        const u_displacementTextureLocation = gl.getUniformLocation(info.program, "u_displacementTexture");
   
         gl.uniform1i(u_diffuseTextureLocation, 0);
         gl.uniform1i(u_specularTextureLocation, 1);
         gl.uniform1i(u_normalTextureLocation, 2); 
+        gl.uniform1i(u_displacementTextureLocation, 3);
   
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, textures[0]);
@@ -167,6 +170,8 @@ export class WebGLRenderer {
         gl.bindTexture(gl.TEXTURE_2D, textures[1]);
         gl.activeTexture(gl.TEXTURE2);
         gl.bindTexture(gl.TEXTURE_2D, textures[2]);
+        gl.activeTexture(gl.TEXTURE3);
+        gl.bindTexture(gl.TEXTURE_2D, textures[3]);
       });
 
       setAttributes(this.#currentProgram, object.geometry.attributes)
