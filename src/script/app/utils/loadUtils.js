@@ -1,7 +1,7 @@
 import { JSONDeserializer } from "../../modules/core/index.js"
 
 export function loadUtil(onSceneLoad) {
-  const loadButton = document.getElementById("loadbtn")
+  const loadButton = document.getElementById("load")
   loadButton.addEventListener("click", () => {
     var input = document.createElement("input")
     input.type = "file"

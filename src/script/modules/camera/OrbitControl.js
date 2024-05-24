@@ -61,9 +61,15 @@ export class OrbitControl {
   }
 
   #onMouseWheel(event) {
-    if (!this.#isZooming) return
+    event.preventDefault()
     const delta = event.deltaY
-    this.#camera.zoom += delta
+    if (this.#camera.type == "PerspectiveCamera") {
+      this.#camera.position.z += delta * 0.05
+      return
+    }
+    if (this.#camera.zoom <= 0.05 && delta > 0) return
+    this.#camera.zoom =
+      delta > 0 ? this.#camera.zoom - 0.05 : this.#camera.zoom + 0.05
   }
 
   update() {

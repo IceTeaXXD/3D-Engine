@@ -4,7 +4,7 @@ import { Scene } from "../../modules/core/index.js"
  * @param {Array<Scene>} scenes
  */
 export function saveUtil(scenes) {
-  const button = document.getElementById("savebtn")
+  const button = document.getElementById("save")
   button.addEventListener("click", () => {
     const res = {}
     res.scenes = scenes.map((scene) => scene.toJSON())
@@ -13,7 +13,7 @@ export function saveUtil(scenes) {
     })
     const a = document.createElement("a")
     a.href = URL.createObjectURL(file)
-    a.download = "scene.json"
+    a.download = "scene-" + new Date().toLocaleString().replace(/[^0-9]/g, "-") + ".json"
     a.click()
   })
 }

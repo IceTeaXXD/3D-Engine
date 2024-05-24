@@ -3,160 +3,328 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3D WebGL</title>
-    <link rel="stylesheet" href="css/styles.css" />
     <link
-      href="https://fonts.googleapis.com/css?family=Inter"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script type="module" src="script/app/app.js"></script>
+    <title>3D Engine - Mariyati</title>
   </head>
   <body>
-    <h1>3D WebGL</h1>
-    <div class="row">
-      <div class="toolbar-1">
-        <h4>Component Tree</h4>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="nav-shape-menu">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a id="Box" class="nav-link"
+              ><svg
+                width="25px"
+                height="25px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17.5777 4.43152L15.5777 3.38197C13.8221 2.46066 12.9443 2 12 2C11.0557 2 10.1779 2.46066 8.42229 3.38197L6.42229 4.43152C4.64855 5.36234 3.6059 5.9095 2.95969 6.64132L12 11.1615L21.0403 6.64132C20.3941 5.9095 19.3515 5.36234 17.5777 4.43152Z"
+                  fill="#000000"
+                />
+                <path
+                  d="M21.7484 7.96435L12.75 12.4635V21.904C13.4679 21.7252 14.2848 21.2965 15.5777 20.618L17.5777 19.5685C19.7294 18.4393 20.8052 17.8748 21.4026 16.8603C22 15.8458 22 14.5833 22 12.0585V11.9415C22 10.0489 22 8.86558 21.7484 7.96435Z"
+                  fill="#000000"
+                />
+                <path
+                  d="M11.25 21.904V12.4635L2.25164 7.96434C2 8.86557 2 10.0489 2 11.9415V12.0585C2 14.5833 2 15.8458 2.5974 16.8603C3.19479 17.8748 4.27063 18.4393 6.42229 19.5685L8.42229 20.618C9.71524 21.2965 10.5321 21.7252 11.25 21.904Z"
+                  fill="#000000"
+                /></svg
+            ></a>
+          </li>
+          <li class="nav-item">
+            <a id="Cube" class="nav-link"
+              ><svg
+                width="25px"
+                height="25px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 10.2308L3.08495 7.02346M12 10.2308L20.9178 7.03406M12 10.2308V20.8791M5.13498 18.5771L10.935 20.6242C11.3297 20.7635 11.527 20.8331 11.7294 20.8608C11.909 20.8853 12.091 20.8853 12.2706 20.8608C12.473 20.8331 12.6703 20.7635 13.065 20.6242L18.865 18.5771C19.6337 18.3058 20.018 18.1702 20.3018 17.9269C20.5523 17.7121 20.7459 17.4386 20.8651 17.1308C21 16.7823 21 16.3747 21 15.5595V8.44058C21 7.62542 21 7.21785 20.8651 6.86935C20.7459 6.56155 20.5523 6.28804 20.3018 6.0732C20.018 5.82996 19.6337 5.69431 18.865 5.42301L13.065 3.37595C12.6703 3.23665 12.473 3.167 12.2706 3.13936C12.091 3.11484 11.909 3.11484 11.7294 3.13936C11.527 3.167 11.3297 3.23665 10.935 3.37595L5.13498 5.42301C4.36629 5.69431 3.98195 5.82996 3.69824 6.0732C3.44766 6.28804 3.25414 6.56155 3.13495 6.86935C3 7.21785 3 7.62542 3 8.44058V15.5595C3 16.3747 3 16.7823 3.13495 17.1308C3.25414 17.4386 3.44766 17.7121 3.69824 17.9269C3.98195 18.1702 4.36629 18.3058 5.13498 18.5771Z"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                /></svg
+            ></a>
+          </li>
+          <li class="nav-item">
+            <a id="Tube" class="nav-link">
+              <svg
+                width="25px"
+                height="25px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  id="Vector"
+                  d="M18 7V17C18 18.6569 15.3137 20 12 20C8.68629 20 6 18.6569 6 17V7M18 7C18 5.34315 15.3137 4 12 4C8.68629 4 6 5.34315 6 7M18 7C18 8.65685 15.3137 10 12 10C8.68629 10 6 8.65685 6 7"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a id="Prism" class="nav-link"
+              ><svg
+                width="25px"
+                height="25px"
+                viewBox="0 0 20.00 20.00"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#000000"
+                stroke="#000000"
+              >
+                <path
+                  d="M 14.970703 2.75 A 0.50005 0.50005 0 0 0 14.759766 2.8125 L 4.7871094 8.296875 A 0.50005 0.50005 0 0 0 4.7792969 8.3007812 L 4.7597656 8.3125 A 0.50005 0.50005 0 0 0 4.5664062 8.5019531 L 1.5664062 13.751953 A 0.50005 0.50005 0 0 0 1.7480469 14.431641 L 7.7480469 17.931641 A 0.50005 0.50005 0 0 0 8.2402344 17.9375 L 8.2460938 17.933594 A 0.50005 0.50005 0 0 0 8.2714844 17.919922 L 18.240234 12.4375 A 0.50005 0.50005 0 0 0 18.472656 11.837891 L 15.472656 3.0878906 A 0.50005 0.50005 0 0 0 14.970703 2.75 z M 14.720703 3.9746094 L 17.390625 11.763672 L 8.2792969 16.775391 L 5.609375 8.984375 L 14.720703 3.9746094 z M 4.8847656 9.9570312 L 7.0917969 16.392578 L 2.6796875 13.818359 L 4.8847656 9.9570312 z "
+                  style="fill: #222222; fill-opacity: 1; stroke-width: 1.04"
+                /></svg
+            ></a>
+          </li>
+          <li class="nav-item">
+            <a id="Pyramid" class="nav-link"
+              ><svg
+                fill="#000000"
+                width="25px"
+                height="25px"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.485,16.857l10,6c.027.016.057.023.084.036s.057.026.087.038a.892.892,0,0,0,.688,0c.03-.012.058-.024.087-.038s.057-.02.084-.036l10-6a1,1,0,0,0,.3-1.438l-10-14c-.013-.018-.035-.024-.049-.04a.962.962,0,0,0-1.53,0c-.014.016-.036.022-.049.04l-10,14a1,1,0,0,0,.3,1.438ZM13,20.234V5.121L20.557,15.7ZM11,5.121V20.234L3.443,15.7Z"
+                /></svg
+            ></a>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-title">
+        <h2>3D Engine</h2>
+      </div>
+      <div class="nav-help-icon">
+        <div class="canvas-buttons">
+          <button type="button" class="btn btn-primary" id="save">Save</button>
+          <button type="button" class="btn btn-success" id="load">Load</button>
+        </div>
+        <a id="help" href="#">
+          <svg
+            width="30px"
+            height="30px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9.08997 9.00007C9.32507 8.33174 9.78912 7.76818 10.3999 7.40921C11.0107 7.05023 11.7289 6.91901 12.4271 7.03879C13.1254 7.15856 13.7588 7.5216 14.215 8.0636C14.6713 8.60561 14.921 9.2916 14.92 10.0001C14.92 12.0001 11.92 13.0001 11.92 13.0001M12 17.0001H12.01M3 7.94153V16.0586C3 16.4013 3 16.5726 3.05048 16.7254C3.09515 16.8606 3.16816 16.9847 3.26463 17.0893C3.37369 17.2077 3.52345 17.2909 3.82297 17.4573L11.223 21.5684C11.5066 21.726 11.6484 21.8047 11.7985 21.8356C11.9315 21.863 12.0685 21.863 12.2015 21.8356C12.3516 21.8047 12.4934 21.726 12.777 21.5684L20.177 17.4573C20.4766 17.2909 20.6263 17.2077 20.7354 17.0893C20.8318 16.9847 20.9049 16.8606 20.9495 16.7254C21 16.5726 21 16.4013 21 16.0586V7.94153C21 7.59889 21 7.42756 20.9495 7.27477C20.9049 7.13959 20.8318 7.01551 20.7354 6.91082C20.6263 6.79248 20.4766 6.70928 20.177 6.54288L12.777 2.43177C12.4934 2.27421 12.3516 2.19543 12.2015 2.16454C12.0685 2.13721 11.9315 2.13721 11.7985 2.16454C11.6484 2.19543 11.5066 2.27421 11.223 2.43177L3.82297 6.54288C3.52345 6.70928 3.37369 6.79248 3.26463 6.91082C3.16816 7.01551 3.09515 7.13959 3.05048 7.27477C3 7.42756 3 7.59889 3 7.94153Z"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Left SIDE BAR -->
+    <div class="sidebar-left">
+      <div class="sidebar-title">
+        <a>Component Tree</a>
+      </div>
+      <div class="top">
         <div class="component-tree">
-          <!-- <div class="component" id="component1">Component 1</div> -->
+          <select
+            class="component-select"
+            multiple
+            aria-label="multiple select example"
+          >
+            <option value="1">One</option>
+            <option value="2" style="padding-left: 10px;">Two</option>
+            <option value="3">Three</option>
+          </select>
         </div>
-        <div class="grid">
-          <h6>Animation</h6>
-          <button class="onoffButton" id="animation">ON</button>
-          <h6>Shading</h6>
-          <button class="onoffButton" id="shading">ON</button>
+      </div>
+      <div class="sidebar-title">
+        <a>Scene Settings</a>
+      </div>
+      <div class="bottom">
+        <div class="color-menu">
+          <label>Scene Color: </label>
+          <input type="color" id="scenecolor" value="#000000" />
         </div>
-        <h5>Camera Controls</h5>
-        <div class="grid">
-          <h6>Projection</h6>
-          <!-- dropdown -->
-          <div class="input">
-            <select id="projection-type">
-              <option value="perspective">Perspective</option>
-              <option value="ortographic">Ortographic</option>
-              <option value="oblique">Oblique</option>
-            </select>
-          </div>
-          <h6>Radius</h6>
-          <input
-            type="range"
-            min="1"
-            max="50"
-            step="1"
-            value="25"
-            id="radiusCamera"
-          />
-        </div>
-        <h5>Mapping</h5>
         <div class="dropdown">
-          <button class="dropbtn" id="mappingButton">Texture</button>
-          <div class="dropdown-content">
-            <a onclick="setMapping('Texture')">Texture</a>
-            <a onclick="setMapping('Environment')">Environment</a>
-            <a onclick="setMapping('Bump')">Bump</a>
+          <label>Camera: </label>
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Perspective
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" value="perspective">Perspective</a>
+            <a class="dropdown-item" value="oblique">Oblique</a>
+            <a class="dropdown-item" value="ortographic">Ortographic</a>
           </div>
         </div>
       </div>
-      <canvas id="canvas"></canvas>
-      <div class="toolbar-2">
-        <h4>Transformation</h4>
-        <h5>Rotation</h5>
-        <div class="grid">
-          <h6>X</h6>
+    </div>
+
+    <!-- CANVAS -->
+    <div class="canvas-container">
+      <canvas id="canvas" style="border: solid #444"></canvas>
+    </div>
+
+    <!-- Right SIDE BAR -->
+    <div class="sidebar-right">
+      <div class="sidebar-title">
+        <a>Transformation Menu</a>
+      </div>
+      <div class="transform-menu">
+        <label>Rotation</label>
+        <div class="transform-input">
+          <label>X</label>
           <input
-            type="range"
-            min="0"
-            max="90"
-            step="1"
-            value="0"
+            type="number"
+            class="form-control draggable-number-input"
             id="rotateX"
-          />
-          <h6>Y</h6>
-          <input
-            type="range"
-            min="0"
-            max="90"
-            step="1"
+            min="-360"
+            max="360"
             value="0"
+          />
+        </div>
+        <div class="transform-input">
+          <label>Y</label>
+          <input
+            type="number"
+            class="form-control draggable-number-input"
             id="rotateY"
-          />
-          <h6>Z</h6>
-          <input
-            type="range"
-            min="0"
-            max="90"
-            step="1"
+            min="-360"
+            max="360"
             value="0"
+          />
+        </div>
+        <div class="transform-input">
+          <label>Z</label>
+          <input
+            type="number"
+            class="form-control draggable-number-input"
             id="rotateZ"
+            min="-360"
+            max="360"
+            value="0"
           />
         </div>
-        <h5>Scale</h5>
-        <div class="grid">
-          <h6>X</h6>
-          <input type="range" min="1" max="10" step="1" value="5" id="scaleX" />
-          <h6>Y</h6>
-          <input type="range" min="1" max="10" step="1" value="5" id="scaleY" />
-          <h6>Z</h6>
-          <input type="range" min="1" max="10" step="1" value="5" id="scaleZ" />
-        </div>
-        <h5>Translate</h5>
-        <div class="grid">
-          <h6>X</h6>
+      </div>
+      <div class="transform-menu">
+        <label>Translation</label>
+        <div class="transform-input">
+          <label>X</label>
           <input
-            type="range"
-            min="-10"
-            max="10"
-            step="1"
-            value="0"
+            type="number"
+            class="form-control draggable-number-input"
             id="translateX"
-          />
-          <h6>Y</h6>
-          <input
-            type="range"
-            min="-10"
-            max="10"
-            step="1"
+            min="-1000"
+            max="1000"
             value="0"
+          />
+        </div>
+        <div class="transform-input">
+          <label>Y</label>
+          <input
+            type="number"
+            class="form-control draggable-number-input"
             id="translateY"
-          />
-          <h6>Z</h6>
-          <input
-            type="range"
-            min="-10"
-            max="10"
-            step="1"
+            min="-1000"
+            max="1000"
             value="0"
+          />
+        </div>
+        <div class="transform-input">
+          <label>Z</label>
+          <input
+            type="number"
+            class="form-control draggable-number-input"
             id="translateZ"
+            min="-1000"
+            max="1000"
+            value="0"
+          />
+        </div>
+      </div>
+      <div class="transform-menu">
+        <label>Scale</label>
+        <div class="transform-input">
+          <label>X</label>
+          <input
+            type="number"
+            class="form-control draggable-number-input"
+            id="scaleX"
+            min="-1000"
+            max="1000"
+            value="0"
+          />
+        </div>
+        <div class="transform-input">
+          <label>Y</label>
+          <input
+            type="number"
+            class="form-control draggable-number-input"
+            id="scaleY"
+            min="-1000"
+            max="1000"
+            value="0"
+          />
+        </div>
+        <div class="transform-input">
+          <label>Z</label>
+          <input
+            type="number"
+            class="form-control draggable-number-input"
+            id="scaleZ"
+            min="-1000"
+            max="1000"
+            value="0"
           />
         </div>
       </div>
     </div>
-    <div class="toolbar-3">
-      <div class="column file-column">
-        <h4>File</h4>
-        <button class="button" id="savebtn">Save</button>
-        <button class="button" id="loadbtn">Load</button>
-      </div>
-    </div>
-
-    <script type="module" src="./script/app/app.js"></script>
-    <script>
-      function setProjection(projection) {
-        document.getElementById("projectionButton").textContent = projection
-      }
-      function setMapping(mapping) {
-        document.getElementById("mappingButton").textContent = mapping
-      }
-      let components = document.querySelectorAll(".component")
-
-      components.forEach((component) => {
-        component.addEventListener("click", function () {
-          // Remove active class from all components
-          components.forEach((c) => c.classList.remove("active"))
-
-          // Add active class to clicked component
-          this.classList.add("active")
-        })
-      })
-    </script>
   </body>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
+  <script type="module" src="./script/app/app.js"></script>
+  <script src="./script/app/utils/interfaceUtils.js"></script>
 </html>

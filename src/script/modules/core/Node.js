@@ -54,9 +54,6 @@ export class Node {
       this.#quaternion.toEuler(_v1)
       this.#rotation.setVector(_v1, false)
     }
-    this.#rotation.onChange = () => {
-      this.#quaternion.setEuler(this.#rotation, 0, 0, false)
-    }
   }
 
   get type() {
@@ -87,6 +84,11 @@ export class Node {
 
   get rotation() {
     return this.#rotation
+  }
+
+  set rotation(value) {
+    this.#rotation = value
+    this.#quaternion.setEuler(value)
   }
 
   get worldRotation() {

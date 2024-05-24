@@ -1,6 +1,38 @@
 import { DEGTORAD } from "../../modules/math/index.js"
+import { Vector3 } from "../../modules/math/index.js"
 
 export function objectTransformations(object) {
+  $(document).ready(function () {
+    let dragging = false
+    let startX, startValue
+
+    $(".draggable-number-input").on("mousedown", function (event) {
+      dragging = true
+      startX = event.pageX
+      startValue = parseInt($(this).val()) || 0
+      $("body").addClass("no-select dragging-cursor")
+      $(this).addClass("active-drag")
+    })
+
+    $(document).on("mousemove", function (event) {
+      if (dragging) {
+        let change = event.pageX - startX
+        let newValue = startValue + change
+        let min = parseInt($(".active-drag").attr("min"))
+        let max = parseInt($(".active-drag").attr("max"))
+        newValue = Math.min(Math.max(newValue, min), max)
+        $(".active-drag").val(newValue)
+        $(".active-drag").trigger("input")
+      }
+    })
+
+    $(document).on("mouseup", function () {
+      dragging = false
+      $("body").removeClass("no-select dragging-cursor")
+      $(".draggable-number-input").removeClass("active-drag")
+    })
+  })
+
   var rotateX = document.getElementById("rotateX")
   var rotateY = document.getElementById("rotateY")
   var rotateZ = document.getElementById("rotateZ")
@@ -13,51 +45,75 @@ export function objectTransformations(object) {
   var translateY = document.getElementById("translateY")
   var translateZ = document.getElementById("translateZ")
 
-  object.rotateX(parseInt(rotateX.value, 10))
-  object.rotateY(parseInt(rotateY.value, 10))
-  object.rotateZ(parseInt(rotateZ.value, 10))
+  rotateX.value = object.rotation.x * DEGTORAD
+  rotateY.value = object.rotation.y * DEGTORAD
+  rotateZ.value = object.rotation.z * DEGTORAD
 
-  object.scale.x = parseInt(scaleX.value, 10)
-  object.scale.y = parseInt(scaleY.value, 10)
-  object.scale.z = parseInt(scaleZ.value, 10)
+  scaleX.value = object.scale.x
+  scaleY.value = object.scale.y
+  scaleZ.value = object.scale.z
 
-  object.position.x = parseInt(translateX.value, 10)
-  object.position.y = parseInt(translateY.value, 10)
-  object.position.z = parseInt(translateZ.value, 10)
+  translateX.value = object.position.x
+  translateY.value = object.position.y
+  translateZ.value = object.position.z
 
   rotateX.oninput = function () {
-    object.rotateX(DEGTORAD * parseInt(this.value, 10))
+    const value = parseInt(this.value, 10)
+    if (value)
+      object.rotation = new Vector3(
+        DEGTORAD * value,
+        object.rotation.y,
+        object.rotation.z
+      )
   }
 
   rotateY.oninput = function () {
-    object.rotateY(DEGTORAD * parseInt(this.value, 10))
+    const value = parseInt(this.value, 10)
+    if (value)
+      object.rotation = new Vector3(
+        object.rotation.x,
+        DEGTORAD * value,
+        object.rotation.z
+      )
   }
 
   rotateZ.oninput = function () {
-    object.rotateZ(DEGTORAD * parseInt(this.value, 10))
+    const value = parseInt(this.value, 10)
+    if (value)
+      object.rotation = new Vector3(
+        object.rotation.x,
+        object.rotation.y,
+        DEGTORAD * value
+      )
   }
 
   scaleX.oninput = function () {
-    object.scale.x = parseInt(this.value, 10)
+    const value = parseInt(this.value, 10)
+    if (value) object.scale.x = value
   }
 
   scaleY.oninput = function () {
-    object.scale.y = parseInt(this.value, 10)
+    const value = parseInt(this.value, 10)
+    if (value) object.scale.y = value
   }
 
   scaleZ.oninput = function () {
-    object.scale.z = parseInt(this.value, 10)
+    const value = parseInt(this.value, 10)
+    if (value) object.scale.z = value
   }
 
   translateX.oninput = function () {
-    object.position.x = parseInt(this.value, 10)
+    const value = parseInt(this.value, 10)
+    if (value) object.position.x = value
   }
 
   translateY.oninput = function () {
-    object.position.y = parseInt(this.value, 10)
+    const value = parseInt(this.value, 10)
+    if (value) object.position.y = value
   }
 
   translateZ.oninput = function () {
-    object.position.z = parseInt(this.value, 10)
+    const value = parseInt(this.value, 10)
+    if (value) object.position.z = value
   }
 }
