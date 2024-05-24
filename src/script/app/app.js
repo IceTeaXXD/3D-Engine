@@ -69,26 +69,14 @@ const orbitControl = {
 }
 
 let scene = new Scene()
-// const box = new Mesh(
-//   new BoxGeometry(2, 2, 2),
-//   new BasicMaterial({ color: Color.red() })
-// )
-// scene.add(box)
-// objectTransformations(box)
-
-// const hollow_box = new Mesh(
-//   new HollowBoxGeometry(2, 2, 2, 0.2),
-//   new PhongMaterial()
-// )
-// scene.add(hollow_box)
-// objectTransformations(hollow_box)
-
-// const hollow_prism = new Mesh(
-//   new HollowPrismGeometry(2, 2, 2, 0.2, 100),
-//   new PhongMaterial()
-// )
-// scene.add(hollow_prism)
-// objectTransformations(hollow_prism)
+const texturedBox = new Mesh(
+    new BoxGeometry(2, 2, 2),
+    new PhongMaterial({ 
+      useTexture: true
+   })
+);
+scene.add(texturedBox);
+objectTransformations(texturedBox);
 
 let sceneArr = [scene]
 
@@ -104,5 +92,6 @@ function render() {
   requestAnimationFrame(render)
   orbitControl[cameras.current].update()
   gl.render(scene, cameras[cameras.current])
+  
 }
 render()
