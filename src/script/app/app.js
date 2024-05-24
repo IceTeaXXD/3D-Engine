@@ -26,6 +26,7 @@ import {
   ObliqueCamera,
   OrbitControl
 } from "../modules/camera/index.js"
+import model from "./models/index.js"
 
 const v = new Vector3()
 const canvas = document.getElementById("canvas")
@@ -83,12 +84,49 @@ let scene = new Scene()
 // scene.add(hollow_box)
 // objectTransformations(hollow_box)
 
-// const hollow_prism = new Mesh(
+const hollow_prism = new Mesh(
+  new HollowBoxGeometry(2, 2, 2, 0.2, 10),
+  new PhongMaterial()
+)
+// scene.add(hollow_prism)
+// objectTransformations(hollow_prism)
+
+scene.add(model)
+console.log(model.children[0].children)
+objectTransformations(model.children[0].children[2].children[0])
+
+// const body = new Mesh(
 //   new HollowPrismGeometry(2, 2, 2, 0.2, 100),
 //   new PhongMaterial()
 // )
-// scene.add(hollow_prism)
-// objectTransformations(hollow_prism)
+// body.position.set(0, -5, 0)
+// body.rotateX(90 * DEGTORAD)
+// body.scale.z = 4
+
+// const lefthand = new Mesh(
+//   new BoxGeometry(1, 1, 1),
+//   new PhongMaterial()
+// )
+// lefthand.position.set(2, 0, 0)
+
+// const righthand = new Mesh(
+//   new BoxGeometry(1, 1, 1),
+//   new PhongMaterial()
+// )
+// righthand.position.set(-2, 0, 0)
+
+// const head = new Mesh(
+//   new BoxGeometry(2, 2, 2),
+//   new PhongMaterial()
+// )
+// head.scale.z /= 4
+// head.position.set(0, 0, -1.2)
+
+// body.add(lefthand)
+// body.add(head)
+// body.add(righthand)
+// objectTransformations(head)
+// scene.add(body)
 
 let sceneArr = [scene]
 

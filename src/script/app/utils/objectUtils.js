@@ -13,17 +13,17 @@ export function objectTransformations(object) {
   var translateY = document.getElementById("translateY")
   var translateZ = document.getElementById("translateZ")
 
-  object.rotateX(parseInt(rotateX.value, 10))
-  object.rotateY(parseInt(rotateY.value, 10))
-  object.rotateZ(parseInt(rotateZ.value, 10))
+  // object.rotateX(parseInt(rotateX.value, 10))
+  // object.rotateY(parseInt(rotateY.value, 10))
+  // object.rotateZ(parseInt(rotateZ.value, 10))
 
-  object.scale.x = parseInt(scaleX.value, 10)
-  object.scale.y = parseInt(scaleY.value, 10)
-  object.scale.z = parseInt(scaleZ.value, 10)
+  // object.scale.x = parseInt(scaleX.value, 10)
+  // object.scale.y = parseInt(scaleY.value, 10)
+  // object.scale.z = parseInt(scaleZ.value, 10)
 
-  object.position.x = parseInt(translateX.value, 10)
-  object.position.y = parseInt(translateY.value, 10)
-  object.position.z = parseInt(translateZ.value, 10)
+  // object.position.x = parseInt(translateX.value, 10)
+  // object.position.y = parseInt(translateY.value, 10)
+  // object.position.z = parseInt(translateZ.value, 10)
 
   rotateX.oninput = function () {
     object.rotateX(DEGTORAD * parseInt(this.value, 10))

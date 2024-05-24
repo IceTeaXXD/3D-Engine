@@ -124,12 +124,17 @@ canvas {
     cursor: pointer;
 }
 
+.child-component {
+    padding-left: 20px;
+}
+
 .component.active {
     background-color: #ddd;
 }
 
 .component-tree {
-    max-height: 200px; /* Adjust as needed */
+    min-height: 300px;
+    max-height: 300px;
     overflow-y: auto;
 }
 
