@@ -40,6 +40,7 @@ const gl = new WebGLRenderer(canvas)
 document.getElementById("scenecolor").oninput = function () {
   canvas.style.backgroundColor = this.value
 }
+gl.loadTexture()
 
 /* CAMERA */
 const cameras = {

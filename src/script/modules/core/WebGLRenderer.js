@@ -97,16 +97,8 @@ export class WebGLRenderer {
     }
   }
 
-  render(Scene, Camera) {
-    let gl = this.#gl
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    gl.enable(gl.CULL_FACE)
-    gl.enable(gl.DEPTH_TEST)
-
-    const defaultUniform = {
-      cameraPosition: Camera.worldPosition,
-      viewMatrix: Camera.getProjectionMatrix()
-    }
+  loadTexture() {
+    const gl = this.#gl;
 
     const urls = [
       `../../src/public/img/brick/albedo.jpg`,
@@ -122,27 +114,26 @@ export class WebGLRenderer {
       `../../src/public/img/wood/normal.jpg`,
       `../../src/public/img/wood/height.png`,
     ];
-
+    
     this.loadImages(urls, (images) => {
       var textures = [];
-      const gl = this.#gl;
       for (var ii = 0; ii < 12; ++ii) {
         var texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, texture);
-
+    
         // Set the parameters so we can render any size image.
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-
+    
         // Upload the image into the texture.
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[ii]);
-
+    
         // add the texture to the array of textures.
         textures.push(texture);
       }
-
+    
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, textures[0]);
       gl.activeTexture(gl.TEXTURE1);
@@ -168,6 +159,18 @@ export class WebGLRenderer {
       gl.activeTexture(gl.TEXTURE11);
       gl.bindTexture(gl.TEXTURE_2D, textures[11]);
     });
+  }
+
+  render(Scene, Camera) {
+    let gl = this.#gl
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    gl.enable(gl.CULL_FACE)
+    gl.enable(gl.DEPTH_TEST)
+
+    const defaultUniform = {
+      cameraPosition: Camera.worldPosition,
+      viewMatrix: Camera.getProjectionMatrix()
+    }
 
     this.renderObject(Scene, defaultUniform)
   }
