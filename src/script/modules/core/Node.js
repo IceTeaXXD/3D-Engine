@@ -160,7 +160,7 @@ export class Node {
     const obj = Nodes[0]
     if (obj && obj.isNode) {
       if (obj.parent !== this) {
-        obj.removeFromParent()
+        // obj.removeFromParent()
         obj.parent = this
       }
       this.children.push(obj)
@@ -180,7 +180,6 @@ export class Node {
       if (index !== -1) {
         Node.parent = null
         this.children.splice(index, 1)
-        Node.dispatchEvent(_events.removed)
       }
     }
     return this

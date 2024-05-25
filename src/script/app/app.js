@@ -19,7 +19,8 @@ import {
   saveUtil,
   loadUtil,
   objectTransformations,
-  cameraController
+  cameraController,
+  createComponent
 } from "./utils/index.js"
 import {
   OrtographicCamera,
@@ -85,7 +86,7 @@ document.getElementById("Box").addEventListener("click", () => {
   scene.add(box)
   selectedObject.object = box
   objectTransformations(selectedObject.object)
-  createComponent("Box-" + scene.children.length)
+  createComponent("Box-" + scene.children.length, scene, selectedObject.object)
 })
 
 document.getElementById("Cube").addEventListener("click", () => {
@@ -96,7 +97,7 @@ document.getElementById("Cube").addEventListener("click", () => {
   scene.add(cube)
   selectedObject.object = cube
   objectTransformations(selectedObject.object)
-  createComponent("Cube-" + scene.children.length)
+  createComponent("Cube-" + scene.children.length, scene, selectedObject.object)
 })
 
 document.getElementById("Tube").addEventListener("click", () => {
@@ -104,7 +105,7 @@ document.getElementById("Tube").addEventListener("click", () => {
   scene.add(tube)
   selectedObject.object = tube
   objectTransformations(selectedObject.object)
-  createComponent("Tube-" + scene.children.length)
+  createComponent("Tube-" + scene.children.length, scene, selectedObject.object)
 })
 
 document.getElementById("Prism").addEventListener("click", () => {
@@ -115,7 +116,7 @@ document.getElementById("Prism").addEventListener("click", () => {
   scene.add(prism)
   selectedObject.object = prism
   objectTransformations(selectedObject.object)
-  createComponent("Prism-" + scene.children.length)
+  createComponent("Prism-" + scene.children.length, scene, selectedObject.object)
 })
 
 document.getElementById("Pyramid").addEventListener("click", () => {
@@ -126,7 +127,7 @@ document.getElementById("Pyramid").addEventListener("click", () => {
   scene.add(pyramid)
   selectedObject.object = pyramid
   objectTransformations(selectedObject.object)
-  createComponent("Pyramid-" + scene.children.length)
+  createComponent("Pyramid-" + scene.children.length, scene, selectedObject.object)
 })
 
 document.getElementById("Brick").addEventListener("click", () => {
@@ -137,7 +138,7 @@ document.getElementById("Brick").addEventListener("click", () => {
   scene.add(brick)
   selectedObject.object = brick
   objectTransformations(selectedObject.object)
-  createComponent("Brick-" + scene.children.length)
+  createComponent("Brick-" + scene.children.length, scene, selectedObject.object)
 })
 
 document.getElementById("Wood").addEventListener("click", () => {
@@ -148,7 +149,7 @@ document.getElementById("Wood").addEventListener("click", () => {
   scene.add(wood)
   selectedObject.object = wood
   objectTransformations(selectedObject.object)
-  createComponent("Wood-" + scene.children.length)
+  createComponent("Wood-" + scene.children.length, scene, selectedObject.object)
 })
 
 document.getElementById("Glass").addEventListener("click", () => {
@@ -159,25 +160,11 @@ document.getElementById("Glass").addEventListener("click", () => {
   scene.add(glass)
   selectedObject.object = glass
   objectTransformations(selectedObject.object)
-  createComponent("Glass-" + scene.children.length)
+  createComponent("Glass-" + scene.children.length, scene, selectedObject.object)
 })
 
-const createComponent = (name) => {
-  let component = document.createElement("div")
-  component.classList.add("component")
-  component.id = scene.children.length
-  component.innerHTML = `<a>${name}</a>`
-  document.querySelector(".components").appendChild(component)
-
-  component.addEventListener("click", function () {
-    let components = document.querySelectorAll(".component")
-    components.forEach((c) => c.classList.remove("active"))
-    this.classList.add("active")
-    selectedObject.object = scene.children[this.id - 1]
-    objectTransformations(selectedObject.object)
-  })
-}
-
+saveUtil(scene)
+loadUtil(scene, selectedObject.object)
 function render() {
   requestAnimationFrame(render)
   orbitControl[cameras.current].update()

@@ -45,9 +45,9 @@ export function objectTransformations(object) {
   var translateY = document.getElementById("translateY")
   var translateZ = document.getElementById("translateZ")
 
-rotateX.value = Math.round(object.rotation.x * RADTODEG);
-rotateY.value = Math.round(object.rotation.y * RADTODEG);
-rotateZ.value = Math.round(object.rotation.z * RADTODEG);
+  rotateX.value = Math.round(object.rotation.x * RADTODEG)
+  rotateY.value = Math.round(object.rotation.y * RADTODEG)
+  rotateZ.value = Math.round(object.rotation.z * RADTODEG)
 
   scaleX.value = object.scale.x
   scaleY.value = object.scale.y
@@ -59,61 +59,64 @@ rotateZ.value = Math.round(object.rotation.z * RADTODEG);
 
   rotateX.oninput = function () {
     const value = parseInt(this.value, 10)
-    if (value)
+    if (!isNaN(value)) {
       object.rotation = new Vector3(
         DEGTORAD * value,
         object.rotation.y,
         object.rotation.z
       )
+    }
   }
 
   rotateY.oninput = function () {
     const value = parseInt(this.value, 10)
-    if (value)
+    if (!isNaN(value)) {
       object.rotation = new Vector3(
         object.rotation.x,
         DEGTORAD * value,
         object.rotation.z
       )
+    }
   }
 
   rotateZ.oninput = function () {
     const value = parseInt(this.value, 10)
-    if (value)
+    if (!isNaN(value)) {
       object.rotation = new Vector3(
         object.rotation.x,
         object.rotation.y,
         DEGTORAD * value
       )
-  }
-
-  scaleX.oninput = function () {
-    const value = parseInt(this.value, 10)
-    if (value) object.scale.x = value
-  }
-
-  scaleY.oninput = function () {
-    const value = parseInt(this.value, 10)
-    if (value) object.scale.y = value
-  }
-
-  scaleZ.oninput = function () {
-    const value = parseInt(this.value, 10)
-    if (value) object.scale.z = value
+    }
   }
 
   translateX.oninput = function () {
     const value = parseInt(this.value, 10)
-    if (value) object.position.x = value
+    if (!isNaN(value)) object.position.x = value
   }
 
   translateY.oninput = function () {
     const value = parseInt(this.value, 10)
-    if (value) object.position.y = value
+    if (!isNaN(value)) object.position.y = value
   }
 
   translateZ.oninput = function () {
     const value = parseInt(this.value, 10)
-    if (value) object.position.z = value
+    if (!isNaN(value)) object.position.z = value
+  }
+
+  scaleX.oninput = function () {
+    const value = parseInt(this.value, 10)
+    if (!isNaN(value)) object.scale.x = value
+  }
+
+  scaleY.oninput = function () {
+    const value = parseInt(this.value, 10)
+    if (!isNaN(value)) object.scale.y = value
+  }
+
+  scaleZ.oninput = function () {
+    const value = parseInt(this.value, 10)
+    if (!isNaN(value)) object.scale.z = value
   }
 }
