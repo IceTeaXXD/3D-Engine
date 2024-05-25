@@ -191,7 +191,7 @@ export class WebGLRenderer {
       if (material.uniforms.useTexture) {
         const gl = this.#gl;
         const tex = material.uniforms.texture;
-        console.log(tex);
+        // console.log(tex);
 
         const u_diffuseTextureLocation = gl.getUniformLocation(info.program, "u_diffuseTexture");
         const u_specularTextureLocation = gl.getUniformLocation(info.program, "u_specularTexture");
@@ -224,61 +224,6 @@ export class WebGLRenderer {
         0,
         object.geometry.getAttribute("position").count
       )
-
-      // console.log(urls);
-
-      // this.loadImages(urls, (images) => {
-      //   var textures = [];
-      //   const gl = this.#gl;
-      //   for (var ii = 0; ii < 2; ++ii) {
-      //     var texture = gl.createTexture();
-      //     gl.bindTexture(gl.TEXTURE_2D, texture);
-
-      //     // Set the parameters so we can render any size image.
-      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-
-      //     // Upload the image into the texture.
-      //     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[ii]);
-
-      //     // add the texture to the array of textures.
-      //     textures.push(texture);
-      //   }
-
-      //   const u_diffuseTextureLocation = gl.getUniformLocation(info.program, "u_diffuseTexture");
-      //   const u_specularTextureLocation = gl.getUniformLocation(info.program, "u_specularTexture");
-      //   const u_normalTextureLocation = gl.getUniformLocation(info.program, "u_normalTexture");
-      //   const u_displacementTextureLocation = gl.getUniformLocation(info.program, "u_displacementTexture");
-
-      //   gl.uniform1i(u_diffuseTextureLocation, 0);
-      //   gl.uniform1i(u_specularTextureLocation, 1);
-      //   gl.uniform1i(u_normalTextureLocation, 2); 
-      //   gl.uniform1i(u_displacementTextureLocation, 3);
-
-      //   gl.activeTexture(gl.TEXTURE0);
-      //   gl.bindTexture(gl.TEXTURE_2D, textures[0]);
-      //   gl.activeTexture(gl.TEXTURE1);
-      //   gl.bindTexture(gl.TEXTURE_2D, textures[1]);
-      //   gl.activeTexture(gl.TEXTURE2);
-      //   gl.bindTexture(gl.TEXTURE_2D, textures[2]);
-      //   gl.activeTexture(gl.TEXTURE3);
-      //   gl.bindTexture(gl.TEXTURE_2D, textures[3]);
-      // });
-
-      // setAttributes(this.#currentProgram, object.geometry.attributes)
-      // setUniforms(this.#currentProgram, {
-      //   ...object.material.uniforms,
-      //   ...uniforms,
-      //   worldMatrix: object.worldMatrix,
-      //   useVertexColor: object.geometry.useVertexColors
-      // })
-      // this.#gl.drawArrays(
-      //   this.#gl.TRIANGLES,
-      //   0,
-      //   object.geometry.getAttribute("position").count
-      // )
     }
     for (let key in object.children) {
       this.renderObject(object.children[key], uniforms)
