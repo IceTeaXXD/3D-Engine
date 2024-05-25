@@ -23,9 +23,11 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1030; /* Adjust as needed to ensure navbar is on top */
+  z-index: 1030;
+  /* Adjust as needed to ensure navbar is on top */
   display: flex;
 }
+
 .nav-help-icon,
 .nav-title,
 .nav-shape-menu {
@@ -53,7 +55,7 @@ body {
 }
 
 .nav-link:hover {
-  background-color: blue;
+  background-color: #007bff;
   cursor: pointer;
 }
 
@@ -93,11 +95,15 @@ body {
   width: 100px;
   height: 30px;
 }
+
 .no-select {
-  user-select: none; /* Prevent text selection during drag */
+  user-select: none;
+  /* Prevent text selection during drag */
 }
+
 .dragging-cursor {
-  cursor: ew-resize; /* Change cursor while dragging */
+  cursor: ew-resize;
+  /* Change cursor while dragging */
 }
 
 .canvas-buttons {
@@ -129,13 +135,15 @@ body {
   height: 100%;
 }
 
-.component.a:hover {
-  background-color: #f8f9fa; /* Change this to your preferred hover color */
+.component:hover {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
 }
 
 .component.active {
-  background-color: #007bff; /* Change this to your preferred active color */
-  color: white; /* Change this to your preferred text color when active */
+  background-color: #007bff;
+  color: white;
 }
 
 /* RIGHT SIDE BAR */
@@ -151,9 +159,14 @@ body {
   margin-top: 60px;
 }
 
-.sidebar-left .top,
-.sidebar-left .bottom {
+.sidebar-left .top {
   height: 50%;
+  overflow-y: auto;
+}
+
+.sidebar-left .middle,
+.sidebar-left .bottom {
+  height: 25%;
   overflow-y: auto;
 }
 

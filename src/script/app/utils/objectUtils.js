@@ -1,4 +1,4 @@
-import { DEGTORAD } from "../../modules/math/index.js"
+import { DEGTORAD, RADTODEG } from "../../modules/math/index.js"
 import { Vector3 } from "../../modules/math/index.js"
 
 export function objectTransformations(object) {
@@ -45,9 +45,9 @@ export function objectTransformations(object) {
   var translateY = document.getElementById("translateY")
   var translateZ = document.getElementById("translateZ")
 
-  rotateX.value = object.rotation.x * DEGTORAD
-  rotateY.value = object.rotation.y * DEGTORAD
-  rotateZ.value = object.rotation.z * DEGTORAD
+rotateX.value = Math.round(object.rotation.x * RADTODEG);
+rotateY.value = Math.round(object.rotation.y * RADTODEG);
+rotateZ.value = Math.round(object.rotation.z * RADTODEG);
 
   scaleX.value = object.scale.x
   scaleY.value = object.scale.y

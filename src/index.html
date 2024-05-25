@@ -261,35 +261,40 @@
       </div>
       <div class="top">
         <div class="component-tree">
-          <div class="components">
-            <div class="component" id="Cube">
-              <a>Cube</a>
-            </div>
-            <div class="component" id="Tube">
-              <a>Tube</a>
-            </div>
-            <div class="component" id="Prism">
-              <a>Prism</a>
-            </div>
-            <div class="component" id="Pyramid">
-              <a>Pyramid</a>
-            </div>
-            <div class="component" id="Brick">
-              <a>Brick</a>
-            </div>
-            <div class="component" id="Glass">
-              <a>Glass</a>
-            </div>
-            <div class="component" id="Wood">
-              <a>Wood</a>
-            </div>
-          </div>
+          <div class="components"></div>
         </div>
       </div>
       <div class="sidebar-title">
         <a>Scene Settings</a>
       </div>
-      <div class="bottom">
+      <div class="middle">
+        <div class="color-menu">
+          <label>Scene Color: </label>
+          <input type="color" id="scenecolor" value="#000000" />
+        </div>
+        <div class="dropdown">
+          <label>Camera: </label>
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Perspective
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" value="perspective">Perspective</a>
+            <a class="dropdown-item" value="oblique">Oblique</a>
+            <a class="dropdown-item" value="ortographic">Ortographic</a>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-title">
+        <a>Animation Editor</a>
+      </div>
+      <div class="middle">
         <div class="color-menu">
           <label>Scene Color: </label>
           <input type="color" id="scenecolor" value="#000000" />

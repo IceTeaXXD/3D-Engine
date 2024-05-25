@@ -85,6 +85,7 @@ document.getElementById("Box").addEventListener("click", () => {
   scene.add(box)
   selectedObject.object = box
   objectTransformations(selectedObject.object)
+  createComponent("Box-" + scene.children.length)
 })
 
 document.getElementById("Cube").addEventListener("click", () => {
@@ -95,6 +96,7 @@ document.getElementById("Cube").addEventListener("click", () => {
   scene.add(cube)
   selectedObject.object = cube
   objectTransformations(selectedObject.object)
+  createComponent("Cube-" + scene.children.length)
 })
 
 document.getElementById("Tube").addEventListener("click", () => {
@@ -102,6 +104,7 @@ document.getElementById("Tube").addEventListener("click", () => {
   scene.add(tube)
   selectedObject.object = tube
   objectTransformations(selectedObject.object)
+  createComponent("Tube-" + scene.children.length)
 })
 
 document.getElementById("Prism").addEventListener("click", () => {
@@ -112,6 +115,7 @@ document.getElementById("Prism").addEventListener("click", () => {
   scene.add(prism)
   selectedObject.object = prism
   objectTransformations(selectedObject.object)
+  createComponent("Prism-" + scene.children.length)
 })
 
 document.getElementById("Pyramid").addEventListener("click", () => {
@@ -122,6 +126,7 @@ document.getElementById("Pyramid").addEventListener("click", () => {
   scene.add(pyramid)
   selectedObject.object = pyramid
   objectTransformations(selectedObject.object)
+  createComponent("Pyramid-" + scene.children.length)
 })
 
 document.getElementById("Brick").addEventListener("click", () => {
@@ -132,6 +137,7 @@ document.getElementById("Brick").addEventListener("click", () => {
   scene.add(brick)
   selectedObject.object = brick
   objectTransformations(selectedObject.object)
+  createComponent("Brick-" + scene.children.length)
 })
 
 document.getElementById("Wood").addEventListener("click", () => {
@@ -142,6 +148,7 @@ document.getElementById("Wood").addEventListener("click", () => {
   scene.add(wood)
   selectedObject.object = wood
   objectTransformations(selectedObject.object)
+  createComponent("Wood-" + scene.children.length)
 })
 
 document.getElementById("Glass").addEventListener("click", () => {
@@ -152,7 +159,24 @@ document.getElementById("Glass").addEventListener("click", () => {
   scene.add(glass)
   selectedObject.object = glass
   objectTransformations(selectedObject.object)
+  createComponent("Glass-" + scene.children.length)
 })
+
+const createComponent = (name) => {
+  let component = document.createElement("div")
+  component.classList.add("component")
+  component.id = scene.children.length
+  component.innerHTML = `<a>${name}</a>`
+  document.querySelector(".components").appendChild(component)
+
+  component.addEventListener("click", function () {
+    let components = document.querySelectorAll(".component")
+    components.forEach((c) => c.classList.remove("active"))
+    this.classList.add("active")
+    selectedObject.object = scene.children[this.id - 1]
+    objectTransformations(selectedObject.object)
+  })
+}
 
 function render() {
   requestAnimationFrame(render)
