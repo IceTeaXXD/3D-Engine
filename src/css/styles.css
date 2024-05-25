@@ -119,6 +119,23 @@ body {
 .component-tree {
   height: 100%;
   padding-bottom: 10px;
+  border: 10px solid #f8f9fa;
+}
+
+.components {
+  padding: 10px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  height: 100%;
+}
+
+.component.a:hover {
+  background-color: #f8f9fa; /* Change this to your preferred hover color */
+}
+
+.component.active {
+  background-color: #007bff; /* Change this to your preferred active color */
+  color: white; /* Change this to your preferred text color when active */
 }
 
 /* RIGHT SIDE BAR */

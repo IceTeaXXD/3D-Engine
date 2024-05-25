@@ -124,6 +124,36 @@ document.getElementById("Pyramid").addEventListener("click", () => {
   objectTransformations(selectedObject.object)
 })
 
+document.getElementById("Brick").addEventListener("click", () => {
+  const brick = new Mesh(
+    new BoxGeometry(2, 2, 2),
+    new PhongMaterial({ useTexture: true, texture: "brick" })
+  )
+  scene.add(brick)
+  selectedObject.object = brick
+  objectTransformations(selectedObject.object)
+})
+
+document.getElementById("Wood").addEventListener("click", () => {
+  const wood = new Mesh(
+    new BoxGeometry(2, 2, 2),
+    new PhongMaterial({ useTexture: true, texture: "wood" })
+  )
+  scene.add(wood)
+  selectedObject.object = wood
+  objectTransformations(selectedObject.object)
+})
+
+document.getElementById("Glass").addEventListener("click", () => {
+  const glass = new Mesh(
+    new BoxGeometry(2, 2, 2),
+    new PhongMaterial({ useTexture: true, texture: "glass" })
+  )
+  scene.add(glass)
+  selectedObject.object = glass
+  objectTransformations(selectedObject.object)
+})
+
 function render() {
   requestAnimationFrame(render)
   orbitControl[cameras.current].update()
