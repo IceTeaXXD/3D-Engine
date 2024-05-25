@@ -76,21 +76,21 @@ export class WebGLRenderer {
     image.onload = callback;
     return image;
   }
-  
+
   loadImages(urls, callback) {
     var images = [];
     var imagesToLoad = urls.length;
-  
+
     // Called each time an image finished
     // loading.
-    var onImageLoad = function() {
+    var onImageLoad = function () {
       --imagesToLoad;
       // If all the images are loaded call the callback.
       if (imagesToLoad === 0) {
         callback(images);
       }
     };
-  
+
     for (var ii = 0; ii < imagesToLoad; ++ii) {
       var image = this.loadImage(urls[ii], onImageLoad);
       images.push(image);
@@ -107,6 +107,67 @@ export class WebGLRenderer {
       cameraPosition: Camera.worldPosition,
       viewMatrix: Camera.getProjectionMatrix()
     }
+
+    const urls = [
+      `../../src/public/img/brick/albedo.jpg`,
+      `../../src/public/img/brick/roughness.jpg`,
+      `../../src/public/img/brick/normal.jpg`,
+      `../../src/public/img/brick/height.png`,
+      `../../src/public/img/glass/albedo.jpg`,
+      `../../src/public/img/glass/roughness.jpg`,
+      `../../src/public/img/glass/normal.jpg`,
+      `../../src/public/img/glass/height.png`,
+      `../../src/public/img/wood/albedo.jpg`,
+      `../../src/public/img/wood/roughness.jpg`,
+      `../../src/public/img/wood/normal.jpg`,
+      `../../src/public/img/wood/height.png`,
+    ];
+
+    this.loadImages(urls, (images) => {
+      var textures = [];
+      const gl = this.#gl;
+      for (var ii = 0; ii < 12; ++ii) {
+        var texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+
+        // Set the parameters so we can render any size image.
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+        // Upload the image into the texture.
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[ii]);
+
+        // add the texture to the array of textures.
+        textures.push(texture);
+      }
+
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, textures[0]);
+      gl.activeTexture(gl.TEXTURE1);
+      gl.bindTexture(gl.TEXTURE_2D, textures[1]);
+      gl.activeTexture(gl.TEXTURE2);
+      gl.bindTexture(gl.TEXTURE_2D, textures[2]);
+      gl.activeTexture(gl.TEXTURE3);
+      gl.bindTexture(gl.TEXTURE_2D, textures[3]);
+      gl.activeTexture(gl.TEXTURE4);
+      gl.bindTexture(gl.TEXTURE_2D, textures[4]);
+      gl.activeTexture(gl.TEXTURE5);
+      gl.bindTexture(gl.TEXTURE_2D, textures[5]);
+      gl.activeTexture(gl.TEXTURE6);
+      gl.bindTexture(gl.TEXTURE_2D, textures[6]);
+      gl.activeTexture(gl.TEXTURE7);
+      gl.bindTexture(gl.TEXTURE_2D, textures[7]);
+      gl.activeTexture(gl.TEXTURE8);
+      gl.bindTexture(gl.TEXTURE_2D, textures[8]);
+      gl.activeTexture(gl.TEXTURE9);
+      gl.bindTexture(gl.TEXTURE_2D, textures[9]);
+      gl.activeTexture(gl.TEXTURE10);
+      gl.bindTexture(gl.TEXTURE_2D, textures[10]);
+      gl.activeTexture(gl.TEXTURE11);
+      gl.bindTexture(gl.TEXTURE_2D, textures[11]);
+    });
 
     this.renderObject(Scene, defaultUniform)
   }
@@ -127,57 +188,30 @@ export class WebGLRenderer {
       const info = this.createOrGetMaterial(material)
       this.setProgramInfo(info)
 
-      const tex = material.uniforms.texture;
-
-      const urls = [
-        `../../src/public/img/${tex}/albedo.jpg`,
-        `../../src/public/img/${tex}/roughness.jpg`,
-        `../../src/public/img/${tex}/normal.jpg`,
-        `../../src/public/img/${tex}/height.png`
-      ];
-
-      // console.log(urls);
-  
-      this.loadImages(urls, (images) => {
-        var textures = [];
+      if (material.uniforms.useTexture) {
         const gl = this.#gl;
-        for (var ii = 0; ii < 2; ++ii) {
-          var texture = gl.createTexture();
-          gl.bindTexture(gl.TEXTURE_2D, texture);
-  
-          // Set the parameters so we can render any size image.
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  
-          // Upload the image into the texture.
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[ii]);
-  
-          // add the texture to the array of textures.
-          textures.push(texture);
-        }
-  
+        const tex = material.uniforms.texture;
+        console.log(tex);
+
         const u_diffuseTextureLocation = gl.getUniformLocation(info.program, "u_diffuseTexture");
         const u_specularTextureLocation = gl.getUniformLocation(info.program, "u_specularTexture");
         const u_normalTextureLocation = gl.getUniformLocation(info.program, "u_normalTexture");
         const u_displacementTextureLocation = gl.getUniformLocation(info.program, "u_displacementTexture");
-  
-        gl.uniform1i(u_diffuseTextureLocation, 0);
-        gl.uniform1i(u_specularTextureLocation, 1);
-        gl.uniform1i(u_normalTextureLocation, 2); 
-        gl.uniform1i(u_displacementTextureLocation, 3);
-  
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, textures[0]);
-        gl.activeTexture(gl.TEXTURE1);
-        gl.bindTexture(gl.TEXTURE_2D, textures[1]);
-        gl.activeTexture(gl.TEXTURE2);
-        gl.bindTexture(gl.TEXTURE_2D, textures[2]);
-        gl.activeTexture(gl.TEXTURE3);
-        gl.bindTexture(gl.TEXTURE_2D, textures[3]);
-      });
 
+        var index;
+        if (tex === "brick") {
+          index = 0;
+        } else if (tex === "glass") {
+          index = 4;
+        } else if (tex === "wood") {
+          index = 8;
+        }
+
+        gl.uniform1i(u_diffuseTextureLocation, index);
+        gl.uniform1i(u_specularTextureLocation, index + 1);
+        gl.uniform1i(u_normalTextureLocation, index + 2);
+        gl.uniform1i(u_displacementTextureLocation, index + 3);
+      }
       setAttributes(this.#currentProgram, object.geometry.attributes)
       setUniforms(this.#currentProgram, {
         ...object.material.uniforms,
@@ -190,6 +224,61 @@ export class WebGLRenderer {
         0,
         object.geometry.getAttribute("position").count
       )
+
+      // console.log(urls);
+
+      // this.loadImages(urls, (images) => {
+      //   var textures = [];
+      //   const gl = this.#gl;
+      //   for (var ii = 0; ii < 2; ++ii) {
+      //     var texture = gl.createTexture();
+      //     gl.bindTexture(gl.TEXTURE_2D, texture);
+
+      //     // Set the parameters so we can render any size image.
+      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+      //     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+      //     // Upload the image into the texture.
+      //     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[ii]);
+
+      //     // add the texture to the array of textures.
+      //     textures.push(texture);
+      //   }
+
+      //   const u_diffuseTextureLocation = gl.getUniformLocation(info.program, "u_diffuseTexture");
+      //   const u_specularTextureLocation = gl.getUniformLocation(info.program, "u_specularTexture");
+      //   const u_normalTextureLocation = gl.getUniformLocation(info.program, "u_normalTexture");
+      //   const u_displacementTextureLocation = gl.getUniformLocation(info.program, "u_displacementTexture");
+
+      //   gl.uniform1i(u_diffuseTextureLocation, 0);
+      //   gl.uniform1i(u_specularTextureLocation, 1);
+      //   gl.uniform1i(u_normalTextureLocation, 2); 
+      //   gl.uniform1i(u_displacementTextureLocation, 3);
+
+      //   gl.activeTexture(gl.TEXTURE0);
+      //   gl.bindTexture(gl.TEXTURE_2D, textures[0]);
+      //   gl.activeTexture(gl.TEXTURE1);
+      //   gl.bindTexture(gl.TEXTURE_2D, textures[1]);
+      //   gl.activeTexture(gl.TEXTURE2);
+      //   gl.bindTexture(gl.TEXTURE_2D, textures[2]);
+      //   gl.activeTexture(gl.TEXTURE3);
+      //   gl.bindTexture(gl.TEXTURE_2D, textures[3]);
+      // });
+
+      // setAttributes(this.#currentProgram, object.geometry.attributes)
+      // setUniforms(this.#currentProgram, {
+      //   ...object.material.uniforms,
+      //   ...uniforms,
+      //   worldMatrix: object.worldMatrix,
+      //   useVertexColor: object.geometry.useVertexColors
+      // })
+      // this.#gl.drawArrays(
+      //   this.#gl.TRIANGLES,
+      //   0,
+      //   object.geometry.getAttribute("position").count
+      // )
     }
     for (let key in object.children) {
       this.renderObject(object.children[key], uniforms)
