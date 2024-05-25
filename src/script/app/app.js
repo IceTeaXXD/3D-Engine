@@ -29,7 +29,7 @@ import {
   OrbitControl
 } from "../modules/camera/index.js"
 import * as SC from "./utils/sceneUtils.js"
-import model from "./models/index.js"
+// import model from "./models/index.js"
 
 /* CANVAS */
 const canvas = document.getElementById("canvas")
