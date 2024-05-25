@@ -28,6 +28,9 @@ import {
   ObliqueCamera,
   OrbitControl
 } from "../modules/camera/index.js"
+import { 
+  DirectionalLight
+} from "../modules/light/index.js"
 import * as SC from "./utils/sceneUtils.js"
 // import model from "./models/index.js"
 
@@ -82,13 +85,18 @@ const orbitControl = {
 const scene = new Scene()
 const selectedObject = { object: null }
 
+const light = new DirectionalLight()
+light.position.x = 2
+light.position.y = -5
+light.position.z = 0
 document.getElementById("Box").addEventListener("click", () => {
-  const box = new Mesh(new BoxGeometry(2, 2, 2), new PhongMaterial())
+  const box = new Mesh(new BoxGeometry(2, 2, 2), new PhongMaterial({lightPosition : light.position}))
   scene.add(box)
   selectedObject.object = box
   objectTransformations(selectedObject.object)
   createComponent("Box-" + scene.children.length, scene, selectedObject.object)
 })
+
 
 document.getElementById("Cube").addEventListener("click", () => {
   const cube = new Mesh(
@@ -102,7 +110,7 @@ document.getElementById("Cube").addEventListener("click", () => {
 })
 
 document.getElementById("Tube").addEventListener("click", () => {
-  const tube = new Mesh(new TubeGeometry(1, 2, 2, 10, 10), new PhongMaterial())
+  const tube = new Mesh(new TubeGeometry(1, 2, 2, 10, 10), new PhongMaterial({lightPosition : light.position}))
   scene.add(tube)
   selectedObject.object = tube
   objectTransformations(selectedObject.object)
@@ -112,7 +120,7 @@ document.getElementById("Tube").addEventListener("click", () => {
 document.getElementById("Prism").addEventListener("click", () => {
   const prism = new Mesh(
     new HollowPrismGeometry(2, 2, 2, 0.3, 5),
-    new PhongMaterial()
+    new PhongMaterial({lightPosition : light.position})
   )
   scene.add(prism)
   selectedObject.object = prism
@@ -123,7 +131,7 @@ document.getElementById("Prism").addEventListener("click", () => {
 document.getElementById("Pyramid").addEventListener("click", () => {
   const pyramid = new Mesh(
     new HollowPyramidGeometry(2, 2, 2, 0.2),
-    new PhongMaterial()
+    new PhongMaterial({lightPosition : light.position})
   )
   scene.add(pyramid)
   selectedObject.object = pyramid
@@ -145,7 +153,7 @@ document.getElementById("Brick").addEventListener("click", () => {
 document.getElementById("Wood").addEventListener("click", () => {
   const wood = new Mesh(
     new BoxGeometry(2, 2, 2),
-    new PhongMaterial({ useTexture: true, texture: "wood" })
+    new PhongMaterial({ useTexture: true, texture: "wood", lightPosition : light.position})
   )
   scene.add(wood)
   selectedObject.object = wood
@@ -156,7 +164,7 @@ document.getElementById("Wood").addEventListener("click", () => {
 document.getElementById("Glass").addEventListener("click", () => {
   const glass = new Mesh(
     new BoxGeometry(2, 2, 2),
-    new PhongMaterial({ useTexture: true, texture: "glass" })
+    new PhongMaterial({ useTexture: true, texture: "glass", lightPosition : light.position })
   )
   scene.add(glass)
   selectedObject.object = glass
