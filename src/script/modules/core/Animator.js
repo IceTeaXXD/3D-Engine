@@ -349,4 +349,48 @@ export class Animator {
         this.easingFunction = this.easeLinear
     }
   }
+
+  get type() {
+    return "Animator"
+  }
+
+  toJSON() {
+    return {
+      frames: this.frames,
+      currentFrame: this.currentFrame,
+      lastRenderTime: this.lastRenderTime,
+      fps: this.fps,
+      isPlaying: this.isPlaying,
+      isLooping: this.isLooping,
+      isReversed: this.isReversed,
+      tweenTime: this.tweenTime,
+      easingDuration: this.easingDuration,
+      easingFunction: this.easingFunction.name
+    }
+  }
+
+  fromJSON(json) {
+    this.frames = json.frames.map((frame) => ({
+      position: new Vector3(
+        frame.position[0],
+        frame.position[1],
+        frame.position[2]
+      ),
+      rotation: new Vector3(
+        frame.rotation[0],
+        frame.rotation[1],
+        frame.rotation[2]
+      ),
+      scale: new Vector3(frame.scale[0], frame.scale[1], frame.scale[2])
+    }))
+    this.currentFrame = json.currentFrame
+    this.lastRenderTime = json.lastRenderTime
+    this.fps = json.fps
+    this.isPlaying = json.isPlaying
+    this.isLooping = json.isLooping
+    this.isReversed = json.isReversed
+    this.tweenTime = json.tweenTime
+    this.easingDuration = json.easingDuration
+    this.setEasingFunction(json.easingFunction)
+  }
 }
