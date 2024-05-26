@@ -27,6 +27,7 @@ export class Interface {
     this.initEventListeners();
     this.initRootComponent(); // Initialize the root "All" component
     this.loadUtil();
+    this.deleteSelectedObject();
   }
 
   /**
@@ -160,6 +161,45 @@ export class Interface {
     });
   }
 
+  deleteSelectedObject() {
+    const delButton = document.getElementById("delete")
+    delButton.addEventListener("click", () => {
+      if (!this.selectedObject.object || this.selectedObject.object === this.scene) {
+        console.warn("No object selected or trying to delete the root object.");
+        return;
+      }
+
+      const selectedObject = this.selectedObject.object;
+      const parent = selectedObject.parent;
+
+      if (parent) {
+        parent.remove(selectedObject);
+      }
+
+      this._deleteComponentAndChildren(selectedObject);
+
+      this.selectedObject.object = this.scene;
+      this.selectAllComponents();
+    });
+  }
+
+  /**
+   * Recursively delete a component and its children from the UI.
+   * 
+   * @param {Mesh} object
+   */
+  _deleteComponentAndChildren(object) {
+    const componentElement = ComponentUI.getComponentElement(this, object);
+    if (componentElement) {
+      const children = Array.from(document.querySelectorAll(`.component[data-mesh-id="${object.id}"]`));
+      children.forEach((child) => child.remove());
+      componentElement.remove();
+    }
+
+    object.children.forEach((child) => {
+      this._deleteComponentAndChildren(child);
+    });
+  }
   /**
    * Find an object in the scene by its ID.
    * 
