@@ -1,0 +1,185 @@
+{
+  "animator": {
+    "frames": [
+      {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          26,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          15,
+          0,
+          15
+        ],
+        "rotation": [
+          0,
+          26,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          0,
+          0,
+          34
+        ],
+        "rotation": [
+          0,
+          -40,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          0,
+          0,
+          34
+        ],
+        "rotation": [
+          0,
+          -119,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          -17,
+          0,
+          17
+        ],
+        "rotation": [
+          0,
+          -119,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          -17,
+          0,
+          17
+        ],
+        "rotation": [
+          0,
+          -209,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          -6,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          -209,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          -6,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          -304,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "position": [
+          -6,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "currentFrame": 9,
+    "lastRenderTime": 0,
+    "fps": 10,
+    "isPlaying": false,
+    "isLooping": false,
+    "isReversed": false,
+    "tweenTime": 0,
+    "easingDuration": 100,
+    "easingFunction": "easeLinear"
+  }
+}
