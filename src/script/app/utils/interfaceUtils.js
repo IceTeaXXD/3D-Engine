@@ -24,16 +24,16 @@ export class Interface {
    * @param {DirectionalLight} light
    */
   constructor(scene, animator, light) {
-    this.scene = scene;
+    this.scene = scene
     this.sceneLight = light
     this.animator = animator
     lightTransformations(this.sceneLight)
-    this.selectedObject = { object: null };
-    this.meshCounter = 0; // Counter to assign unique IDs to meshes
-    this.initEventListeners();
-    this.initRootComponent(); // Initialize the root "All" component
-    this.loadUtil();
-    this.deleteSelectedObject();
+    this.selectedObject = { object: null }
+    this.meshCounter = 0 // Counter to assign unique IDs to meshes
+    this.initEventListeners()
+    this.initRootComponent() // Initialize the root "All" component
+    this.loadUtil()
+    this.deleteSelectedObject()
   }
 
   /**
@@ -102,40 +102,58 @@ export class Interface {
    * @param {string} type
    */
   addGeometry(type) {
-    const color = new Color();
-    let geometry;
-    let material = new PhongMaterial();
+    const color = new Color()
+    let geometry
+    let material = new PhongMaterial()
 
     switch (type) {
       case "Box":
-        material = new PhongMaterial({lightPosition : this.sceneLight.position})
-        geometry = new BoxGeometry(2, 2, 2);
-        break;
-        case "Cube":
-        material = new PhongMaterial({lightPosition : this.sceneLight.position})
-        geometry = new HollowBoxGeometry(2, 2, 2, 0.2, 10);
-        break;
-        case "Tube":
-          geometry = new TubeGeometry(1, 2, 2, 10, 10);
-          break;
-        case "Prism":
-        material = new PhongMaterial({lightPosition : this.sceneLight.position})
-        geometry = new HollowPrismGeometry(2, 2, 2, 0.3, 5);
-        break;
+        material = new PhongMaterial({
+          lightPosition: this.sceneLight.position
+        })
+        geometry = new BoxGeometry(2, 2, 2)
+        break
+      case "Cube":
+        material = new PhongMaterial({
+          lightPosition: this.sceneLight.position
+        })
+        geometry = new HollowBoxGeometry(2, 2, 2, 0.2, 10)
+        break
+      case "Tube":
+        geometry = new TubeGeometry(1, 2, 2, 10, 10)
+        break
+      case "Prism":
+        material = new PhongMaterial({
+          lightPosition: this.sceneLight.position
+        })
+        geometry = new HollowPrismGeometry(2, 2, 2, 0.3, 5)
+        break
       case "Pyramid":
-        geometry = new HollowPyramidGeometry(2, 2, 2, 0.2);
-        material = new PhongMaterial({});
-        break;
+        geometry = new HollowPyramidGeometry(2, 2, 2, 0.2)
+        material = new PhongMaterial({})
+        break
       case "Brick":
-        material = new PhongMaterial({ useTexture: true, texture: "brick" });
-        geometry = new BoxGeometry(2, 2, 2);
-        break;
+        material = new PhongMaterial({
+          lightPosition: this.sceneLight.position,
+          useTexture: true,
+          texture: "brick"
+        })
+        geometry = new BoxGeometry(2, 2, 2)
+        break
       case "Wood":
-        material = new PhongMaterial({ useTexture: true, texture: "wood" })
+        material = new PhongMaterial({
+          lightposition: this.sceneLight.position,
+          useTexture: true,
+          texture: "wood"
+        })
         geometry = new BoxGeometry(2, 2, 2)
         break
       case "Glass":
-        material = new PhongMaterial({ useTexture: true, texture: "glass" })
+        material = new PhongMaterial({
+          lightPosition: this.sceneLight.position,
+          useTexture: true,
+          texture: "glass"
+        })
         geometry = new BoxGeometry(2, 2, 2)
         break
       default:

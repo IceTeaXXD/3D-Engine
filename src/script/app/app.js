@@ -84,6 +84,9 @@ const orbitControl = {
 /* SCENE */
 const scene = new Scene()
 const light = new DirectionalLight()
+light.position.x = 20
+light.position.y = 100
+light.position.z = 300
 
 saveUtil(scene)
 
