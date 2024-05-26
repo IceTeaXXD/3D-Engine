@@ -20,11 +20,13 @@ import { lightTransformations } from "./lightUtils.js"
 export class Interface {
   /**
    * @param {Scene} scene
+   * @param {Animator} animator
    * @param {DirectionalLight} light
    */
-  constructor(scene, light) {
+  constructor(scene, animator, light) {
     this.scene = scene;
     this.sceneLight = light
+    this.animator = animator
     lightTransformations(this.sceneLight)
     this.selectedObject = { object: null };
     this.meshCounter = 0; // Counter to assign unique IDs to meshes
