@@ -53,10 +53,18 @@ export class Color {
    * @param {number} a Alpha value
    */
   setHex(hex, a = this.a) {
-    this.r = parseInt(hex.substring(1, 3), 16) / 255
-    this.g = parseInt(hex.substring(3, 5), 16) / 255
-    this.b = parseInt(hex.substring(5, 7), 16) / 255
-    this.a = a
+    if (hex.startsWith('#')) {
+      hex = hex.slice(1);
+    }
+    if (hex.length === 6) {
+      this.r = parseInt(hex.substring(0, 2), 16) / 255;
+      this.g = parseInt(hex.substring(2, 4), 16) / 255;
+      this.b = parseInt(hex.substring(4, 6), 16) / 255;
+    } else {
+      throw new Error("Hex color must be in the format #RRGGBB");
+    }
+    this.a = a;
+    return new Color(this.r, this.g, this.b, this.a);
   }
 
   copy(c) {
@@ -75,9 +83,7 @@ export class Color {
    * Convert color to 32 bit value
    */
   to32bit() {
-    return `rgba(${this.r * 255}, ${this.g * 255}, ${this.b * 255}, ${
-      this.a * 255
-    })`
+    return `rgba(${this.r * 255}, ${this.g * 255}, ${this.b * 255}, ${this.a * 255})`
   }
 
   /**

@@ -1,7 +1,11 @@
 import { Vector3, DEGTORAD, RADTODEG } from "../math/index.js"
 import { objectTransformations } from "../../app/utils/objectUtils.js"
+import { Node } from "./Node.js"
 
 export class Animator {
+  /**
+   * @type {Array<{position: Vector3, rotation: Vector3, scaling: Vector3}>}
+   */
   frames = []
   currentFrame = 0
   lastRenderTime = 0
@@ -9,6 +13,9 @@ export class Animator {
   isPlaying = false
   isLooping = false
   isReversed = false
+  /**
+   * @type {Node}
+   */
   object = null
   tweenTime = 0
   easingDuration = 1000
@@ -22,31 +29,37 @@ export class Animator {
     this.isPlaying = false
     this.isLooping = false
     this.isReversed = false
-    this.addFrame(new Vector3(0, 0, 0), new Vector3(0, 0, 0))
+    this.addFrame(
+      new Vector3(0, 0, 0),
+      new Vector3(0, 0, 0),
+      new Vector3(1, 1, 1)
+    )
     this.easingFunction = this.easeLinear
   }
 
-  addFrame(position, rotation) {
-    this.frames.push({ position, rotation })
+  addFrame(position, rotation, scale) {
+    this.frames.push({ position, rotation, scale })
   }
 
   addNewFrame() {
     this.frames.splice(this.currentFrame + 1, 0, {
       position: this.frames[this.currentFrame].position,
-      rotation: this.frames[this.currentFrame].rotation
+      rotation: this.frames[this.currentFrame].rotation,
+      scale: this.frames[this.currentFrame].scale
     })
     this.currentFrame++
     document.getElementById("frame").value = this.currentFrame + 1
   }
 
-  editFrame(position, rotation) {
+  editFrame(position, rotation, scale) {
     this.frames[this.currentFrame] = {
       position: new Vector3(position.x, position.y, position.z),
       rotation: new Vector3(
         rotation.x * RADTODEG,
         rotation.y * RADTODEG,
         rotation.z * RADTODEG
-      )
+      ),
+      scale: new Vector3(scale.x, scale.y, scale.z)
     }
   }
 
@@ -160,6 +173,12 @@ export class Animator {
       easedProgress
     )
 
+    const interpolatedScale = this.interpolate(
+      this.frames[this.currentFrame].scale,
+      this.frames[nextFrame].scale,
+      easedProgress
+    )
+
     this.object.position.set(
       interpolatedPosition.x,
       interpolatedPosition.y,
@@ -170,6 +189,12 @@ export class Animator {
       DEGTORAD * interpolatedRotation.x,
       DEGTORAD * interpolatedRotation.y,
       DEGTORAD * interpolatedRotation.z
+    )
+
+    this.object.scale.set(
+      interpolatedScale.x,
+      interpolatedScale.y,
+      interpolatedScale.z
     )
   }
 
@@ -187,6 +212,12 @@ export class Animator {
       DEGTORAD * this.frames[this.currentFrame].rotation.x,
       DEGTORAD * this.frames[this.currentFrame].rotation.y,
       DEGTORAD * this.frames[this.currentFrame].rotation.z
+    )
+
+    this.object.scale.set(
+      this.frames[this.currentFrame].scale.x,
+      this.frames[this.currentFrame].scale.y,
+      this.frames[this.currentFrame].scale.z
     )
     objectTransformations(this.object)
   }
@@ -317,5 +348,49 @@ export class Animator {
       default:
         this.easingFunction = this.easeLinear
     }
+  }
+
+  get type() {
+    return "Animator"
+  }
+
+  toJSON() {
+    return {
+      frames: this.frames,
+      currentFrame: this.currentFrame,
+      lastRenderTime: this.lastRenderTime,
+      fps: this.fps,
+      isPlaying: this.isPlaying,
+      isLooping: this.isLooping,
+      isReversed: this.isReversed,
+      tweenTime: this.tweenTime,
+      easingDuration: this.easingDuration,
+      easingFunction: this.easingFunction.name
+    }
+  }
+
+  fromJSON(json) {
+    this.frames = json.frames.map((frame) => ({
+      position: new Vector3(
+        frame.position[0],
+        frame.position[1],
+        frame.position[2]
+      ),
+      rotation: new Vector3(
+        frame.rotation[0],
+        frame.rotation[1],
+        frame.rotation[2]
+      ),
+      scale: new Vector3(frame.scale[0], frame.scale[1], frame.scale[2])
+    }))
+    this.currentFrame = json.currentFrame
+    this.lastRenderTime = json.lastRenderTime
+    this.fps = json.fps
+    this.isPlaying = json.isPlaying
+    this.isLooping = json.isLooping
+    this.isReversed = json.isReversed
+    this.tweenTime = json.tweenTime
+    this.easingDuration = json.easingDuration
+    this.setEasingFunction(json.easingFunction)
   }
 }
