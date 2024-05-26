@@ -13,7 +13,6 @@ import {
   BasicMaterial,
   ShaderMaterial,
   PhongMaterial,
-  Texture
 } from "../../modules/materials/index.js"
 import { JSONDeserializer } from "../../modules/core/index.js"
 
