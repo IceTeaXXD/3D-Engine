@@ -3,6 +3,7 @@ import { Node } from "./Node.js"
 import { ShaderTypes, WebGLTypes, WebGLTypeSetter } from "./GLTypes.js"
 import { Scene } from "./Scene.js"
 import { WebGLRenderer } from "./WebGLRenderer.js"
+import { Animator } from "./Animator.js"
 
 const JSONDeserializer = (json) => {
   switch (json.type) {
@@ -23,5 +24,6 @@ export {
   Scene,
   WebGLRenderer,
   Mesh,
+  Animator,
   JSONDeserializer
 }

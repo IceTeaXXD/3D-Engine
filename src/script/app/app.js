@@ -1,10 +1,9 @@
-import { Mesh, WebGLRenderer, Scene } from "../modules/core/index.js"
+import { Mesh, WebGLRenderer, Scene, Animator } from "../modules/core/index.js"
 import {
   Color,
   BasicMaterial,
   ShaderMaterial,
-  PhongMaterial,
-  Texture
+  PhongMaterial
 } from "../modules/materials/index.js"
 import { Vector3, DEGTORAD } from "../modules/math/index.js"
 import {
@@ -117,7 +116,11 @@ document.getElementById("Prism").addEventListener("click", () => {
   scene.add(prism)
   selectedObject.object = prism
   objectTransformations(selectedObject.object)
-  createComponent("Prism-" + scene.children.length, scene, selectedObject.object)
+  createComponent(
+    "Prism-" + scene.children.length,
+    scene,
+    selectedObject.object
+  )
 })
 
 document.getElementById("Pyramid").addEventListener("click", () => {
@@ -128,7 +131,11 @@ document.getElementById("Pyramid").addEventListener("click", () => {
   scene.add(pyramid)
   selectedObject.object = pyramid
   objectTransformations(selectedObject.object)
-  createComponent("Pyramid-" + scene.children.length, scene, selectedObject.object)
+  createComponent(
+    "Pyramid-" + scene.children.length,
+    scene,
+    selectedObject.object
+  )
 })
 
 document.getElementById("Brick").addEventListener("click", () => {
@@ -139,7 +146,11 @@ document.getElementById("Brick").addEventListener("click", () => {
   scene.add(brick)
   selectedObject.object = brick
   objectTransformations(selectedObject.object)
-  createComponent("Brick-" + scene.children.length, scene, selectedObject.object)
+  createComponent(
+    "Brick-" + scene.children.length,
+    scene,
+    selectedObject.object
+  )
 })
 
 document.getElementById("Wood").addEventListener("click", () => {
@@ -161,14 +172,88 @@ document.getElementById("Glass").addEventListener("click", () => {
   scene.add(glass)
   selectedObject.object = glass
   objectTransformations(selectedObject.object)
-  createComponent("Glass-" + scene.children.length, scene, selectedObject.object)
+  createComponent(
+    "Glass-" + scene.children.length,
+    scene,
+    selectedObject.object
+  )
 })
 
 saveUtil(scene)
 loadUtil(scene, selectedObject.object)
-function render() {
-  requestAnimationFrame(render)
+let lastRenderTime = 0
+let targetFPS = 10
+
+const animator = new Animator()
+
+/* ANIMATOR */
+document.getElementById("fps").oninput = function () {
+  targetFPS = this.value
+  animator.fps = this.value
+}
+
+document.getElementById("play").addEventListener("click", () => {
+  animator.play()
+})
+
+document.getElementById("next").addEventListener("click", () => {
+  animator.switchFrameToNext()
+})
+
+document.getElementById("prev").addEventListener("click", () => {
+  animator.switchFrameToPrevious()
+})
+
+document.getElementById("start").addEventListener("click", () => {
+  animator.switchFrameToStart()
+})
+
+document.getElementById("end").addEventListener("click", () => {
+  animator.switchFrameToEnd()
+})
+
+document.getElementById("reverse").addEventListener("click", () => {
+  animator.reverse()
+})
+
+document.getElementById("loop").addEventListener("click", () => {
+  animator.loop()
+})
+
+document.getElementById("add-frame").addEventListener("click", () => {
+  animator.addNewFrame()
+})
+
+document.getElementById("delete-frame").addEventListener("click", () => {
+  animator.removeFrame()
+})
+
+document.getElementById("swap-prev").addEventListener("click", () => {
+  animator.swapCurrentFrameToPrevious()
+})
+
+document.getElementById("swap-next").addEventListener("click", () => {
+  animator.swapCurrentFrameToNext()
+})
+
+document.getElementById("record").addEventListener("click", () => {
+  animator.editFrame(
+    selectedObject.object.position,
+    selectedObject.object.rotation
+  )
+})
+
+document.getElementById("tweening").addEventListener("change", () => {
+  animator.setEasingFunction(document.getElementById("tweening").value)
+})
+
+function render(currentTime) {
+  const deltaTime = currentTime - lastRenderTime
+  lastRenderTime = currentTime
+  animator.update(deltaTime, selectedObject.object)
   orbitControl[cameras.current].update()
   gl.render(scene, cameras[cameras.current])
+
+  requestAnimationFrame(render)
 }
-render()
+requestAnimationFrame(render)
