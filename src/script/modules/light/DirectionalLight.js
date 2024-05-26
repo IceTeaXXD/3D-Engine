@@ -5,47 +5,42 @@ import { Node } from "../core/index.js";
 export class DirectionalLight extends Light {
     /**@type {Node} */
     target
-    #_target = new Vector3(0,0,0)
     /**@type {boolean} */
     isDirectional
     /**@type {Vector3} */
     #_direction
 
     constructor (options = {}){
-        const { color, uniform, target, ...other } = options || {};
+        const { color, isDirectional, target, ...other } = options || {};
         super({
             color,
-            uniform,
+            uniform: {
+                lightIsDirectional: isDirectional || true,
+                lightDirection: target || new Vector3(0,0,0),
+            }
         })
-        this.target = target || this.#_target
-        this.isDirectional = true
+        this.target = this.uniforms["target"]
+        this.#_direction = new Vector3(0,0,0)
+        this.isDirectional = this.uniforms["isDirectional"]
     }
 
     get direction() {
         // direction = target.pos -  this.pos (in world space)
         if (this.target) {
-            this._direction
+            this.#_direction
                 .setVector(this.target.worldPosition)
                 .sub(this.worldPosition).normalize();
         } else {
             // Asumsi target = (0,0,0), direction = -this.pos
-            this._direction
+            this.#_direction
                 .setVector(this.worldPosition)
                 .mul(-1).normalize();
         }
-        return this._direction;
+        return this.#_direction;
     }
 
     get type(){
         return "DirectionalLight"
-    }
-
-    get uniforms() {
-        return {
-            ...super.uniforms,
-            lightDirection: this.direction,
-            lightIsDirectional: true, // menandakan directional light di shader
-        }
     }
 
     toJSON() {

@@ -81,8 +81,8 @@ const orbitControl = {
 
 /* SCENE */
 const scene = new Scene()
-
-const uiInterface = new Interface(scene);
+const light = new DirectionalLight()
+const uiInterface = new Interface(scene, light);
 
 
 saveUtil(scene)
@@ -163,7 +163,6 @@ function render(currentTime) {
   animator.update(deltaTime, uiInterface.selectedObject.object)
   orbitControl[cameras.current].update()
   gl.render(scene, cameras[cameras.current])
-
   requestAnimationFrame(render)
 }
 requestAnimationFrame(render)

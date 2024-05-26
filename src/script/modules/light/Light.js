@@ -4,9 +4,9 @@ import { Vector3 } from "../math/index.js"
 
 export class Light extends Node {
     /** @type {{[key: string]: any}} Uniforms */
-    #uniforms
+    uniforms
     get uniforms() {
-        return this.#uniforms
+        return this.uniforms
     }
 
     /** @type {Color} Uniforms */
@@ -17,8 +17,8 @@ export class Light extends Node {
 
     constructor(options = {}) {
         super();
-        const { color, uniforms, position } = options || {};
-        this.#uniforms = uniforms || {};
+        const { color, uniforms } = options || {};
+        this.uniforms = uniforms || {};
         this.#color = color || Color.white();
     }
     
@@ -29,7 +29,7 @@ export class Light extends Node {
         const { uniforms, color, ...other } = super.toJSON()
         return {
           ...other,
-          uniforms: this.#uniforms,
+          uniforms: this.uniforms,
           color: this.#color,
         }
       }

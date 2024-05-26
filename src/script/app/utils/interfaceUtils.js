@@ -15,13 +15,17 @@ import {
   PhongMaterial,
 } from "../../modules/materials/index.js"
 import { JSONDeserializer } from "../../modules/core/index.js"
-
+import { DirectionalLight } from "../../modules/light/DirectionalLight.js"
+import { lightTransformations } from "./lightUtils.js"
 export class Interface {
   /**
    * @param {Scene} scene
+   * @param {DirectionalLight} light
    */
-  constructor(scene) {
+  constructor(scene, light) {
     this.scene = scene;
+    this.sceneLight = light
+    lightTransformations(this.sceneLight)
     this.selectedObject = { object: null };
     this.meshCounter = 0; // Counter to assign unique IDs to meshes
     this.initEventListeners();
@@ -85,15 +89,18 @@ export class Interface {
 
     switch (type) {
       case "Box":
+        material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new BoxGeometry(2, 2, 2);
         break;
-      case "Cube":
+        case "Cube":
+        material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new HollowBoxGeometry(2, 2, 2, 0.2, 10);
         break;
-      case "Tube":
-        geometry = new TubeGeometry(1, 2, 2, 10, 10);
-        break;
-      case "Prism":
+        case "Tube":
+          geometry = new TubeGeometry(1, 2, 2, 10, 10);
+          break;
+        case "Prism":
+        material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new HollowPrismGeometry(2, 2, 2, 0.3, 5);
         break;
       case "Pyramid":
@@ -101,6 +108,7 @@ export class Interface {
         break;
       case "Brick":
         material = new PhongMaterial({ useTexture: true, texture: "brick" });
+        material = new PhongMaterial({ useTexture: true, texture: "brick"});
         geometry = new BoxGeometry(2, 2, 2);
         break;
       case "Wood":

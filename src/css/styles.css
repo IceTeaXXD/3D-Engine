@@ -83,6 +83,28 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+.light-transform-menu {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+.light-transform-menu label {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+}
+
+.light-transform-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reset-cam {
+  
+}
 
 .draggable-number-input {
   width: 100px;
