@@ -80,24 +80,30 @@ export class Interface {
    * @param {string} type
    */
   addGeometry(type) {
+    const color = new Color();
     let geometry;
     let material = new PhongMaterial();
 
     switch (type) {
       case "Box":
         geometry = new BoxGeometry(2, 2, 2);
+        material = new PhongMaterial({});
         break;
       case "Cube":
         geometry = new HollowBoxGeometry(2, 2, 2, 0.2, 10);
+        material = new PhongMaterial({});
         break;
       case "Tube":
         geometry = new TubeGeometry(1, 2, 2, 10, 10);
+        material = new PhongMaterial({});
         break;
       case "Prism":
         geometry = new HollowPrismGeometry(2, 2, 2, 0.3, 5);
+        material = new PhongMaterial({});
         break;
       case "Pyramid":
         geometry = new HollowPyramidGeometry(2, 2, 2, 0.2);
+        material = new PhongMaterial({});
         break;
       case "Brick":
         material = new PhongMaterial({ useTexture: true, texture: "brick" });
