@@ -16,10 +16,9 @@ import {
 } from "../modules/geometry/index.js"
 import {
   saveUtil,
-  loadUtil,
   objectTransformations,
   cameraController,
-  createComponent
+  Interface
 } from "./utils/index.js"
 import {
   OrtographicCamera,
@@ -79,108 +78,12 @@ const orbitControl = {
 
 /* SCENE */
 const scene = new Scene()
-const selectedObject = { object: null }
 
-document.getElementById("Box").addEventListener("click", () => {
-  const box = new Mesh(new BoxGeometry(2, 2, 2), new PhongMaterial())
-  scene.add(box)
-  selectedObject.object = box
-  objectTransformations(selectedObject.object)
-  createComponent("Box-" + scene.children.length, scene, selectedObject.object)
-})
+const uiInterface = new Interface(scene);
 
-document.getElementById("Cube").addEventListener("click", () => {
-  const cube = new Mesh(
-    new HollowBoxGeometry(2, 2, 2, 0.2, 10),
-    new PhongMaterial()
-  )
-  scene.add(cube)
-  selectedObject.object = cube
-  objectTransformations(selectedObject.object)
-  createComponent("Cube-" + scene.children.length, scene, selectedObject.object)
-})
-
-document.getElementById("Tube").addEventListener("click", () => {
-  const tube = new Mesh(new TubeGeometry(1, 2, 2, 10, 10), new PhongMaterial())
-  scene.add(tube)
-  selectedObject.object = tube
-  objectTransformations(selectedObject.object)
-  createComponent("Tube-" + scene.children.length, scene, selectedObject.object)
-})
-
-document.getElementById("Prism").addEventListener("click", () => {
-  const prism = new Mesh(
-    new HollowPrismGeometry(2, 2, 2, 0.3, 5),
-    new PhongMaterial()
-  )
-  scene.add(prism)
-  selectedObject.object = prism
-  objectTransformations(selectedObject.object)
-  createComponent(
-    "Prism-" + scene.children.length,
-    scene,
-    selectedObject.object
-  )
-})
-
-document.getElementById("Pyramid").addEventListener("click", () => {
-  const pyramid = new Mesh(
-    new HollowPyramidGeometry(2, 2, 2, 0.2),
-    new PhongMaterial()
-  )
-  scene.add(pyramid)
-  selectedObject.object = pyramid
-  objectTransformations(selectedObject.object)
-  createComponent(
-    "Pyramid-" + scene.children.length,
-    scene,
-    selectedObject.object
-  )
-})
-
-document.getElementById("Brick").addEventListener("click", () => {
-  const brick = new Mesh(
-    new BoxGeometry(2, 2, 2),
-    new PhongMaterial({ useTexture: true, texture: "brick" })
-  )
-  scene.add(brick)
-  selectedObject.object = brick
-  objectTransformations(selectedObject.object)
-  createComponent(
-    "Brick-" + scene.children.length,
-    scene,
-    selectedObject.object
-  )
-})
-
-document.getElementById("Wood").addEventListener("click", () => {
-  const wood = new Mesh(
-    new BoxGeometry(2, 2, 2),
-    new PhongMaterial({ useTexture: true, texture: "wood" })
-  )
-  scene.add(wood)
-  selectedObject.object = wood
-  objectTransformations(selectedObject.object)
-  createComponent("Wood-" + scene.children.length, scene, selectedObject.object)
-})
-
-document.getElementById("Glass").addEventListener("click", () => {
-  const glass = new Mesh(
-    new BoxGeometry(2, 2, 2),
-    new PhongMaterial({ useTexture: true, texture: "glass" })
-  )
-  scene.add(glass)
-  selectedObject.object = glass
-  objectTransformations(selectedObject.object)
-  createComponent(
-    "Glass-" + scene.children.length,
-    scene,
-    selectedObject.object
-  )
-})
 
 saveUtil(scene)
-loadUtil(scene, selectedObject.object)
+
 let lastRenderTime = 0
 let targetFPS = 10
 
@@ -238,8 +141,8 @@ document.getElementById("swap-next").addEventListener("click", () => {
 
 document.getElementById("record").addEventListener("click", () => {
   animator.editFrame(
-    selectedObject.object.position,
-    selectedObject.object.rotation
+    uiInterface.selectedObject.object.position,
+    uiInterface.selectedObject.object.rotation
   )
 })
 
@@ -250,7 +153,7 @@ document.getElementById("tweening").addEventListener("change", () => {
 function render(currentTime) {
   const deltaTime = currentTime - lastRenderTime
   lastRenderTime = currentTime
-  animator.update(deltaTime, selectedObject.object)
+  animator.update(deltaTime, uiInterface.selectedObject.object)
   orbitControl[cameras.current].update()
   gl.render(scene, cameras[cameras.current])
 
