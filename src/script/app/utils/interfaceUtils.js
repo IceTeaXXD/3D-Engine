@@ -108,12 +108,10 @@ export class Interface {
       case "Box":
         material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new BoxGeometry(2, 2, 2);
-        material = new PhongMaterial({});
         break;
         case "Cube":
         material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new HollowBoxGeometry(2, 2, 2, 0.2, 10);
-        material = new PhongMaterial({});
         break;
         case "Tube":
           geometry = new TubeGeometry(1, 2, 2, 10, 10);
