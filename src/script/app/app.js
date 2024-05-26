@@ -16,6 +16,7 @@ import {
 } from "../modules/geometry/index.js"
 import {
   saveUtil,
+  saveAnimatorUtil,
   objectTransformations,
   cameraController,
   Interface
@@ -79,15 +80,14 @@ const orbitControl = {
 /* SCENE */
 const scene = new Scene()
 
-const uiInterface = new Interface(scene);
-
-
 saveUtil(scene)
 
 let lastRenderTime = 0
 let targetFPS = 10
 
 const animator = new Animator()
+saveAnimatorUtil(animator)
+const uiInterface = new Interface(scene, animator)
 
 /* ANIMATOR */
 document.getElementById("fps").oninput = function () {
@@ -142,7 +142,8 @@ document.getElementById("swap-next").addEventListener("click", () => {
 document.getElementById("record").addEventListener("click", () => {
   animator.editFrame(
     uiInterface.selectedObject.object.position,
-    uiInterface.selectedObject.object.rotation
+    uiInterface.selectedObject.object.rotation,
+    uiInterface.selectedObject.object.scale
   )
 })
 
