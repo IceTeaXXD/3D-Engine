@@ -2,37 +2,6 @@ import { DEGTORAD, RADTODEG } from "../../modules/math/index.js"
 import { Vector3 } from "../../modules/math/index.js"
 
 export function objectTransformations(object) {
-  $(document).ready(function () {
-    let dragging = false
-    let startX, startValue
-
-    $(".draggable-number-input").on("mousedown", function (event) {
-      dragging = true
-      startX = event.pageX
-      startValue = parseInt($(this).val()) || 0
-      $("body").addClass("no-select dragging-cursor")
-      $(this).addClass("active-drag")
-    })
-
-    $(document).on("mousemove", function (event) {
-      if (dragging) {
-        let change = event.pageX - startX
-        let newValue = startValue + change
-        let min = parseInt($(".active-drag").attr("min"))
-        let max = parseInt($(".active-drag").attr("max"))
-        newValue = Math.min(Math.max(newValue, min), max)
-        $(".active-drag").val(newValue)
-        $(".active-drag").trigger("input")
-      }
-    })
-
-    $(document).on("mouseup", function () {
-      dragging = false
-      $("body").removeClass("no-select dragging-cursor")
-      $(".draggable-number-input").removeClass("active-drag")
-    })
-  })
-
   var rotateX = document.getElementById("rotateX")
   var rotateY = document.getElementById("rotateY")
   var rotateZ = document.getElementById("rotateZ")

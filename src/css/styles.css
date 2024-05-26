@@ -2,13 +2,6 @@ body {
   font-family: "Poppins";
 }
 
-.point {
-  width: 8px;
-  height: 8px;
-  background-color: red;
-  border-radius: 50%;
-}
-
 .sidebar-title {
   font-size: 20px;
   color: #333;
@@ -159,14 +152,9 @@ body {
   margin-top: 60px;
 }
 
-.sidebar-left .top {
-  height: 50%;
-  overflow-y: auto;
-}
-
-.sidebar-left .middle,
+.sidebar-left .top,
 .sidebar-left .bottom {
-  height: 25%;
+  height: 50%;
   overflow-y: auto;
 }
 
@@ -184,4 +172,43 @@ body {
   left: 300px;
   right: 300px;
   bottom: 0;
+}
+
+/* ANIMATION EDITOR */
+.animator button {
+  background-color: white;
+}
+
+.animator button:hover {
+  background-color: #007bff;
+}
+
+.animator-title {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+}
+
+.animator-player-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animator-player-bottom {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animator-editor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animator-title {
+  padding: 10px;
 }
