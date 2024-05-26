@@ -1,7 +1,6 @@
 import { JSONDeserializer } from "../../modules/core/index.js"
-import { createComponent } from "./interfaceUtils.js"
 
-export function loadUtil(scene, selectedObject) {
+export function loadUtil(scene, selectedObject, Interface) {
   const loadButton = document.getElementById("load")
   loadButton.addEventListener("click", () => {
     var input = document.createElement("input")
@@ -19,7 +18,7 @@ export function loadUtil(scene, selectedObject) {
           res.children.forEach((child) => {
             scene.add(child)
             selectedObject = child
-            createComponent(child.type + "-" + scene.children.length, scene, selectedObject)
+            Interface.createComponent(child.type + "-" + scene.children.length, scene, selectedObject)
           })
         }
         reader.readAsText(file)
