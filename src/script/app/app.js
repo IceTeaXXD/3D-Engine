@@ -150,6 +150,10 @@ document.getElementById("tweening").addEventListener("change", () => {
   animator.setEasingFunction(document.getElementById("tweening").value)
 })
 
+document.getElementById("reset-cam").addEventListener("click", () => {
+  orbitControl[cameras.current].reset()
+})
+
 function render(currentTime) {
   const deltaTime = currentTime - lastRenderTime
   lastRenderTime = currentTime

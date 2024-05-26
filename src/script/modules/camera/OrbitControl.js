@@ -76,6 +76,17 @@ export class OrbitControl {
     this.#center.computeLocalMatrix()
   }
 
+  reset() {
+    this.#center.position.set(0, 0, 0)
+    this.#center.rotation.set(0, 0, 0)
+    this.#center.quaternion.set(0, 0, 0, 1)
+    if (this.#camera.type == "PerspectiveCamera") {
+      this.#camera.position.set(0, 0, 25)
+    } else {
+      this.#camera.zoom = 1
+    }
+  }
+
   destroy() {
     this.#canvas.removeEventListener("mousedown", this.#onMouseDown)
     this.#canvas.removeEventListener("mousemove", this.#onMouseMove)
