@@ -19,7 +19,6 @@ import {
   saveUtil,
   objectTransformations,
   cameraController,
-  loadUtil,
   Interface
 } from "./utils/index.js"
 import {
@@ -84,90 +83,7 @@ const selectedObject = { object: null }
 
 const uiInterface = new Interface(scene);
 
-// document.getElementById("Box").addEventListener("click", () => {
-//   const box = new Mesh(new BoxGeometry(2, 2, 2), new PhongMaterial())
-//   scene.add(box)
-//   selectedObject.object = box
-//   objectTransformations(selectedObject.object)
-//   createComponent("Box-" + scene.children.length, scene, selectedObject.object)
-// })
-
-// document.getElementById("Cube").addEventListener("click", () => {
-//   const cube = new Mesh(
-//     new HollowBoxGeometry(2, 2, 2, 0.2, 10),
-//     new PhongMaterial()
-//   )
-//   scene.add(cube)
-//   selectedObject.object = cube
-//   objectTransformations(selectedObject.object)
-//   createComponent("Cube-" + scene.children.length, scene, selectedObject.object)
-// })
-
-// document.getElementById("Tube").addEventListener("click", () => {
-//   const tube = new Mesh(new TubeGeometry(1, 2, 2, 10, 10), new PhongMaterial())
-//   scene.add(tube)
-//   selectedObject.object = tube
-//   objectTransformations(selectedObject.object)
-//   createComponent("Tube-" + scene.children.length, scene, selectedObject.object)
-// })
-
-// document.getElementById("Prism").addEventListener("click", () => {
-//   const prism = new Mesh(
-//     new HollowPrismGeometry(2, 2, 2, 0.3, 5),
-//     new PhongMaterial()
-//   )
-//   scene.add(prism)
-//   selectedObject.object = prism
-//   objectTransformations(selectedObject.object)
-//   createComponent("Prism-" + scene.children.length, scene, selectedObject.object)
-// })
-
-// document.getElementById("Pyramid").addEventListener("click", () => {
-//   const pyramid = new Mesh(
-//     new HollowPyramidGeometry(2, 2, 2, 0.2),
-//     new PhongMaterial()
-//   )
-//   scene.add(pyramid)
-//   selectedObject.object = pyramid
-//   objectTransformations(selectedObject.object)
-//   createComponent("Pyramid-" + scene.children.length, scene, selectedObject.object)
-// })
-
-// document.getElementById("Brick").addEventListener("click", () => {
-//   const brick = new Mesh(
-//     new BoxGeometry(2, 2, 2),
-//     new PhongMaterial({ useTexture: true, texture: "brick" })
-//   )
-//   scene.add(brick)
-//   selectedObject.object = brick
-//   objectTransformations(selectedObject.object)
-//   createComponent("Brick-" + scene.children.length, scene, selectedObject.object)
-// })
-
-// document.getElementById("Wood").addEventListener("click", () => {
-//   const wood = new Mesh(
-//     new BoxGeometry(2, 2, 2),
-//     new PhongMaterial({ useTexture: true, texture: "wood" })
-//   )
-//   scene.add(wood)
-//   selectedObject.object = wood
-//   objectTransformations(selectedObject.object)
-//   createComponent("Wood-" + scene.children.length, scene, selectedObject.object)
-// })
-
-// document.getElementById("Glass").addEventListener("click", () => {
-//   const glass = new Mesh(
-//     new BoxGeometry(2, 2, 2),
-//     new PhongMaterial({ useTexture: true, texture: "glass" })
-//   )
-//   scene.add(glass)
-//   selectedObject.object = glass
-//   objectTransformations(selectedObject.object)
-//   createComponent("Glass-" + scene.children.length, scene, selectedObject.object)
-// })
-
 saveUtil(scene)
-loadUtil(scene, selectedObject.object, uiInterface)
 function render() {
   requestAnimationFrame(render)
   orbitControl[cameras.current].update()

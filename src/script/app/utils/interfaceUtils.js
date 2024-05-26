@@ -27,6 +27,7 @@ export class Interface {
     this.meshCounter = 0; // Counter to assign unique IDs to meshes
     this.initEventListeners();
     this.initRootComponent(); // Initialize the root "All" component
+    this.loadUtil();
   }
 
   /**
@@ -51,7 +52,7 @@ export class Interface {
     allComponent.classList.add("component");
     allComponent.dataset.level = 0;
     allComponent.dataset.meshId = "root";
-    allComponent.innerHTML = `<a>All</a>`;
+    allComponent.innerHTML = `<a>Scene</a>`;
     allComponent.style.fontWeight = "bold"; // Highlight the "All" component
     ComponentUI.container.prepend(allComponent); // Add it at the beginning of the list
 
@@ -129,6 +130,35 @@ export class Interface {
     const level = parentComponent ? parseInt(parentComponent.dataset.level) + 1 : 1;
     const componentName = `${type}-${mesh.id}`;
     ComponentUI.createComponent(componentName, mesh, level, this, parentComponent);
+  }
+
+  loadUtil() {
+    const loadButton = document.getElementById("load")
+    loadButton.addEventListener("click", () => {
+      var input = document.createElement("input")
+      input.type = "file"
+      input.accept = "application/json"
+      document.body.appendChild(input);
+      input.style.display = 'none';
+      input.click()
+      input.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const json = JSON.parse(e.target.result);
+          const res = JSONDeserializer(json.scene);
+          res.children.forEach((child) => {
+            this.scene.add(child);
+            this.selectedObject.object = child;
+            const parentComponent = ComponentUI.getComponentElement(this, child.parent);
+            const level = parentComponent ? parseInt(parentComponent.dataset.level) + 1 : 1;
+            const componentName = `${child.type}-${this.scene.children.length}`;
+            ComponentUI.createComponent(componentName, child, level, this, parentComponent);
+          });
+        };
+        reader.readAsText(file);
+      });
+    });
   }
 
   /**
