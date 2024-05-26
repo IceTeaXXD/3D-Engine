@@ -79,8 +79,7 @@ const orbitControl = {
 /* SCENE */
 const scene = new Scene()
 
-const uiInterface = new Interface(scene);
-
+const uiInterface = new Interface(scene)
 
 saveUtil(scene)
 
@@ -142,7 +141,8 @@ document.getElementById("swap-next").addEventListener("click", () => {
 document.getElementById("record").addEventListener("click", () => {
   animator.editFrame(
     uiInterface.selectedObject.object.position,
-    uiInterface.selectedObject.object.rotation
+    uiInterface.selectedObject.object.rotation,
+    uiInterface.selectedObject.object.scale
   )
 })
 
