@@ -20,11 +20,13 @@ import { lightTransformations } from "./lightUtils.js"
 export class Interface {
   /**
    * @param {Scene} scene
+   * @param {Animator} animator
    * @param {DirectionalLight} light
    */
-  constructor(scene, light) {
+  constructor(scene, animator, light) {
     this.scene = scene;
     this.sceneLight = light
+    this.animator = animator
     lightTransformations(this.sceneLight)
     this.selectedObject = { object: null };
     this.meshCounter = 0; // Counter to assign unique IDs to meshes
@@ -108,12 +110,10 @@ export class Interface {
       case "Box":
         material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new BoxGeometry(2, 2, 2);
-        material = new PhongMaterial({});
         break;
         case "Cube":
         material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new HollowBoxGeometry(2, 2, 2, 0.2, 10);
-        material = new PhongMaterial({});
         break;
         case "Tube":
           geometry = new TubeGeometry(1, 2, 2, 10, 10);

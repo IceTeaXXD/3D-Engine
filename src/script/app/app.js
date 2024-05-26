@@ -19,7 +19,8 @@ import {
   saveAnimatorUtil,
   objectTransformations,
   cameraController,
-  Interface
+  Interface,
+  lightTransformations
 } from "./utils/index.js"
 import {
   OrtographicCamera,
@@ -83,7 +84,6 @@ const orbitControl = {
 /* SCENE */
 const scene = new Scene()
 const light = new DirectionalLight()
-const uiInterface = new Interface(scene, light);
 
 saveUtil(scene)
 
@@ -92,7 +92,7 @@ let targetFPS = 10
 
 const animator = new Animator()
 saveAnimatorUtil(animator)
-const uiInterface = new Interface(scene, animator)
+const uiInterface = new Interface(scene, animator, light);
 
 /* ANIMATOR */
 document.getElementById("fps").oninput = function () {
