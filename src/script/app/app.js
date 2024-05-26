@@ -27,6 +27,9 @@ import {
   ObliqueCamera,
   OrbitControl
 } from "../modules/camera/index.js"
+import { 
+  DirectionalLight
+} from "../modules/light/index.js"
 import * as SC from "./utils/sceneUtils.js"
 // import model from "./models/index.js"
 
@@ -79,6 +82,8 @@ const orbitControl = {
 
 /* SCENE */
 const scene = new Scene()
+const light = new DirectionalLight()
+const uiInterface = new Interface(scene, light);
 
 saveUtil(scene)
 
@@ -161,7 +166,6 @@ function render(currentTime) {
   animator.update(deltaTime, uiInterface.selectedObject.object)
   orbitControl[cameras.current].update()
   gl.render(scene, cameras[cameras.current])
-
   requestAnimationFrame(render)
 }
 requestAnimationFrame(render)

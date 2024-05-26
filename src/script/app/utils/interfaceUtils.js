@@ -15,21 +15,23 @@ import {
   PhongMaterial
 } from "../../modules/materials/index.js"
 import { JSONDeserializer } from "../../modules/core/index.js"
-
+import { DirectionalLight } from "../../modules/light/DirectionalLight.js"
+import { lightTransformations } from "./lightUtils.js"
 export class Interface {
   /**
    * @param {Scene} scene
-   * @param {Animator} animator
+   * @param {DirectionalLight} light
    */
-  constructor(scene, animator) {
-    this.scene = scene
-    this.animator = animator
-    this.selectedObject = { object: null }
-    this.meshCounter = 0 // Counter to assign unique IDs to meshes
-    this.initEventListeners()
-    this.initRootComponent() // Initialize the root "All" component
-    this.loadUtil()
-    this.deleteSelectedObject()
+  constructor(scene, light) {
+    this.scene = scene;
+    this.sceneLight = light
+    lightTransformations(this.sceneLight)
+    this.selectedObject = { object: null };
+    this.meshCounter = 0; // Counter to assign unique IDs to meshes
+    this.initEventListeners();
+    this.initRootComponent(); // Initialize the root "All" component
+    this.loadUtil();
+    this.deleteSelectedObject();
   }
 
   /**
@@ -104,29 +106,30 @@ export class Interface {
 
     switch (type) {
       case "Box":
+        material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new BoxGeometry(2, 2, 2);
         material = new PhongMaterial({});
         break;
-      case "Cube":
+        case "Cube":
+        material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new HollowBoxGeometry(2, 2, 2, 0.2, 10);
         material = new PhongMaterial({});
         break;
-      case "Tube":
-        geometry = new TubeGeometry(1, 2, 2, 10, 10);
-        material = new PhongMaterial({});
-        break;
-      case "Prism":
+        case "Tube":
+          geometry = new TubeGeometry(1, 2, 2, 10, 10);
+          break;
+        case "Prism":
+        material = new PhongMaterial({lightPosition : this.sceneLight.position})
         geometry = new HollowPrismGeometry(2, 2, 2, 0.3, 5);
-        material = new PhongMaterial({});
         break;
       case "Pyramid":
         geometry = new HollowPyramidGeometry(2, 2, 2, 0.2);
         material = new PhongMaterial({});
         break;
       case "Brick":
-        material = new PhongMaterial({ useTexture: true, texture: "brick" })
-        geometry = new BoxGeometry(2, 2, 2)
-        break
+        material = new PhongMaterial({ useTexture: true, texture: "brick" });
+        geometry = new BoxGeometry(2, 2, 2);
+        break;
       case "Wood":
         material = new PhongMaterial({ useTexture: true, texture: "wood" })
         geometry = new BoxGeometry(2, 2, 2)
